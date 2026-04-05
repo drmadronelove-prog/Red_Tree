@@ -1,0 +1,1939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Neuroinclusive Therapy Center — Dr. Madrone Love, PsyD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#e6e3dd;--bg2:#dedad3;--bg3:#d4d0c8;--bg4:#ccc8bf;
+  --ink:#161612;--mid:#6b6860;--dim:#9c9890;--faint:rgba(0,0,0,0.06);
+  --white:#fff;--brd:rgba(0,0,0,0.12);--brd2:rgba(0,0,0,0.07);
+  --accent:#2a2a28;--hi:#1a1a18;
+  --r:4px;
+  --font-display:'Syne',sans-serif;
+  --font-body:'Inter',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;height:52px;background:var(--bg);border-bottom:1px solid var(--brd);z-index:1000;display:flex;align-items:center;padding:0 2rem;gap:0}
+.nav-mark{display:flex;align-items:center;gap:0;text-decoration:none;flex-shrink:0;padding-right:2rem;border-right:1px solid var(--brd)}
+.nav-brand{font-family:var(--font-display);font-size:14px;font-weight:700;color:var(--ink);letter-spacing:0.02em;line-height:1;text-transform:uppercase}
+.nav-brand span{display:none}
+.nav-links{display:flex;gap:0;overflow-x:auto;flex:1;padding-left:0}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-btn{border:none;background:none;cursor:pointer;font-family:var(--font-body);font-size:11px;font-weight:400;padding:0 16px;height:52px;border-radius:0;color:var(--dim);white-space:nowrap;letter-spacing:0.05em;text-transform:uppercase;transition:color .15s;border-right:1px solid var(--brd2)}
+.nav-btn:last-child{border-right:none}
+.nav-btn:hover,.nav-btn.on{color:var(--ink)}
+.nav-btn.on{font-weight:600}
+
+/* PAGES */
+.pg{display:none;min-height:100vh;padding-top:52px}
+.pg.on{display:block}
+.wrap{max-width:960px;margin:0 auto;padding:4rem 2rem}
+.wide{max-width:1400px;margin:0 auto;padding:4rem 2rem}
+
+/* PAGE HEADERS */
+.ph{margin-bottom:3rem;padding-bottom:1.5rem;border-bottom:1px solid var(--brd)}
+.ph h2{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:var(--ink);letter-spacing:-0.01em;line-height:1.1;margin-bottom:.5rem;text-transform:uppercase}
+.ph p{font-size:13.5px;color:var(--mid);line-height:1.8;max-width:600px}
+
+/* HERO */
+#pg-home{background:var(--bg)}
+.hero{min-height:calc(100vh - 52px);display:flex;flex-direction:column;padding:3.5rem 2rem 0;position:relative;overflow:hidden}
+.hero-top{position:relative;z-index:2;margin-bottom:2.5rem}
+.hero-label{font-family:var(--font-body);font-size:10.5px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);margin-bottom:1.5rem;display:flex;align-items:center;gap:10px}
+.hero-label::after{content:'';flex:1;height:1px;background:var(--brd)}
+.hero h1{font-family:var(--font-display);font-size:clamp(3rem,8vw,7.5rem);font-weight:800;color:var(--ink);letter-spacing:-0.03em;line-height:0.92;text-transform:uppercase;margin-bottom:1.5rem}
+.hero h1 em{font-style:italic;font-weight:400}
+.hero-sub{font-size:14px;color:var(--mid);max-width:440px;line-height:1.75;margin-bottom:2.5rem}
+/* video strip */
+.hero-video-strip{width:calc(100% + 4rem);margin-left:-2rem;height:320px;overflow:hidden;position:relative;margin-bottom:0}
+.hero-video-strip video{width:100%;height:100%;object-fit:cover;opacity:0.75}
+.hero-video-strip::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,var(--bg) 0%,transparent 25%,transparent 75%,var(--bg) 100%)}
+/* tile grid below video */
+.hero-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--brd);border:1px solid var(--brd);width:100%;margin-top:3rem;margin-bottom:0}
+@media(max-width:680px){.hero-grid{grid-template-columns:1fr 1fr}}
+.hero-tile{background:var(--bg);cursor:pointer;transition:background .15s;overflow:hidden;display:flex;flex-direction:column;border:none}
+.hero-tile:hover .ht-img{transform:scale(1.03)}
+.hero-tile:hover{background:var(--white)}
+.ht-info{padding:.9rem 1rem .7rem}
+.ht-num{font-size:9.5px;letter-spacing:0.1em;color:var(--dim);text-transform:uppercase;margin-bottom:.4rem;font-family:var(--font-body)}
+.ht-title{font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px;line-height:1.2;text-transform:uppercase}
+.ht-sub{font-size:10.5px;color:var(--dim);line-height:1.4;margin-bottom:.5rem}
+.ht-tags{display:flex;gap:4px;flex-wrap:wrap}
+.ht-tag{font-size:9px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:2px 7px;border:1px solid var(--brd);border-radius:20px;color:var(--mid);background:transparent}
+.ht-img-wrap{flex:1;min-height:160px;overflow:hidden;position:relative}
+.ht-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;min-height:160px}
+.hero-byline{padding:1.5rem 0 2.5rem;font-size:10.5px;color:var(--dim);letter-spacing:0.07em;text-transform:uppercase;border-top:1px solid var(--brd);margin-top:0;width:100%}
+
+/* CARDS */
+.card{background:var(--white);border:1px solid var(--brd);border-radius:var(--r);padding:1.5rem}
+.card-grid{display:grid;gap:1rem}
+
+/* TAGS */
+.tag{display:inline-block;font-size:9.5px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:2px 8px;border-radius:20px;border:1px solid var(--brd)}
+.tag-dsm{color:var(--mid);background:transparent}
+.tag-comm{color:var(--mid);background:transparent}
+.tag-tool{color:var(--mid);background:transparent}
+
+/* TABS */
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--brd);margin-bottom:2.5rem;overflow-x:auto}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;border:none;cursor:pointer;font-family:var(--font-body);font-size:10.5px;font-weight:400;padding:12px 16px;background:transparent;color:var(--dim);transition:all .15s;white-space:nowrap;letter-spacing:0.06em;text-transform:uppercase;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab.on{color:var(--ink);border-bottom-color:var(--ink);font-weight:600}
+.tab:hover{color:var(--ink)}
+
+/* FORMS */
+.fld{margin-bottom:14px}
+.fld label{display:block;font-size:10px;font-weight:600;color:var(--dim);margin-bottom:5px;letter-spacing:0.07em;text-transform:uppercase}
+input,select,textarea{font-family:var(--font-body);font-size:13px;padding:10px 13px;border-radius:var(--r);border:1px solid var(--brd);background:var(--white);color:var(--ink);width:100%;outline:none;transition:border-color .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--ink)}
+textarea{resize:vertical;line-height:1.5}
+
+/* BUTTONS */
+.btn{font-family:var(--font-body);cursor:pointer;font-size:10.5px;font-weight:600;padding:10px 22px;border-radius:var(--r);border:1px solid var(--brd);background:transparent;color:var(--mid);transition:all .15s;letter-spacing:0.06em;text-transform:uppercase}
+.btn:hover{border-color:var(--ink);color:var(--ink)}
+.btn-p{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn-p:hover{background:var(--hi);border-color:var(--hi)}
+.btn-sm{font-size:9.5px;padding:6px 13px}
+.btn-ghost{border-color:transparent;color:var(--dim)}
+.btn-ghost:hover{border-color:var(--brd);color:var(--ink)}
+
+/* GRID */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.span2{grid-column:1/-1}
+@media(max-width:640px){.g2,.g3{grid-template-columns:1fr}}
+
+/* CHECKLIST */
+.cl-bar{display:flex;align-items:center;gap:18px;padding:1.25rem 1.5rem;background:var(--white);border:1px solid var(--brd);border-radius:var(--r);margin-bottom:2rem}
+.cl-n{font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--ink);min-width:70px;line-height:1}
+.cl-n sub{font-size:11px;font-weight:400;color:var(--dim);font-family:var(--font-body)}
+.cl-track{flex:1;height:1px;background:var(--brd);overflow:hidden}
+.cl-fill{height:100%;background:var(--ink);transition:width .4s}
+.cl-sec{margin-bottom:2rem}
+.cl-sec-hd{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.cl-sec-title{font-size:10px;font-weight:600;color:var(--dim);letter-spacing:.09em;text-transform:uppercase}
+.cl-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--brd2);cursor:pointer}
+.cl-item:last-child{border-bottom:none}
+.cl-item:hover{opacity:.7}
+.cl-box{width:15px;height:15px;border-radius:2px;border:1px solid var(--brd);background:transparent;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.cl-box.on{background:var(--ink);border-color:var(--ink)}
+.cl-text{font-size:13.5px;color:var(--ink);line-height:1.45}
+.cl-hint{font-size:11.5px;color:var(--dim);margin-top:2px;line-height:1.4}
+
+/* MATRIX */
+.matrix-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.matrix-tbl{border-collapse:collapse;font-size:12px;width:100%;table-layout:fixed}
+.matrix-tbl th{padding:7px 4px;text-align:center;border:1px solid var(--brd2);background:var(--bg);font-weight:600;font-size:9px;color:var(--dim);letter-spacing:.03em;text-transform:uppercase;vertical-bottom;white-space:normal;word-break:break-word;line-height:1.3;width:52px}
+.matrix-tbl th.row-h{text-align:left;position:sticky;left:0;z-index:2;background:var(--bg);width:190px;min-width:190px;padding:8px 12px;font-size:10px}
+.matrix-tbl td{padding:8px 6px;border:1px solid var(--brd2);text-align:center;vertical-align:middle}
+.matrix-tbl td.label{text-align:left;font-weight:600;font-size:12px;color:var(--ink);background:var(--bg);position:sticky;left:0;z-index:1;border-right:1px solid var(--brd);width:190px;min-width:190px;max-width:190px;white-space:normal;vertical-align:top;line-height:1.45;padding:10px 12px}
+.matrix-tbl td.label .sub{font-size:10px;color:var(--dim);font-weight:400;display:block;margin-top:2px}
+.matrix-tbl tr:nth-child(even) td,.matrix-tbl tr:nth-child(even) td.label{background:rgba(0,0,0,0.02)}
+.row-dsm .label{border-left:2px solid var(--ink)}
+.row-ndsm .label{border-left:2px solid var(--dim)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--ink);display:inline-block}
+.dot-m{background:var(--mid)}
+.dot-l{background:var(--dim);opacity:.4}
+.matrix-legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:1rem;font-size:11.5px;color:var(--dim)}
+.ml-item{display:flex;align-items:center;gap:7px}
+
+/* NETWORK */
+.net-bar{display:flex;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+.net-legend{display:flex;gap:16px;flex-wrap:wrap}
+.net-leg-item{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--dim)}
+.net-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.net-shared{font-size:12px;padding:10px 14px;background:var(--white);border:1px solid var(--brd);border-radius:var(--r);color:var(--mid);margin-bottom:12px;min-height:40px;line-height:1.5}
+svg.network{display:block;width:100%;border:1px solid var(--brd);border-radius:var(--r);background:var(--white)}
+
+/* SLIDES */
+.slide-viewer{position:relative;background:var(--ink);border-radius:var(--r);overflow:hidden;border:1px solid var(--brd)}
+.slide-stage{position:relative;aspect-ratio:16/9}
+.slide-stage img{width:100%;height:100%;object-fit:contain;display:block}
+.slide-controls{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:var(--bg);border-top:1px solid var(--brd)}
+.slide-counter{font-size:10.5px;color:var(--dim);letter-spacing:.05em;text-transform:uppercase}
+.slide-progress{display:flex;gap:3px;flex-wrap:wrap;flex:1;margin:0 16px}
+.slide-pip{width:16px;height:2px;border-radius:1px;background:var(--brd);cursor:pointer;transition:.15s}
+.slide-pip.on{background:var(--ink)}
+.slide-pip:hover{background:var(--mid)}
+.slide-nav-btn{border:1px solid var(--brd);background:transparent;border-radius:var(--r);cursor:pointer;color:var(--mid);padding:6px 14px;font-family:var(--font-body);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;transition:.15s}
+.slide-nav-btn:hover{color:var(--ink);border-color:var(--ink)}
+.slide-nav-btn:disabled{opacity:.2;cursor:default}
+.slide-thumbnail-strip{display:flex;gap:5px;overflow-x:auto;padding:10px 14px;background:var(--white)}
+.slide-thumbnail-strip::-webkit-scrollbar{height:2px}
+.slide-thumbnail-strip::-webkit-scrollbar-thumb{background:var(--brd)}
+.slide-thumb{flex-shrink:0;width:68px;height:38px;object-fit:cover;border-radius:2px;cursor:pointer;opacity:0.35;transition:.15s;border:1px solid transparent}
+.slide-thumb.on{opacity:1;border-color:var(--ink)}
+.slide-thumb:hover{opacity:.65}
+
+/* I-CBT */
+.icbt-progress{display:flex;gap:6px;margin-bottom:2.5rem}
+.icbt-step{flex:1;height:1px;background:var(--brd);transition:.3s}
+.icbt-step.done{background:var(--ink)}
+.icbt-step.active{background:var(--ink)}
+.icbt-panel{display:none}.icbt-panel.on{display:block}
+.icbt-header{font-family:var(--font-display);font-size:24px;font-weight:700;color:var(--ink);margin-bottom:.4rem;text-transform:uppercase}
+.icbt-sub{font-size:13.5px;color:var(--mid);line-height:1.75;margin-bottom:1.5rem;max-width:600px}
+.icbt-nav{display:flex;gap:10px;margin-top:1.5rem}
+.device-list{display:flex;flex-direction:column;gap:6px}
+.device-item{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border:1px solid var(--brd2);border-radius:var(--r);cursor:pointer;transition:.15s;background:var(--white)}
+.device-item:hover,.device-item.on{border-color:var(--ink)}
+.di-check{width:15px;height:15px;border-radius:2px;border:1px solid var(--brd);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:.15s}
+.di-check.on{background:var(--ink);border-color:var(--ink)}
+.di-label{font-size:13px;font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:2px}
+.di-hint{font-size:12px;color:var(--dim);line-height:1.4}
+.icbt-summary{background:var(--bg);border:1px solid var(--brd);border-radius:var(--r);padding:1.5rem;margin-top:1rem}
+.icbt-sum-row{display:flex;gap:10px;margin-bottom:12px}
+.icbt-sum-label{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);width:160px;flex-shrink:0;padding-top:2px}
+.icbt-sum-val{font-size:13.5px;color:var(--ink);line-height:1.5}
+.self-split{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.self-box{border-radius:var(--r);padding:1.25rem;border:1px solid var(--brd)}
+.self-box.feared{background:rgba(180,0,0,0.04)}
+.self-box.trusted{background:rgba(0,120,80,0.04)}
+.self-box h4{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;margin-bottom:.5rem;color:var(--dim)}
+
+/* ERP */
+.erp-hierarchy{display:flex;flex-direction:column;gap:6px}
+.erp-item{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--white);border:1px solid var(--brd2);border-radius:var(--r)}
+.erp-suds{width:44px;height:24px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;border:1px solid var(--brd)}
+.suds-hi{background:rgba(200,0,0,0.07);color:#900;border-color:rgba(200,0,0,0.15)}
+.suds-md{background:rgba(180,130,0,0.07);color:#765000;border-color:rgba(180,130,0,0.15)}
+.suds-lo{background:rgba(0,130,80,0.07);color:#005030;border-color:rgba(0,130,80,0.15)}
+.erp-situation{flex:1;font-size:13px;color:var(--ink)}
+.erp-bar-wrap{background:var(--white);border:1px solid var(--brd2);border-radius:var(--r);padding:.75rem;margin-bottom:.6rem}
+.erp-bar-label{font-size:10px;color:var(--dim);margin-bottom:6px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.erp-bar-row{display:flex;align-items:center;gap:12px}
+.erp-bar-track{flex:1;height:3px;background:var(--brd);border-radius:2px;overflow:hidden}
+.erp-bar-fill{height:100%;border-radius:2px;transition:width .4s}
+.suds-num{font-size:15px;font-weight:600;color:var(--ink);min-width:32px;text-align:right}
+
+/* CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:11px;padding:5px 11px;border-radius:20px;cursor:pointer;border:1px solid var(--brd);background:transparent;color:var(--dim);font-family:var(--font-body);transition:.15s}
+.chip.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+
+/* RESOURCES */
+.res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--brd)}
+.res-card{display:flex;flex-direction:column;gap:12px;padding:1.75rem;background:var(--bg);transition:.15s}
+.res-card:hover{background:var(--white)}
+.res-card h3{font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--ink);text-transform:uppercase}
+.res-card .res-sub{font-size:10px;color:var(--dim);font-weight:500;letter-spacing:.07em;text-transform:uppercase}
+.res-card p{font-size:13.5px;color:var(--mid);line-height:1.7;flex:1}
+.res-link{font-size:10.5px;color:var(--ink);font-weight:600;text-decoration:none;letter-spacing:.06em;text-transform:uppercase}
+.res-link:hover{color:var(--mid)}
+.res-tag{align-self:flex-start}
+
+/* DEEP WORK */
+.dw-card{background:var(--white);border:1px solid var(--brd);border-radius:var(--r);padding:1.5rem;margin-bottom:1.25rem;position:relative}
+.dw-num{position:absolute;top:1.25rem;right:1.25rem;font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--brd)}
+
+/* EPISODES */
+.ep-entry{background:var(--white);border:1px solid var(--brd2);border-radius:var(--r);padding:1.25rem;margin-bottom:.75rem}
+.ep-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.ep-date{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--ink)}
+.ep-field{font-size:13px;color:var(--mid);margin-bottom:6px;line-height:1.55}
+.ep-field b{color:var(--ink);font-weight:600}
+
+/* ASSESSMENTS */
+.aq-question{padding:1.1rem 0;border-bottom:1px solid var(--brd2)}
+.aq-question:last-child{border-bottom:none}
+.aq-num{font-size:10px;font-weight:600;letter-spacing:.07em;color:var(--dim);text-transform:uppercase;margin-bottom:6px}
+.aq-text{font-size:14px;color:var(--ink);line-height:1.55;margin-bottom:10px}
+.aq-opts{display:flex;gap:6px;flex-wrap:wrap}
+.aq-opt{font-size:11px;padding:6px 12px;border-radius:20px;cursor:pointer;border:1px solid var(--brd);background:transparent;color:var(--dim);font-family:var(--font-body);transition:.15s;white-space:nowrap}
+.aq-opt.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.aq-prog-bar{height:1px;background:var(--brd);margin:1.5rem 0;overflow:hidden}
+.aq-prog-fill{height:100%;background:var(--ink);transition:width .4s}
+.score-card{padding:2rem;border-radius:var(--r);text-align:center;margin-bottom:1.25rem;background:var(--ink);color:var(--bg)}
+.score-num{font-family:var(--font-display);font-size:5rem;font-weight:700;line-height:1;margin-bottom:.25rem}
+.score-label{font-size:13px;opacity:.7;line-height:1.5}
+.score-interpretation{padding:1.25rem;border-radius:var(--r);margin-bottom:1rem;font-size:13.5px;line-height:1.7;border:1px solid var(--brd);background:var(--white)}
+.sub-scores{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:8px;margin:1rem 0}
+.sub-score{background:var(--white);border:1px solid var(--brd);border-radius:var(--r);padding:.85rem;text-align:center}
+.sub-score-n{font-size:24px;font-weight:700;font-family:var(--font-display);color:var(--ink)}
+.sub-score-label{font-size:10px;color:var(--dim);margin-top:2px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.assess-intro{background:var(--white);border:1px solid var(--brd);border-radius:var(--r);padding:1.25rem;margin-bottom:1.5rem;font-size:13.5px;color:var(--mid);line-height:1.7}
+.assess-intro h4{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--ink);margin-bottom:.5rem;text-transform:uppercase}
+
+/* VIDEO LINKS */
+.vid-link-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--brd);margin-bottom:2rem}
+.vid-link-card{background:var(--bg);padding:1.4rem;display:flex;flex-direction:column;gap:8px;transition:background .15s;text-decoration:none}
+.vid-link-card:hover{background:var(--white)}
+.vid-link-label{font-size:9.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--dim)}
+.vid-link-title{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--ink);line-height:1.2;text-transform:uppercase}
+.vid-link-sub{font-size:11px;color:var(--dim);line-height:1.5}
+
+/* YOUTUBE EMBED */
+.yt-embed{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:var(--r);background:var(--ink)}
+.yt-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+
+/* MISC */
+.sep{height:1px;background:var(--brd);margin:1.5rem 0}
+.hint{font-size:12px;color:var(--dim);line-height:1.6;margin-top:.4rem}
+@media print{nav,.tabs,button{display:none!important}.pg{display:block!important;padding-top:0!important}}
+@media(max-width:480px){.hero-grid{grid-template-columns:1fr 1fr}.self-split{grid-template-columns:1fr}}
+@media(max-width:640px){#pg-psychotherapy .g2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-mark" href="#" onclick="show('home');return false">
+    <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="20" r="19" stroke="rgba(74,142,224,0.4)" stroke-width="1"/>
+      <circle cx="20" cy="20" r="3" fill="#4a8ee0"/>
+      <circle cx="8" cy="14" r="2.5" fill="#2561d4" opacity=".8"/>
+      <circle cx="32" cy="14" r="2.5" fill="#2561d4" opacity=".8"/>
+      <circle cx="8" cy="28" r="2.5" fill="#1640a0" opacity=".7"/>
+      <circle cx="32" cy="28" r="2.5" fill="#1640a0" opacity=".7"/>
+      <circle cx="20" cy="7" r="2" fill="#4a8ee0" opacity=".6"/>
+      <circle cx="20" cy="34" r="2" fill="#4a8ee0" opacity=".6"/>
+      <line x1="20" y1="20" x2="8" y2="14" stroke="#3070c0" stroke-width="1" opacity=".5"/>
+      <line x1="20" y1="20" x2="32" y2="14" stroke="#3070c0" stroke-width="1" opacity=".5"/>
+      <line x1="20" y1="20" x2="8" y2="28" stroke="#2050a0" stroke-width="1" opacity=".4"/>
+      <line x1="20" y1="20" x2="32" y2="28" stroke="#2050a0" stroke-width="1" opacity=".4"/>
+      <line x1="20" y1="20" x2="20" y2="7" stroke="#4a8ee0" stroke-width="1" opacity=".4"/>
+      <line x1="20" y1="20" x2="20" y2="34" stroke="#4a8ee0" stroke-width="1" opacity=".4"/>
+      <line x1="8" y1="14" x2="20" y2="7" stroke="#3070c0" stroke-width=".7" opacity=".3"/>
+      <line x1="32" y1="14" x2="20" y2="7" stroke="#3070c0" stroke-width=".7" opacity=".3"/>
+      <line x1="8" y1="28" x2="20" y2="34" stroke="#2050a0" stroke-width=".7" opacity=".3"/>
+      <line x1="32" y1="28" x2="20" y2="34" stroke="#2050a0" stroke-width=".7" opacity=".3"/>
+      <line x1="8" y1="14" x2="8" y2="28" stroke="#2050a0" stroke-width=".7" opacity=".25"/>
+      <line x1="32" y1="14" x2="32" y2="28" stroke="#2050a0" stroke-width=".7" opacity=".25"/>
+    </svg>
+    <div class="nav-brand">Dr. Madrone Love<span>PsyD · Neuroinclusive Therapy Center</span></div>
+  </a>
+  <div class="nav-links">
+    <button class="nav-btn" onclick="show('assessments')">Assessments</button>
+    <button class="nav-btn" onclick="show('viz')">Neurodiversity</button>
+    <button class="nav-btn" onclick="show('act')">ACT</button>
+    <button class="nav-btn" onclick="show('slides')">ND Relationships</button>
+    <button class="nav-btn" onclick="show('adhd-skills')">ADHD Skills</button>
+    <button class="nav-btn" onclick="show('asd-skills')">ASD Skills</button>
+    <button class="nav-btn" onclick="show('ocd-skills')">OCD Skills</button>
+    <button class="nav-btn" onclick="show('mindfulness')">Mindfulness</button>
+    <button class="nav-btn" onclick="show('psychotherapy')">Psychotherapy</button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════ HOME -->
+<div class="pg on" id="pg-home">
+  <div class="hero">
+    <video class="hero-video-bg" style="display:none" autoplay muted loop playsinline>
+      <source src="hero.mp4" type="video/mp4">
+    </video>
+    <div class="hero-top">
+      <div class="hero-label">Neuroinclusive Therapy Center &nbsp;·&nbsp; Dr. Madrone Love, PsyD</div>
+      <h1><em>Neuroinclusive</em><br>Therapy Tools.</h1>
+      <p class="hero-sub">Interactive clinical resources for neurodivergent adults and the clinicians who work alongside them.</p>
+    </div>
+    <div class="hero-video-strip">
+      <video autoplay muted loop playsinline>
+        <source src="hero.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-tile" onclick="show('assessments');aTab('adhd',null)">
+        <div class="ht-info">
+          <div class="ht-num">01</div>
+          <div class="ht-title">Assessments</div>
+          <div class="ht-tags"><span class="ht-tag">Screening</span><span class="ht-tag">Clinical</span></div>
+        </div>
+        <div class="ht-img-wrap">
+          <img class="ht-img" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=75" alt="Assessments" loading="lazy">
+        </div>
+      </div>
+      <div class="hero-tile" onclick="show('viz')">
+        <div class="ht-info">
+          <div class="ht-num">02</div>
+          <div class="ht-title">Neurodiversity</div>
+          <div class="ht-tags"><span class="ht-tag">Matrix</span><span class="ht-tag">Network</span></div>
+        </div>
+        <div class="ht-img-wrap">
+          <img class="ht-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=75" alt="Neurodiversity" loading="lazy">
+        </div>
+      </div>
+      <div class="hero-tile" onclick="show('act')">
+        <div class="ht-info">
+          <div class="ht-num">03</div>
+          <div class="ht-title">ACT</div>
+          <div class="ht-tags"><span class="ht-tag">Values</span><span class="ht-tag">Matrix</span></div>
+        </div>
+        <div class="ht-img-wrap">
+          <img class="ht-img" src="https://images.unsplash.com/photo-1506126279646-a697353d3166?w=600&q=75" alt="ACT" loading="lazy">
+        </div>
+      </div>
+      <div class="hero-tile" onclick="show('slides')">
+        <div class="ht-info">
+          <div class="ht-num">04</div>
+          <div class="ht-title">ND Relationships</div>
+          <div class="ht-tags"><span class="ht-tag">Slide Deck</span></div>
+        </div>
+        <div class="ht-img-wrap">
+          <img class="ht-img" src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=600&q=75" alt="ND Relationships" loading="lazy">
+        </div>
+      </div>
+      <div class="hero-tile" onclick="show('adhd-skills')">
+        <div class="ht-info">
+          <div class="ht-num">05</div>
+          <div class="ht-title">ADHD Skills</div>
+          <div class="ht-tags"><span class="ht-tag">Deep Work</span><span class="ht-tag">Goals</span></div>
+        </div>
+        <div class="ht-img-wrap">
+          <img class="ht-img" src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=600&q=75" alt="ADHD Skills" loading="lazy">
+        </div>
+      </div>
+      <div class="hero-tile" onclick="show('asd-skills')">
+        <div class="ht-info">
+          <div class="ht-num">06</div>
+          <div class="ht-title">ASD Skills</div>
+          <div class="ht-tags"><span class="ht-tag">Dysregulation</span><span class="ht-tag">Log</span></div>
+        </div>
+        <div class="ht-img-wrap">
+          <img class="ht-img" src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=600&q=75" alt="ASD Skills" loading="lazy">
+        </div>
+      </div>
+      <div class="hero-tile" onclick="show('ocd-skills')">
+        <div class="ht-info">
+          <div class="ht-num">07</div>
+          <div class="ht-title">OCD Skills</div>
+          <div class="ht-tags"><span class="ht-tag">I-CBT</span><span class="ht-tag">ERP</span></div>
+        </div>
+        <div class="ht-img-wrap">
+          <img class="ht-img" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=75" alt="OCD Skills" loading="lazy">
+        </div>
+      </div>
+      <div class="hero-tile" onclick="show('mindfulness')">
+        <div class="ht-info">
+          <div class="ht-num">08</div>
+          <div class="ht-title">Mindfulness</div>
+          <div class="ht-tags"><span class="ht-tag">Meditation</span><span class="ht-tag">Dharma</span></div>
+        </div>
+        <div class="ht-img-wrap">
+          <img class="ht-img" src="https://images.unsplash.com/photo-1508672019048-805c876b67e2?w=600&q=75" alt="Mindfulness" loading="lazy">
+        </div>
+      </div>
+      <div class="hero-tile" onclick="show('psychotherapy')">
+        <div class="ht-info">
+          <div class="ht-num">09</div>
+          <div class="ht-title">Psychotherapy</div>
+          <div class="ht-tags"><span class="ht-tag">Dr. Love</span><span class="ht-tag">Practice</span></div>
+        </div>
+        <div class="ht-img-wrap">
+          <img class="ht-img" src="https://framerusercontent.com/images/dFb8nG8s65ACttUOCX4LpKj7qw.jpg?scale-down-to=512" alt="Psychotherapy" loading="lazy">
+        </div>
+      </div>
+    </div>
+    <div class="hero-byline"><a href="https://madronelove.com" target="_blank" style="color:inherit;text-decoration:none">madronelove.com</a> &nbsp;·&nbsp; Berkeley &amp; San Francisco &nbsp;·&nbsp; PSY35899</div>
+  </div>
+
+<!-- ══════════════════════════════════════════════════════ CHECKLIST -->
+<div class="pg" id="pg-checklist">
+<div class="wrap">
+  <div class="ph"><h2>ADHD Symptom Checklist</h2><p>DSM-5 diagnostic criteria alongside community-reported experiences. Check items that resonate — your selections persist across sessions.</p></div>
+  <div class="cl-bar">
+    <div class="cl-n"><span id="cl-n">0</span><br><sub>/ <span id="cl-tot">0</span> checked</sub></div>
+    <div class="cl-track"><div class="cl-fill" id="cl-fill" style="width:0%"></div></div>
+    <button class="btn btn-sm" style="background:rgba(255,255,255,0.12);color:white;border-color:transparent" onclick="clClear()">clear all</button>
+  </div>
+  <div id="cl-list"></div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ MECHANISM MATRIX -->
+<!-- ══════════════════════════════════════════════════════ ACT -->
+<div class="pg" id="pg-act">
+<div class="wrap">
+  <div class="ph"><h2>ACT — Acceptance &amp; Commitment Therapy</h2><p>Values clarification and the ACT matrix. From Steven Hayes and Kevin Polk. The goal is not to feel better — it is to build a life worth feeling for.</p></div>
+  <div class="tabs">
+    <button class="tab on" onclick="actTab('vals',this)">Values Clarification</button>
+    <button class="tab" onclick="actTab('matrix',this)">ACT Matrix</button>
+  </div>
+  <div id="act-vals"></div>
+  <div id="act-matrix" style="display:none"></div>
+</div>
+</div>
+
+<div class="pg" id="pg-matrix">
+<div class="wide">
+  <div class="ph"><h2>Mechanism Matrix</h2><p>Which cognitive mechanisms underlie which presentations? Each row is a diagnosis or construct; each column is a shared mechanism. Use this for psychoeducation, teaching, and client conversations.</p></div>
+  <div class="matrix-legend">
+    <div class="ml-item"><span class="dot" style="background:var(--accent)"></span>Strong connection — core feature</div>
+    <div class="ml-item"><span class="dot dot-m"></span>Moderate connection — frequently co-present</div>
+    <div class="ml-item"><span class="dot dot-l" style="background:var(--powder);opacity:1"></span>Variable — present in some presentations</div>
+  </div>
+  <div class="sep"></div>
+  <div class="matrix-wrap"><table class="matrix-tbl" id="matrix-tbl-x"></table></div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ OVERLAP MAP -->
+<div class="pg" id="pg-network">
+<div class="wide">
+  <div class="ph"><h2>Neurodivergence Overlap Map</h2><p>Comprehensive interactive network of all diagnoses, non-DSM constructs, and shared cognitive mechanisms. Click nodes to select; select two or more to reveal shared mechanisms.</p></div>
+  <div class="net-bar">
+    <div class="net-legend">
+      <div class="net-leg-item"><span class="net-dot" style="background:#0d1e35;border:1.5px solid #4a90d8;border-radius:50%"></span>DSM / ICD</div>
+      <div class="net-leg-item"><span class="net-dot" style="background:#281010;border:1.5px solid #b06060;border-radius:50%"></span>Non-DSM</div>
+      <div class="net-leg-item"><span class="net-dot" style="background:#161228;border:1.5px solid #7060c0;border-radius:50%"></span>Mechanism</div>
+    </div>
+    <button class="btn btn-sm btn-ghost" style="margin-left:auto" onclick="netClear()">clear selection</button>
+  </div>
+  <div class="net-shared" id="net-label">Click any node to highlight its connections. Select two or more to see shared mechanisms.</div>
+  <svg class="network" id="net-svg-x" viewBox="0 0 1300 1060"></svg>
+</div>
+</div>
+
+<div class="pg" id="pg-viz">
+<div class="wide">
+  <div class="ph"><h2>Neurodiversity Visualized</h2><p>Two complementary views of how neurodivergent presentations overlap. The matrix shows mechanism-by-diagnosis relationships in tabular form. The overlap map lets you explore the same relationships as an interactive network — click nodes to select, and select two or more to reveal what they share.</p></div>
+  <div class="tabs">
+    <button class="tab on" onclick="vizTab('mtrx',this)">Mechanism Matrix</button>
+    <button class="tab" onclick="vizTab('ntwk',this);if(!netDone)buildNet()">Overlap Map</button>
+  </div>
+  <div id="vz-mtrx"><div>
+<div class="matrix-legend">
+    <div class="ml-item"><span class="dot" style="background:var(--accent)"></span>Strong connection — core feature</div>
+    <div class="ml-item"><span class="dot dot-m"></span>Moderate connection — frequently co-present</div>
+    <div class="ml-item"><span class="dot dot-l" style="background:var(--powder);opacity:1"></span>Variable — present in some presentations</div>
+  </div>
+  <div class="sep"></div>
+  <div class="matrix-wrap"><table class="matrix-tbl" id="matrix-tbl"></table></div>
+</div>
+</div>
+  <div id="vz-ntwk" style="display:none"><div>
+<div class="net-bar">
+    <div class="net-legend">
+      <div class="net-leg-item"><span class="net-dot" style="background:#0d1e35;border:1.5px solid #4a90d8;border-radius:50%"></span>DSM / ICD</div>
+      <div class="net-leg-item"><span class="net-dot" style="background:#281010;border:1.5px solid #b06060;border-radius:50%"></span>Non-DSM</div>
+      <div class="net-leg-item"><span class="net-dot" style="background:#161228;border:1.5px solid #7060c0;border-radius:50%"></span>Mechanism</div>
+    </div>
+    <button class="btn btn-sm btn-ghost" style="margin-left:auto" onclick="netClear()">clear selection</button>
+  </div>
+  <div class="net-shared" id="net-label">Click any node to highlight its connections. Select two or more to see shared mechanisms.</div>
+  <svg class="network" id="net-svg" viewBox="0 0 1300 1060"></svg>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ SLIDES -->
+<div class="pg" id="pg-slides">
+<div class="wrap" style="max-width:1000px">
+  <div class="ph"><h2>Neurodivergent Romantic Relationships</h2><p>A clinical slide deck on neurodiversity in romantic and relational contexts — including mixed-neurotype relationships, the double empathy problem, sexuality and gender diversity, and therapeutic approaches. Use arrow keys or click to navigate.</p></div>
+  <div class="slide-viewer">
+    <div class="slide-stage"><img id="slide-img" src="slides/slide-01.jpg" alt="Slide 1"></div>
+    <div class="slide-thumbnail-strip" id="slide-strip"></div>
+    <div class="slide-controls">
+      <button class="slide-nav-btn" id="slide-prev" onclick="slideNav(-1)" disabled>← Prev</button>
+      <div class="slide-progress" id="slide-pips"></div>
+      <span class="slide-counter"><span id="slide-cur">1</span> / 27</span>
+      <button class="slide-nav-btn" id="slide-next" onclick="slideNav(1)">Next →</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ DEEP WORK -->
+<div class="pg" id="pg-goals">
+<div class="wrap">
+  <div class="ph"><h2>Deep Work Planner</h2><p>Based on Cal Newport's <em>Deep Work</em> + ACT. Focus on process first — the practice or habit, not just the outcome. Anchor weekly goals in long-term intentions. Use values to act when capacity is depleted.</p></div>
+  <div class="tabs">
+    <button class="tab on" onclick="gTab('ltg',this)">Long-term goals</button>
+    <button class="tab" onclick="gTab('wk',this)">Weekly goals</button>
+    <button class="tab" onclick="gTab('val',this)">Values + activities</button>
+  </div>
+  <div id="gp-ltg"><div id="ltg-list"></div><button class="btn btn-p" onclick="addLTG()">+ Add long-term goal</button></div>
+  <div id="gp-wk" style="display:none"><div id="wk-list"></div><button class="btn btn-p" onclick="addWK()">+ Add weekly goal</button></div>
+  <div id="gp-val" style="display:none">
+    <p class="hint" style="margin-bottom:1.25rem">From ACT: identify what matters, name what gets in the way, and choose low-demand actions that keep you connected to your values even when capacity is low.</p>
+    <div id="val-list"></div><button class="btn btn-p" onclick="addVAL()">+ Add value</button>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ MELTDOWN -->
+<div class="pg" id="pg-meltdown">
+<div class="wrap">
+  <div class="ph"><h2>Dysregulation Log</h2><p>Track patterns — triggers, early warning signs, what helps, and insights for next time. Use the first tab to build your personal profile; log episodes after they happen.</p></div>
+  <div class="tabs">
+    <button class="tab on" onclick="mTab('plan',this)">Know Your Pattern</button>
+    <button class="tab" onclick="mTab('log',this)">Log an Episode</button>
+    <button class="tab" onclick="mTab('hist',this)">History</button>
+  </div>
+  <div id="mp-plan">
+    <div style="display:flex;flex-direction:column;gap:1rem">
+      <div class="card"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--mid);margin-bottom:12px">Common triggers</div><div class="chips" id="trig-chips"></div><input style="margin-top:10px" placeholder="Add your own triggers..." id="trig-custom" oninput="savePlan()"></div>
+      <div class="card"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--mid);margin-bottom:12px">Early warning signs in my body</div><div class="chips" id="body-chips"></div><input style="margin-top:10px" placeholder="Add your own signals..." id="body-custom" oninput="savePlan()"></div>
+      <div class="card"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--mid);margin-bottom:12px">What helps me regulate</div><div class="chips" id="help-chips"></div><input style="margin-top:10px" placeholder="Add your own..." id="help-custom" oninput="savePlan()"></div>
+      <div class="card"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--mid);margin-bottom:10px">Who I can contact</div><textarea id="contacts-ta" rows="3" placeholder="Name, relationship, how to reach them..." oninput="savePlan()"></textarea></div>
+    </div>
+  </div>
+  <div id="mp-log" style="display:none">
+    <div class="card">
+      <div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--mid);margin-bottom:1.25rem">Log a dysregulation episode</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="fld"><label>Date</label><input id="ep-date" placeholder="Today's date or a specific date"></div>
+        <div class="fld"><label>What was happening right before?</label><textarea id="ep-before" rows="2" placeholder="Triggers, context, what led up to it..."></textarea></div>
+        <div class="fld"><label>What did my body feel like?</label><textarea id="ep-body" rows="2" placeholder="Physical sensations, early warnings, what escalated..."></textarea></div>
+        <div class="fld"><label>What happened / what did I do?</label><textarea id="ep-during" rows="2" placeholder="During the episode..."></textarea></div>
+        <div class="fld"><label>What helped me come back?</label><textarea id="ep-helped" rows="2" placeholder="Co-regulation strategies that worked..."></textarea></div>
+        <div class="fld"><label>What to remember for next time</label><textarea id="ep-remember" rows="2" placeholder="Insights, patterns, what to do differently..."></textarea></div>
+        <div class="fld"><label>Support I need</label><textarea id="ep-support" rows="2" placeholder="From others, from myself, from my environment..."></textarea></div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <button class="btn btn-p" onclick="saveEp()">Save Entry</button>
+          <span id="ep-fl" style="font-size:12px;color:var(--accent);opacity:0;transition:.5s"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="mp-hist" style="display:none"><div id="ep-list"><p style="color:var(--dim);text-align:center;padding:3rem;font-size:14px">No episodes logged yet.</p></div></div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ I-CBT -->
+<div class="pg" id="pg-icbt">
+<div class="wrap">
+  <div class="ph"><h2>I-CBT Practice</h2><p>Inference-Based CBT for OCD. Work through a structured exercise to identify your primary inference, map the OCD narrative, practice the crossroads, and reconnect with your trusted self. Save to review in session.</p></div>
+  <div class="icbt-progress" id="icbt-prog"></div>
+  <div id="icbt-panels"></div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ ERP -->
+<div class="pg" id="pg-erp">
+<div class="wrap">
+  <div class="ph"><h2>ERP Practice</h2><p>Exposure and Response Prevention. Build your fear hierarchy, plan exposures, and track your anxiety during practice. Designed for use alongside therapy — not as a replacement.</p></div>
+  <div class="tabs">
+    <button class="tab on" onclick="eTab('hier',this)">Fear Hierarchy</button>
+    <button class="tab" onclick="eTab('plan',this)">Plan an Exposure</button>
+    <button class="tab" onclick="eTab('track',this)">During Exposure</button>
+    <button class="tab" onclick="eTab('reflect',this)">After Exposure</button>
+  </div>
+  <div id="ep-hier"></div>
+  <div id="ep-plan" style="display:none"></div>
+  <div id="ep-track" style="display:none"></div>
+  <div id="ep-reflect" style="display:none"></div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ RESOURCES -->
+
+<!-- ══════════════════════════════════════════════════════ ASSESSMENTS -->
+<div class="pg" id="pg-ocd-skills">
+<div class="wrap">
+  <div class="ph"><h2>OCD Skills</h2><p>Two evidence-based approaches for OCD — work through them together or separately. I-CBT targets the reasoning that makes obsessive doubt feel real; ERP builds tolerance and breaks the compulsion cycle.</p></div>
+  <div class="tabs">
+    <button class="tab on" onclick="ocdTab('icbt',this)">I-CBT Practice</button>
+    <button class="tab" onclick="ocdTab('erp',this)">ERP Practice</button>
+  </div>
+  <div id="ocd-icbt-panel">
+  <div class="icbt-progress" id="icbt-prog"></div>
+  <div id="icbt-panels"></div>
+</div>
+  <div id="ocd-erp-panel" style="display:none">
+  <div class="tabs">
+    <button class="tab on" onclick="eTab('hier',this)">Fear Hierarchy</button>
+    <button class="tab" onclick="eTab('plan',this)">Plan an Exposure</button>
+    <button class="tab" onclick="eTab('track',this)">During Exposure</button>
+    <button class="tab" onclick="eTab('reflect',this)">After Exposure</button>
+  </div>
+  <div id="ep-hier"></div>
+  <div id="ep-plan" style="display:none"></div>
+  <div id="ep-track" style="display:none"></div>
+  <div id="ep-reflect" style="display:none"></div>
+</div>
+</div>
+</div>
+
+<!-- ══
+ -->
+<div class="pg" id="pg-adhd-skills">
+<div class="wrap">
+  <div class="ph"><h2>ADHD Skills — Deep Work Planner</h2><p>Based on Cal Newport's <em>Deep Work</em> + ACT. Focus on process first — the practice or habit, not just the outcome. Anchor weekly goals in long-term intentions. Use values to act when capacity is depleted.</p></div>
+  <div class="tabs">
+    <button class="tab on" onclick="gTab('ltg',this)">Long-term goals</button>
+    <button class="tab" onclick="gTab('wk',this)">Weekly goals</button>
+    <button class="tab" onclick="gTab('val',this)">Values + activities</button>
+  </div>
+  <div id="gp-ltg"><div id="ltg-list"></div><button class="btn btn-p" onclick="addLTG()">+ Add long-term goal</button></div>
+  <div id="gp-wk" style="display:none"><div id="wk-list"></div><button class="btn btn-p" onclick="addWK()">+ Add weekly goal</button></div>
+  <div id="gp-val" style="display:none">
+    <p class="hint" style="margin-bottom:1.25rem">From ACT: identify what matters, name what gets in the way, and choose low-demand actions that keep you connected to your values even when capacity is low.</p>
+    <div id="val-list"></div><button class="btn btn-p" onclick="addVAL()">+ Add value</button>
+  </div>
+</div>
+</div>
+
+<!-- ══
+ -->
+<div class="pg" id="pg-asd-skills">
+<div class="wrap">
+  <div class="ph"><h2>ASD Skills — Dysregulation Log</h2><p>For autistic adults: track your dysregulation patterns — triggers, early warning signals, what helps, and insights for next time. Build a personal regulation profile over time.</p></div>
+  <div class="tabs">
+    <button class="tab on" onclick="mTab('plan',this)">Know Your Pattern</button>
+    <button class="tab" onclick="mTab('log',this)">Log an Episode</button>
+    <button class="tab" onclick="mTab('hist',this)">History</button>
+  </div>
+  <div id="mp-plan">
+    <div style="display:flex;flex-direction:column;gap:1rem">
+      <div class="card"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--mid);margin-bottom:12px">Common triggers</div><div class="chips" id="trig-chips"></div><input style="margin-top:10px" placeholder="Add your own triggers..." id="trig-custom" oninput="savePlan()"></div>
+      <div class="card"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--mid);margin-bottom:12px">Early warning signs in my body</div><div class="chips" id="body-chips"></div><input style="margin-top:10px" placeholder="Add your own signals..." id="body-custom" oninput="savePlan()"></div>
+      <div class="card"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--mid);margin-bottom:12px">What helps me regulate</div><div class="chips" id="help-chips"></div><input style="margin-top:10px" placeholder="Add your own..." id="help-custom" oninput="savePlan()"></div>
+      <div class="card"><div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--mid);margin-bottom:10px">Who I can contact</div><textarea id="contacts-ta" rows="3" placeholder="Name, relationship, how to reach them..." oninput="savePlan()"></textarea></div>
+    </div>
+  </div>
+  <div id="mp-log" style="display:none">
+    <div class="card">
+      <div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--mid);margin-bottom:1.25rem">Log a dysregulation episode</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="fld"><label>Date</label><input id="ep-date" placeholder="Today's date or a specific date"></div>
+        <div class="fld"><label>What was happening right before?</label><textarea id="ep-before" rows="2" placeholder="Triggers, context, what led up to it..."></textarea></div>
+        <div class="fld"><label>What did my body feel like?</label><textarea id="ep-body" rows="2" placeholder="Physical sensations, early warnings, what escalated..."></textarea></div>
+        <div class="fld"><label>What happened / what did I do?</label><textarea id="ep-during" rows="2" placeholder="During the episode..."></textarea></div>
+        <div class="fld"><label>What helped me come back?</label><textarea id="ep-helped" rows="2" placeholder="Co-regulation strategies that worked..."></textarea></div>
+        <div class="fld"><label>What to remember for next time</label><textarea id="ep-remember" rows="2" placeholder="Insights, patterns, what to do differently..."></textarea></div>
+        <div class="fld"><label>Support I need</label><textarea id="ep-support" rows="2" placeholder="From others, from myself, from my environment..."></textarea></div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <button class="btn btn-p" onclick="saveEp()">Save Entry</button>
+          <span id="ep-fl" style="font-size:12px;color:var(--accent);opacity:0;transition:.5s"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="mp-hist" style="display:none"><div id="ep-list"><p style="color:var(--dim);text-align:center;padding:3rem;font-size:14px">No episodes logged yet.</p></div></div>
+</div>
+</div>
+
+<!-- ══
+ -->
+<div class="pg" id="pg-assessments">
+<div class="wrap">
+  <div class="ph"><h2>Interactive Assessments &amp; Tools</h2><p>Validated screening tools, symptom checklists, and ACT exercises. Results are for self-understanding and clinical conversation — not diagnostic. All data stays on your device.</p></div>
+  <div class="tabs" style="flex-wrap:wrap">
+    <button class="tab on" onclick="aTab('adhd',this)">ADHD Checklist</button>
+    <button class="tab" onclick="aTab('aq',this)">AQ-50</button>
+    <button class="tab" onclick="aTab('tas',this)">Alexithymia</button>
+    <button class="tab" onclick="aTab('vviq',this)">VVIQ</button>
+  </div>
+  <div id="ap-adhd"></div>
+  <div id="ap-aq" style="display:none"></div>
+  <div id="ap-tas" style="display:none"></div>
+  <div id="ap-vviq" style="display:none"></div>
+</div>
+</div>
+
+<div class="pg" id="pg-mindfulness">
+<div class="wrap">
+  <div class="ph"><h2>Mindfulness &amp; Meditation</h2><p>Contemplative resources for neurodivergent-affirming practice. Mindfulness, when adapted for different nervous systems, can support regulation, self-compassion, and present-moment grounding.</p></div>
+
+  <div style="margin-bottom:2.5rem">
+    <div style="font-size:12px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--mid);margin-bottom:1rem">Guided Meditation — Gil Fronsdal</div>
+    <div class="yt-embed" style="margin-bottom:.75rem">
+      <iframe
+        src="https://www.youtube.com/embed/4zK-NpOdzOg?si=M1ojeQAVZicFpioa"
+        title="Gil Fronsdal Guided Meditation"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen></iframe>
+    </div>
+    <p style="font-size:12.5px;color:var(--dim);line-height:1.6">Gil Fronsdal — Insight Meditation Center, Berkeley. Vipassana and mindfulness teachings in the Theravada tradition.</p>
+  </div>
+
+  <div class="res-grid">
+    <div class="res-card">
+      <span class="tag tag-dsm res-tag">Archive</span>
+      <h3>Audiodharma</h3>
+      <div class="res-sub">Insight Meditation Center</div>
+      <p>Free archive of hundreds of guided meditations and dharma talks by Gil Fronsdal and other IMC teachers. Includes the foundational Introduction to Meditation series — an excellent starting point for clients new to practice.</p>
+      <a class="res-link" href="https://audiodharma.org" target="_blank">audiodharma.org ↗</a>
+    </div>
+    <div class="res-card">
+      <span class="tag tag-comm res-tag">Center</span>
+      <h3>Insight Meditation Center</h3>
+      <div class="res-sub">IMC — Redwood City, CA</div>
+      <p>Gil Fronsdal's home center. Weekly dharma talks, sitting groups, and daylong retreats. Sliding-scale and free offerings available. Particularly welcoming to those new to meditation.</p>
+      <a class="res-link" href="https://www.insightmeditationcenter.org" target="_blank">insightmeditationcenter.org ↗</a>
+    </div>
+    <div class="res-card">
+      <span class="tag tag-tool res-tag">Retreat Center</span>
+      <h3>Spirit Rock</h3>
+      <div class="res-sub">Spirit Rock Meditation Center — Woodacre, CA</div>
+      <p>One of the leading Insight meditation centers in the West. Offers daylong, residential, and online retreats. Programs specifically for communities of color, LGBTQ+ practitioners, and those with chronic illness.</p>
+      <a class="res-link" href="https://www.spiritrock.org" target="_blank">spiritrock.org ↗</a>
+    </div>
+
+  </div>
+</div>
+</div>
+<!-- ══════════════════════════════════════════════════════ PSYCHOTHERAPY -->
+<div class="pg" id="pg-psychotherapy">
+<div class="wrap">
+  <div class="ph"><h2>Psychotherapy</h2><p>About Dr. Love's clinical practice — approach, specialties, training, and how to work together.</p></div>
+
+  <div style="display:grid;grid-template-columns:clamp(180px,28%,260px) 1fr;gap:2rem;margin-bottom:2.5rem;align-items:start">
+    <div>
+      <img src="https://framerusercontent.com/images/dFb8nG8s65ACttUOCX4LpKj7qw.jpg?scale-down-to=512&width=512&height=653"
+           alt="Dr. Madrone Love" style="width:100%;border-radius:12px;display:block">
+    </div>
+    <div>
+      <div style="font-family:var(--font-display);font-size:28px;font-weight:400;color:var(--ink);margin-bottom:4px">Dr. Madrone Love, PsyD</div>
+      <div style="font-size:12px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);margin-bottom:1.25rem">Neuro-inclusive Psychologist &nbsp;·&nbsp; she / her &nbsp;·&nbsp; PSY35899</div>
+      <p style="font-size:14.5px;line-height:1.8;color:var(--mid);margin-bottom:1rem">I work with people who feel different. Maybe you have an autism, ADHD, or OCD diagnosis — including self-diagnosis — or you simply describe yourself as "weird." Your difference isn't a sign that something is wrong with you, and my work isn't to fix you or make you "normal." Working together is about understanding who you are and the life you are building for yourself.</p>
+      <p style="font-size:14.5px;line-height:1.8;color:var(--mid);margin-bottom:1.25rem">My approach draws deeply from Buddhist practice — being fully present with clients as they navigate life's inevitable challenges. I integrate neurodiversity-affirming perspectives throughout all clinical work, whether we are focusing directly on neurodivergent experience or on relationships, grief, major transitions, or existential questions.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="https://calendar.app.google/fTADXwL79iR4DWom7" target="_blank" class="btn btn-p" style="text-decoration:none">Book a free 20-min consult</a>
+        <a href="https://madronelove.com" target="_blank" class="btn" style="text-decoration:none">madronelove.com</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:2rem">
+    <div class="card">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--mid);margin-bottom:1rem">Specialties</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0"></span><span style="font-size:13.5px;color:var(--off)">ADHD — inattentive, combined, and late-diagnosed</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0"></span><span style="font-size:13.5px;color:var(--off)">OCD — including ROCD, harm, scrupulosity, intrusive thoughts</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0"></span><span style="font-size:13.5px;color:var(--off)">Autism / ASD — adults, especially late- and self-diagnosed</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:rgba(184,238,221,0.45);flex-shrink:0"></span><span style="font-size:13.5px;color:var(--off)">Trauma &amp; PTSD — including complex trauma (C-PTSD)</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:rgba(184,238,221,0.45);flex-shrink:0"></span><span style="font-size:13.5px;color:var(--off)">Anxiety, depression, grief &amp; loss</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:rgba(184,238,221,0.45);flex-shrink:0"></span><span style="font-size:13.5px;color:var(--off)">Giftedness, 2e, NVLD, HSP, dyslexia</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:rgba(184,238,221,0.45);flex-shrink:0"></span><span style="font-size:13.5px;color:var(--off)">Relationships, LGBTQ+ affirming, spirituality</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:rgba(184,238,221,0.2);flex-shrink:0"></span><span style="font-size:13.5px;color:var(--off)">Alexithymia, limerence, maladaptive daydreaming</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:rgba(184,238,221,0.2);flex-shrink:0"></span><span style="font-size:13.5px;color:var(--off)">Partners and family members of neurodivergent people</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--mid);margin-bottom:1rem">Modalities &amp; Training</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0"></span><span style="font-size:13.5px;color:var(--off)">Inference-Based CBT (I-CBT) — OCD</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0"></span><span style="font-size:13.5px;color:var(--off)">Exposure &amp; Response Prevention (ERP) — IOCDF trained</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0"></span><span style="font-size:13.5px;color:var(--off)">Dialectical Behavior Therapy (DBT)</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0"></span><span style="font-size:13.5px;color:var(--off)">Acceptance &amp; Commitment Therapy (ACT)</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:rgba(184,238,221,0.45);flex-shrink:0"></span><span style="font-size:13.5px;color:var(--off)">Somatic &amp; mindfulness-based approaches</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:rgba(184,238,221,0.45);flex-shrink:0"></span><span style="font-size:13.5px;color:var(--off)">Executive functioning coaching</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:rgba(184,238,221,0.45);flex-shrink:0"></span><span style="font-size:13.5px;color:var(--off)">Ketamine-assisted therapy &amp; psychedelic integration</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:rgba(184,238,221,0.2);flex-shrink:0"></span><span style="font-size:13.5px;color:var(--off)">Buddhist-informed presence &amp; compassion practices</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:2rem">
+    <div class="card">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--mid);margin-bottom:1rem">Locations &amp; Contact</div>
+      <div style="font-size:13.5px;color:var(--off);line-height:1.7">
+        <div style="font-weight:600;color:var(--ink);margin-bottom:2px">Hayes Valley, San Francisco</div>
+        <div style="color:var(--mid);margin-bottom:12px">110 Gough Street, Suite 203B, San Francisco, CA 94102</div>
+        <div style="font-weight:600;color:var(--ink);margin-bottom:2px">Berkeley</div>
+        <div style="color:var(--mid);margin-bottom:12px">2915 Martin Luther King Jr. Way, Berkeley, CA 94703</div>
+        <div style="font-weight:600;color:var(--ink);margin-bottom:2px">Telehealth</div>
+        <div style="color:var(--mid);margin-bottom:16px">California-wide</div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <a href="tel:+14159152183" style="color:var(--accent);text-decoration:none;font-size:13.5px">(415) 915-2183</a>
+          <a href="mailto:therapy@madronelove.com" style="color:var(--accent);text-decoration:none;font-size:13.5px">therapy@madronelove.com</a>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--mid);margin-bottom:1rem">CIIS Faculty Profile</div>
+      <p style="font-size:13.5px;color:var(--mid);line-height:1.7;margin-bottom:1.25rem">Dr. Love is an Assistant Professor of Integral Counseling Psychology at the California Institute of Integral Studies (CIIS), San Francisco — a program that blends clinical training with contemplative, multicultural, and integral perspectives.</p>
+      <a href="https://www.ciis.edu/profiles/madrone-love" target="_blank" class="btn btn-p" style="text-decoration:none;display:inline-block">View CIIS Faculty Profile</a>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:1.25rem">
+    <div style="font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--mid);margin-bottom:1rem">Education &amp; Background</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+      <div>
+        <div style="font-size:13.5px;color:var(--off);line-height:1.8">
+          <div><span style="font-weight:600;color:var(--ink)">PsyD,</span> Clinical Psychology — Wright Institute, 2023</div>
+          <div><span style="font-weight:600;color:var(--ink)">Postdoctoral Fellowship</span> — UCSF, 2025</div>
+          <div><span style="font-weight:600;color:var(--ink)">MA</span> — UC Berkeley</div>
+          <div><span style="font-weight:600;color:var(--ink)">BA</span> — University of Pennsylvania</div>
+        </div>
+      </div>
+      <div style="font-size:13.5px;color:var(--off);line-height:1.8">
+        <div><span style="font-weight:600;color:var(--ink)">ERP Training</span> — International OCD Foundation (IOCDF)</div>
+        <div><span style="font-weight:600;color:var(--ink)">Assistant Professor</span> — Integral Counseling Psychology, CIIS</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.75rem">
+    <a href="https://madronelove.com" target="_blank" class="card" style="text-decoration:none;display:flex;align-items:center;gap:10px;padding:1rem">
+      
+      <div><div style="font-size:13px;font-weight:600;color:var(--ink)">madronelove.com</div><div style="font-size:11.5px;color:var(--dim)">Full practice website</div></div>
+    </a>
+    <a href="https://www.psychologytoday.com/us/therapists/dr-madrone-love-neuro-inclusive-psychologist-san-francisco-ca/1554818" target="_blank" class="card" style="text-decoration:none;display:flex;align-items:center;gap:10px;padding:1rem">
+      
+      <div><div style="font-size:13px;font-weight:600;color:var(--ink)">Psychology Today</div><div style="font-size:11.5px;color:var(--dim)">Therapist profile</div></div>
+    </a>
+    <a href="https://www.ciis.edu/profiles/madrone-love" target="_blank" class="card" style="text-decoration:none;display:flex;align-items:center;gap:10px;padding:1rem">
+      
+      <div><div style="font-size:13px;font-weight:600;color:var(--ink)">CIIS Faculty</div><div style="font-size:11.5px;color:var(--dim)">Integral Counseling Psychology</div></div>
+    </a>
+    <a href="https://calendar.app.google/fTADXwL79iR4DWom7" target="_blank" class="card" style="text-decoration:none;display:flex;align-items:center;gap:10px;padding:1rem;background:var(--s2);border-color:rgba(184,238,221,0.2)">
+      
+      <div><div style="font-size:13px;font-weight:600;color:var(--accent)">Book a consult</div><div style="font-size:11.5px;color:var(--dim)">Free 20-min call</div></div>
+    </a>
+  </div>
+</div>
+</div>
+
+
+<script>
+// ═══ NAV ══════════════════════════════════════════════════════════════════════
+const PGS=['home','checklist','matrix','network','viz','slides','adhd-skills','asd-skills','ocd-skills','assessments','act','mindfulness','psychotherapy'];
+const NAV_IDS=['assessments','viz','act','slides','adhd-skills','asd-skills','ocd-skills','mindfulness','psychotherapy'];
+function show(id){
+  PGS.forEach(p=>{const el=document.getElementById('pg-'+p);if(el)el.classList.toggle('on',p===id);});
+  document.querySelectorAll('.nav-btn').forEach((b,i)=>{b.classList.toggle('on',NAV_IDS[i]===id);});
+  if(id==='goals'){show('adhd-skills');return;}
+  if(id==='meltdown'){show('asd-skills');return;}
+  if(id==='icbt'||id==='erp'){show('ocd-skills');return;}
+  if((id==='network')&&!netDone) buildNet();
+  if(id==='viz'&&!matDone) buildMatrix();
+  if(id==='matrix'&&!matDone) buildMatrix();
+  window.scrollTo(0,0);
+}
+
+// ═══ STORAGE ═════════════════════════════════════════════════════════════════
+const S=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch{}};
+const L=(k,fb)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb;}catch{return fb;}};
+const uid=()=>Math.random().toString(36).slice(2,9);
+const esc=(s)=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+// ═══ CHECKLIST ═══════════════════════════════════════════════════════════════
+const CLD=[
+  {id:'s1',t:'Inattention',tag:'DSM-5',n:'5+ for adult diagnosis',items:[
+    {id:'ia1',t:'Careless mistakes / poor attention to detail'},
+    {id:'ia2',t:'Difficulty sustaining attention in tasks or play'},
+    {id:'ia3',t:'Does not seem to listen when spoken to directly'},
+    {id:'ia4',t:'Fails to follow through; does not finish tasks'},
+    {id:'ia5',t:'Difficulty organizing tasks and activities'},
+    {id:'ia6',t:'Avoids tasks requiring sustained mental effort'},
+    {id:'ia7',t:'Loses things necessary for tasks'},
+    {id:'ia8',t:'Easily distracted by extraneous stimuli'},
+    {id:'ia9',t:'Forgetful in daily activities'},
+  ]},
+  {id:'s2',t:'Hyperactivity / Impulsivity',tag:'DSM-5',n:'5+ for adult diagnosis',items:[
+    {id:'hi1',t:'Fidgets, taps, or squirms in seat'},
+    {id:'hi2',t:'Leaves seat when expected to remain seated'},
+    {id:'hi3',t:'Internal restlessness (adults: replaces running / climbing)'},
+    {id:'hi4',t:'Unable to engage in leisure activities quietly'},
+    {id:'hi5',t:'Feels "on the go," driven by a motor'},
+    {id:'hi6',t:'Talks excessively'},
+    {id:'hi7',t:'Blurts out answers before questions are finished'},
+    {id:'hi8',t:'Difficulty waiting their turn'},
+    {id:'hi9',t:'Interrupts or intrudes on others'},
+  ]},
+  {id:'s3',t:'Executive function',tag:'Community-reported',items:[
+    {id:'ef1',t:'Temporal agnosia / time blindness',h:'only NOW and NOT-NOW; cannot feel time passing'},
+    {id:'ef2',t:'Task initiation failure',h:'unable to start despite intending to'},
+    {id:'ef3',t:'High task-switching costs'},
+    {id:'ef4',t:'Poor working memory',h:'loses train of thought mid-sentence'},
+    {id:'ef5',t:'Difficulty prioritizing; everything equally urgent or unimportant'},
+    {id:'ef6',t:'Chronic underestimation of task duration'},
+    {id:'ef7',t:'Planning paralysis — knows what to do but cannot start'},
+    {id:'ef8',t:'Starts many things; finishes few'},
+  ]},
+  {id:'s4',t:'Attention and arousal',tag:'Community-reported',items:[
+    {id:'at1',t:'Hyperfocus',h:'complete absorption in high-interest tasks, to exclusion of everything else'},
+    {id:'at2',t:'Interest-based nervous system',h:'motivated by interest, novelty, urgency, challenge — not importance'},
+    {id:'at3',t:'Demand avoidance',h:'motivation collapses when something becomes obligatory'},
+    {id:'at4',t:'Wildly inconsistent performance across days'},
+    {id:'at5',t:'Distracted by internal thoughts as much as external stimuli'},
+    {id:'at6',t:'Chronic understimulation and boredom intolerance'},
+  ]},
+  {id:'s5',t:'Emotional experience',tag:'Community-reported',items:[
+    {id:'em1',t:'Emotional dysregulation',h:'emotions arrive fast, intensely, hard to modulate'},
+    {id:'em2',t:'Rejection sensitive dysphoria (RSD)',h:'intense pain from perceived criticism or rejection'},
+    {id:'em3',t:'Shame sensitivity',h:'chronic sense of being defective or too much'},
+    {id:'em4',t:'Frustration intolerance'},
+    {id:'em5',t:'Intense enthusiasm for new interests that fades quickly'},
+    {id:'em6',t:'ADHD burnout',h:'cyclical collapse after periods of compensatory output'},
+  ]},
+  {id:'s6',t:'Memory and processing',tag:'Community-reported',items:[
+    {id:'me1',t:'Relational object impermanence',h:'out of sight, out of mind for people and relationships'},
+    {id:'me2',t:'Forgetting conversations, promises, or commitments'},
+    {id:'me3',t:'Inconsistent memory',h:'vivid recall of random things; forgets important things'},
+    {id:'me4',t:'Word retrieval difficulties on demand'},
+    {id:'me5',t:'Prospective memory failures',h:'forgetting to do planned future actions'},
+  ]},
+  {id:'s7',t:'Social and relational',tag:'Community-reported',items:[
+    {id:'so1',t:'Talks over others unintentionally'},
+    {id:'so2',t:'Difficulty listening without simultaneously formulating response'},
+    {id:'so3',t:'Inconsistent follow-through on social commitments'},
+    {id:'so4',t:'Justice sensitivity',h:'intense emotional response to perceived unfairness'},
+    {id:'so5',t:'Masking / camouflaging',h:'especially common in women and late-diagnosed adults'},
+  ]},
+  {id:'s8',t:'Body and sensory',tag:'Community-reported',items:[
+    {id:'bo1',t:'Sensory sensitivities',h:'clothing, sounds, lights, tastes, textures'},
+    {id:'bo2',t:'Difficulty sleeping',h:'racing mind; delayed sleep phase syndrome'},
+    {id:'bo3',t:'Appetite irregularity',h:'forgetting to eat; binge eating when remembered'},
+    {id:'bo4',t:'Chronic physical restlessness'},
+    {id:'bo5',t:'Interoceptive differences',h:'difficulty detecting hunger, thirst, pain, fatigue until extreme'},
+  ]},
+  {id:'s9',t:'Identity and self-concept',tag:'Community-reported',items:[
+    {id:'id1',t:'Chronic underachievement relative to apparent ability'},
+    {id:'id2',t:'Internalized shame from decades of unexplained failure'},
+    {id:'id3',t:'Imposter syndrome'},
+    {id:'id4',t:'Compensatory perfectionism'},
+    {id:'id5',t:'Grief and disorientation after late diagnosis'},
+    {id:'id6',t:'Identity instability across contexts'},
+  ]},
+];
+let clCh=new Set(L('nd-cl',[]));
+const clTotal=CLD.reduce((a,s)=>a+s.items.length,0);
+function buildChecklist(){
+  document.getElementById('cl-tot').textContent=clTotal;
+  const el=document.getElementById('cl-list');el.innerHTML='';
+  CLD.forEach(sec=>{
+    const div=document.createElement('div');div.className='cl-sec';
+    const tC=sec.tag==='DSM-5'?'tag-dsm':'tag-comm';
+    div.innerHTML=`<div class="cl-sec-hd"><span class="cl-sec-title">${sec.t}</span><span class="tag ${tC}">${sec.tag}</span>${sec.n?`<span style="font-size:11px;color:var(--dim)">${sec.n}</span>`:''}<span style="margin-left:auto;font-size:11px;color:var(--dim)" id="sn-${sec.id}">0/${sec.items.length}</span></div>`;
+    const card=document.createElement('div');card.className='card';card.style.padding='.4rem 1rem';
+    sec.items.forEach((item,i)=>{
+      const row=document.createElement('div');row.className='cl-item';
+      row.style.borderBottom=i<sec.items.length-1?'1px solid var(--frost)':'none';
+      row.innerHTML=`<div class="cl-box${clCh.has(item.id)?' on':''}" id="cb-${item.id}">${clCh.has(item.id)?'<svg width="10" height="8" viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}</div><div><div class="cl-text">${item.t}</div>${item.h?`<div class="cl-hint">${item.h}</div>`:''}</div>`;
+      row.onclick=()=>clTog(item.id,sec);
+      card.appendChild(row);
+    });
+    div.appendChild(card);el.appendChild(div);updSecN(sec);
+  });
+  updClBar();
+}
+function clTog(id,sec){clCh.has(id)?clCh.delete(id):clCh.add(id);S('nd-cl',[...clCh]);const cb=document.getElementById('cb-'+id);if(cb){cb.className='cl-box'+(clCh.has(id)?' on':'');cb.innerHTML=clCh.has(id)?'<svg width="10" height="8" viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>':'';}updSecN(sec);updClBar();}
+function updSecN(sec){const el=document.getElementById('sn-'+sec.id);if(el)el.textContent=`${sec.items.filter(i=>clCh.has(i.id)).length}/${sec.items.length}`;}
+function updClBar(){const n=clCh.size;document.getElementById('cl-n').textContent=n;document.getElementById('cl-fill').style.width=Math.round(n/clTotal*100)+'%';}
+function clClear(){clCh.clear();S('nd-cl',[]);buildChecklist();}
+
+// ═══ MECHANISM MATRIX ════════════════════════════════════════════════════════
+let matDone=false;
+const MECHS=[
+  {id:'abs',label:'Absorption'},
+  {id:'hyp',label:'Hyperphantasia'},
+  {id:'dmn',label:'DMN Intrusion'},
+  {id:'inf',label:'Inferential Confusion'},
+  {id:'mono',label:'Monotropism'},
+  {id:'hf',label:'Hyperfocus'},
+  {id:'int',label:'Interoceptive Diff.'},
+  {id:'mot',label:'Motivated Imagination'},
+  {id:'pre',label:'Preferential Interiority'},
+  {id:'rea',label:'Reality Monitoring'},
+  {id:'dop',label:'Dopamine Dysreg.'},
+  {id:'per',label:'Perseverative Cog.'},
+  {id:'emo',label:'Emotional Dysreg.'},
+];
+// 2=strong, 1=moderate, 0=absent
+const ROWS=[
+  {label:'OCD',sub:'Obsessive-Compulsive Disorder',type:'dsm',d:{abs:2,hyp:2,dmn:1,inf:2,mono:0,hf:1,int:1,mot:2,pre:1,rea:2,dop:2,per:2,emo:2}},
+  {label:'ADHD',sub:'Attention Deficit Hyperactivity',type:'dsm',d:{abs:2,hyp:1,dmn:2,inf:0,mono:1,hf:2,int:1,mot:2,pre:2,rea:0,dop:2,per:2,emo:2}},
+  {label:'Autism / ASD',sub:'Autism Spectrum',type:'dsm',d:{abs:2,hyp:2,dmn:2,inf:2,mono:2,hf:2,int:2,mot:2,pre:2,rea:1,dop:1,per:2,emo:2}},
+  {label:'Borderline PD',sub:'BPD',type:'dsm',d:{abs:2,hyp:2,dmn:0,inf:2,mono:0,hf:0,int:2,mot:2,pre:1,rea:2,dop:2,per:2,emo:2}},
+  {label:'Dissociation',sub:'Dissociative disorders',type:'dsm',d:{abs:2,hyp:1,dmn:0,inf:0,mono:0,hf:0,int:2,mot:0,pre:2,rea:2,dop:0,per:1,emo:2}},
+  {label:'C-PTSD',sub:'Complex trauma',type:'dsm',d:{abs:2,hyp:0,dmn:1,inf:0,mono:0,hf:0,int:2,mot:0,pre:1,rea:2,dop:0,per:2,emo:2}},
+  {label:'Limerence',sub:'Non-DSM',type:'ndsm',d:{abs:2,hyp:2,dmn:0,inf:2,mono:0,hf:0,int:0,mot:2,pre:2,rea:2,dop:2,per:2,emo:2}},
+  {label:'Maladaptive Daydreaming',sub:'Non-DSM',type:'ndsm',d:{abs:2,hyp:2,dmn:2,inf:0,mono:0,hf:0,int:0,mot:2,pre:2,rea:2,dop:1,per:2,emo:1}},
+  {label:'Giftedness',sub:'Twice-exceptional / 2e',type:'ndsm',d:{abs:2,hyp:2,dmn:2,inf:0,mono:1,hf:2,int:1,mot:2,pre:2,rea:0,dop:0,per:2,emo:1}},
+  {label:'Highly Sensitive Person',sub:'HSP / Sensory processing',type:'ndsm',d:{abs:2,hyp:2,dmn:2,inf:0,mono:0,hf:0,int:2,mot:0,pre:2,rea:0,dop:0,per:0,emo:2}},
+  {label:'Rejection Sensitivity',sub:'RSD — common in ADHD/ASD',type:'ndsm',d:{abs:0,hyp:0,dmn:0,inf:0,mono:0,hf:0,int:0,mot:2,pre:0,rea:0,dop:2,per:2,emo:2}},
+  {label:'Justice Sensitivity',sub:'Common in ND populations',type:'ndsm',d:{abs:0,hyp:0,dmn:0,inf:0,mono:0,hf:0,int:0,mot:2,pre:0,rea:0,dop:2,per:2,emo:2}},
+  {label:'Alexithymia',sub:'Emotion identification difficulty',type:'ndsm',d:{abs:0,hyp:0,dmn:0,inf:0,mono:0,hf:0,int:2,mot:0,pre:0,rea:0,dop:0,per:0,emo:2}},
+  {label:'CDS',sub:'Cognitive disengagement syndrome',type:'ndsm',d:{abs:2,hyp:0,dmn:2,inf:0,mono:0,hf:0,int:0,mot:1,pre:2,rea:1,dop:0,per:1,emo:0}},
+];
+function buildMatrix(){
+  const tbl=document.getElementById('matrix-tbl');
+  let html=`<tr><th class="row-h">Diagnosis / Construct</th>`;
+  MECHS.forEach(m=>{html+=`<th title="${m.label}">${m.label}</th>`;});
+  html+='</tr>';
+  ROWS.forEach(row=>{
+    html+=`<tr class="row-${row.type}"><td class="label"><div style="font-weight:600;font-size:12.5px;margin-bottom:3px">${row.label}</div><div style="font-size:10.5px;color:var(--dim);line-height:1.3">${row.sub}</div></td>`;
+    MECHS.forEach(m=>{
+      const v=row.d[m.id]||0;
+      const dot=v===2?'<span class="dot"></span>':v===1?'<span class="dot dot-m"></span>':'';
+      html+=`<td>${dot}</td>`;
+    });
+    html+='</tr>';
+  });
+  tbl.innerHTML=html;
+  matDone=true;
+}
+
+// ═══ NETWORK ═════════════════════════════════════════════════════════════════
+let netDone=false;
+const BN=[
+  {id:'ocd',label:'OCD',type:'dsm'},{id:'adhd',label:'ADHD',type:'dsm'},
+  {id:'asd',label:'Autism / ASD',type:'dsm'},{id:'bpd',label:'Borderline PD',type:'dsm'},
+  {id:'diss',label:'Dissociation',type:'dsm'},{id:'cptsd',label:'C-PTSD',type:'dsm'},
+  {id:'lime',label:'Limerence',type:'ndsm'},{id:'md',label:'Maladaptive daydreaming',type:'ndsm'},
+  {id:'gift',label:'Giftedness',type:'ndsm'},{id:'alex',label:'Alexithymia',type:'ndsm'},
+  {id:'rsd',label:'Rejection sensitivity',type:'ndsm'},{id:'flow',label:'Flow states',type:'ndsm'},
+  {id:'fant',label:'Fantasy proneness',type:'ndsm'},{id:'hsp',label:'Highly sensitive person',type:'ndsm'},
+  {id:'just',label:'Justice sensitivity',type:'ndsm'},{id:'cds',label:'Cog. disengagement',type:'ndsm'},
+  {id:'nvld',label:'Nonverbal LD',type:'ndsm'},
+  {id:'abs',label:'Absorption',type:'mech'},{id:'hyph',label:'Hyperphantasia',type:'mech'},
+  {id:'dmn',label:'DMN intrusion',type:'mech'},{id:'inf',label:'Inferential confusion',type:'mech'},
+  {id:'mono',label:'Monotropism',type:'mech'},{id:'hfoc',label:'Hyperfocus',type:'mech'},
+  {id:'into',label:'Interoceptive diff.',type:'mech'},{id:'motv',label:'Motivated imagination',type:'mech'},
+  {id:'pref',label:'Preferential interiority',type:'mech'},{id:'real',label:'Reality monitoring',type:'mech'},
+  {id:'dopa',label:'Dopamine dysreg.',type:'mech'},{id:'pers',label:'Perseverative cognition',type:'mech'},
+  {id:'emdr',label:'Emotional dysreg.',type:'mech'},
+];
+const BL=[
+  ['ocd','inf'],['ocd','abs'],['ocd','hyph'],['ocd','motv'],['ocd','real'],['ocd','pers'],['ocd','dopa'],['ocd','alex'],['ocd','emdr'],['ocd','just'],
+  ['adhd','dmn'],['adhd','abs'],['adhd','motv'],['adhd','dopa'],['adhd','pers'],['adhd','hyph'],['adhd','pref'],['adhd','hfoc'],['adhd','rsd'],['adhd','emdr'],['adhd','alex'],['adhd','cptsd'],['adhd','flow'],['adhd','just'],['adhd','cds'],
+  ['asd','mono'],['asd','into'],['asd','abs'],['asd','hyph'],['asd','pref'],['asd','dmn'],['asd','pers'],['asd','motv'],['asd','hfoc'],['asd','alex'],['asd','emdr'],['asd','cptsd'],['asd','flow'],['asd','just'],['asd','nvld'],['asd','inf'],
+  ['bpd','motv'],['bpd','abs'],['bpd','inf'],['bpd','real'],['bpd','rsd'],['bpd','emdr'],['bpd','dopa'],['bpd','pers'],['bpd','lime'],['bpd','cptsd'],['bpd','diss'],['bpd','into'],['bpd','alex'],['bpd','hyph'],
+  ['diss','abs'],['diss','real'],['diss','pref'],['diss','into'],['diss','cptsd'],['diss','emdr'],
+  ['cptsd','into'],['cptsd','real'],['cptsd','emdr'],['cptsd','abs'],['cptsd','pers'],['cptsd','diss'],['cptsd','hsp'],['cptsd','just'],
+  ['lime','motv'],['lime','abs'],['lime','inf'],['lime','dopa'],['lime','pref'],['lime','pers'],['lime','hyph'],['lime','real'],['lime','rsd'],['lime','emdr'],['lime','alex'],['lime','fant'],
+  ['md','abs'],['md','hyph'],['md','motv'],['md','pref'],['md','dmn'],['md','real'],['md','pers'],['md','diss'],['md','fant'],['md','cds'],
+  ['gift','abs'],['gift','hyph'],['gift','motv'],['gift','pref'],['gift','hfoc'],['gift','pers'],['gift','dmn'],['gift','into'],['gift','flow'],['gift','fant'],['gift','hsp'],['gift','just'],
+  ['alex','into'],['alex','emdr'],
+  ['rsd','dopa'],['rsd','emdr'],['rsd','pers'],['rsd','motv'],['rsd','just'],
+  ['flow','abs'],['flow','hfoc'],['flow','motv'],['flow','pref'],['flow','dmn'],['flow','mono'],
+  ['fant','abs'],['fant','hyph'],['fant','pref'],['fant','real'],
+  ['hsp','abs'],['hsp','into'],['hsp','emdr'],['hsp','pref'],['hsp','dmn'],['hsp','hyph'],['hsp','cptsd'],['hsp','alex'],['hsp','just'],
+  ['just','emdr'],['just','pers'],['just','motv'],['just','dopa'],
+  ['cds','abs'],['cds','dmn'],['cds','pref'],['cds','real'],['cds','motv'],['cds','diss'],
+  ['nvld','inf'],['nvld','alex'],['nvld','into'],['nvld','emdr'],['nvld','mono'],['nvld','just'],['nvld','pers'],
+  ['emdr','dopa'],['emdr','into'],
+  ['dmn','abs'],['mono','abs'],['mono','pref'],['mono','dmn'],['mono','hfoc'],
+  ['hfoc','abs'],['hfoc','pref'],['hfoc','dopa'],
+  ['hyph','inf'],['hyph','real'],['inf','motv'],['inf','pers'],
+  ['abs','pref'],['dopa','motv'],['pers','inf'],['motv','pref'],
+];
+const NC={dsm:{fill:'#dae8f8',stroke:'#1640a0',text:'#0b1e4a'},ndsm:{fill:'#f8ddd8',stroke:'#a03020',text:'#5a1810'},mech:{fill:'#e4e0f8',stroke:'#5040a0',text:'#28206a'}};
+let netSel=new Set();
+let netAdj={};
+function buildNet(){
+  BN.forEach(n=>netAdj[n.id]=new Set());
+  BL.forEach(([s,t])=>{netAdj[s]&&netAdj[s].add(t);netAdj[t]&&netAdj[t].add(s);});
+  const nodes=BN.map(n=>({...n}));
+  const links=BL.map(([s,t])=>({source:s,target:t}));
+  const sim=d3.forceSimulation(nodes)
+    .force('link',d3.forceLink(links).id(d=>d.id).distance(d=>{const st=d.source.type||'mech',tt=d.target.type||'mech';if(st!=='mech'&&tt!=='mech')return 320;if(st!=='mech'||tt!=='mech')return 180;return 130;}).strength(0.2))
+    .force('charge',d3.forceManyBody().strength(-1800))
+    .force('center',d3.forceCenter(650,530))
+    .force('collide',d3.forceCollide().radius(d=>Math.max(60,d.label.length*6.8+22)/2+35));
+  sim.stop();for(let i=0;i<900;i++)sim.tick();
+  const pos={};nodes.forEach(n=>{pos[n.id]={x:Math.max(80,Math.min(1220,n.x)),y:Math.max(22,Math.min(1038,n.y))};});
+  renderNet(pos,netSel);
+  netDone=true;
+  window._netPos=pos;
+}
+function renderNet(pos,sel){
+  function getShared(s){if(s.size<2)return{sh:new Set(),pt:new Set()};const cc={};[...s].forEach(sid=>netAdj[sid]&&netAdj[sid].forEach(nb=>{cc[nb]=(cc[nb]||0)+1;}));return{sh:new Set(BN.filter(n=>!s.has(n.id)&&cc[n.id]===s.size).map(n=>n.id)),pt:new Set(BN.filter(n=>!s.has(n.id)&&cc[n.id]>0&&cc[n.id]<s.size).map(n=>n.id))};}
+  const {sh,pt}=getShared(sel);
+  const svg=const svg=d3.select('#net-svg');svg.selectAll('*').remove();svg.style('background','#111');
+  function nOp(id){if(!sel.size)return 1;if(sel.has(id)||sh.has(id))return 1;if(pt.has(id))return 0.3;return 0.06;}
+  function lS(s,t){if(!sel.size)return{c:'#363636',o:0.6,w:0.65};const ss=sel.has(s),ts=sel.has(t),ssh=sh.has(s),tsh=sh.has(t);if((ss&&tsh)||(ts&&ssh))return{c:'#c09060',o:0.9,w:2.0};if(ss||ts||ssh||tsh)return{c:'#363636',o:0.3,w:0.6};return{c:'#252525',o:0.2,w:0.4};}
+  BL.forEach(([s,t])=>{const sp=pos[s],tp=pos[t];if(!sp||!tp)return;const l=lS(s,t);svg.append('line').attr('x1',sp.x).attr('y1',sp.y).attr('x2',tp.x).attr('y2',tp.y).attr('stroke',l.c).attr('stroke-opacity',l.o).attr('stroke-width',l.w);});
+  BN.forEach(nd=>{const p=pos[nd.id];if(!p)return;const c=NC[nd.type],w=Math.max(60,nd.label.length*6.8+22),ph=27;const g=svg.append('g').attr('opacity',nOp(nd.id)).style('cursor','pointer');g.append('rect').attr('x',p.x-w/2).attr('y',p.y-ph/2).attr('width',w).attr('height',ph).attr('rx',ph/2).attr('fill',c.fill).attr('stroke',c.stroke).attr('stroke-width',sel.has(nd.id)?2.5:0.7);g.append('text').attr('x',p.x).attr('y',p.y).attr('text-anchor','middle').attr('dominant-baseline','central').attr('font-size',11).attr('font-weight',500).attr('fill',c.text).attr('font-family',"'Inter',sans-serif").text(nd.label);g.on('click',e=>{e.stopPropagation();netSel.has(nd.id)?netSel.delete(nd.id):netSel.add(nd.id);updNetLabel();renderNet(window._netPos,netSel);});});
+  svg.on('click',()=>{netSel.clear();updNetLabel();renderNet(window._netPos,netSel);});
+  updNetLabel();
+}
+function updNetLabel(){
+  const el=document.getElementById('net-label');if(!el)return;
+  if(!netSel.size){el.textContent='Click any node to highlight its connections. Select two or more to see shared mechanisms.';return;}
+  if(netSel.size===1){el.textContent=[...netSel].map(id=>BN.find(n=>n.id===id)?.label).join('')+' selected. Click another node to compare.';return;}
+  const cc={};[...netSel].forEach(sid=>netAdj[sid]&&netAdj[sid].forEach(nb=>{cc[nb]=(cc[nb]||0)+1;}));
+  const sh=BN.filter(n=>!netSel.has(n.id)&&cc[n.id]===netSel.size).map(n=>n.label);
+  el.textContent=sh.length?'Shared mechanisms: '+sh.join(', '):'No shared mechanisms between selected nodes.';
+}
+function netClear(){netSel.clear();if(window._netPos)renderNet(window._netPos,netSel);}
+
+// ═══ SLIDES ═══════════════════════════════════════════════════════════════════
+let sCur=1;const sTotal=27;
+function buildSlides(){
+  const strip=document.getElementById('slide-strip');
+  const pips=document.getElementById('slide-pips');
+  strip.innerHTML='';pips.innerHTML='';
+  for(let i=1;i<=sTotal;i++){
+    const th=document.createElement('img');th.className='slide-thumb'+(i===1?' on':'');th.src=`slides/slide-${String(i).padStart(2,'0')}.jpg`;th.alt=`Slide ${i}`;th.onclick=()=>goSlide(i);strip.appendChild(th);
+    const pip=document.createElement('div');pip.className='slide-pip'+(i===1?' on':'');pip.onclick=()=>goSlide(i);pips.appendChild(pip);
+  }
+}
+function goSlide(n){
+  sCur=Math.max(1,Math.min(sTotal,n));
+  document.getElementById('slide-img').src=`slides/slide-${String(sCur).padStart(2,'0')}.jpg`;
+  document.getElementById('slide-cur').textContent=sCur;
+  document.querySelectorAll('.slide-thumb').forEach((t,i)=>t.classList.toggle('on',i+1===sCur));
+  document.querySelectorAll('.slide-pip').forEach((p,i)=>p.classList.toggle('on',i+1===sCur));
+  document.getElementById('slide-prev').disabled=sCur===1;
+  document.getElementById('slide-next').disabled=sCur===sTotal;
+  const strip=document.getElementById('slide-strip');
+  const thumb=strip.querySelectorAll('.slide-thumb')[sCur-1];
+  if(thumb)thumb.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
+}
+function slideNav(d){goSlide(sCur+d);}
+document.addEventListener('keydown',e=>{if(document.getElementById('pg-slides').classList.contains('on')){if(e.key==='ArrowRight')slideNav(1);if(e.key==='ArrowLeft')slideNav(-1);}});
+
+// ═══ DEEP WORK ════════════════════════════════════════════════════════════════
+let ltgs=L('nd-ltg',[]),wks=L('nd-wk',[]),vals=L('nd-val',[]);
+const WGO=['— select —','All-or-nothing thinking','Perfectionism','Procrastination','Emotional dysregulation','Sensory overload','Demand avoidance','Time blindness','Overwhelm','Executive dysfunction','Forgot','RSD','Burnout','Life happened','Other'];
+function gTab(w,b){['ltg','wk','val'].forEach(t=>{document.getElementById('gp-'+t).style.display=t===w?'block':'none';});document.querySelectorAll('#pg-adhd-skills .tab').forEach((x,i)=>x.classList.toggle('on',['ltg','wk','val'][i]===w));if(w==='ltg')rLTG();if(w==='wk')rWK();if(w==='val')rVAL();}
+function addLTG(){ltgs.push({id:uid(),goal:'',steps:'',deadline:'',process:'',measure:'',motivation:''});S('nd-ltg',ltgs);rLTG();}
+function dLTG(id){ltgs=ltgs.filter(x=>x.id!==id);S('nd-ltg',ltgs);rLTG();}
+function uLTG(id,f,v){const x=ltgs.find(x=>x.id===id);if(x){x[f]=v;S('nd-ltg',ltgs);}}
+function rLTG(){const el=document.getElementById('ltg-list');el.innerHTML='';ltgs.forEach((l,i)=>{const d=document.createElement('div');d.className='dw-card';d.innerHTML=`<span class="dw-num">${String(i+1).padStart(2,'0')}</span><div style="display:flex;justify-content:flex-end;margin-bottom:12px"><button class="btn btn-sm btn-ghost" onclick="dLTG('${l.id}')">remove</button></div><div class="g2"><div class="fld"><label>Long-term goal</label><input value="${esc(l.goal)}" placeholder="What are you working toward?" oninput="uLTG('${l.id}','goal',this.value)"></div><div class="fld"><label>Deadline</label><input value="${esc(l.deadline)}" placeholder="e.g. 6/1/26" oninput="uLTG('${l.id}','deadline',this.value)"></div><div class="fld span2"><label>Steps to finish</label><input value="${esc(l.steps)}" placeholder="Key milestones or actions" oninput="uLTG('${l.id}','steps',this.value)"></div><div class="fld"><label>Process I'm focusing on</label><input value="${esc(l.process)}" placeholder="The habit or practice — not just the outcome" oninput="uLTG('${l.id}','process',this.value)"></div><div class="fld"><label>How I'll measure success</label><input value="${esc(l.measure)}" placeholder="Concrete indicators" oninput="uLTG('${l.id}','measure',this.value)"></div><div class="fld span2"><label>My motivation</label><input value="${esc(l.motivation)}" placeholder="Why does this matter to me?" oninput="uLTG('${l.id}','motivation',this.value)"></div></div>`;el.appendChild(d);});}
+function addWK(){wks.push({id:uid(),ltg:'',week:'Week 1',goal:'',penalty:'',reward:'',score:'',giw:''});S('nd-wk',wks);rWK();}
+function dWK(id){wks=wks.filter(x=>x.id!==id);S('nd-wk',wks);rWK();}
+function uWK(id,f,v){const x=wks.find(x=>x.id===id);if(x){x[f]=v;S('nd-wk',wks);}}
+function rWK(){const el=document.getElementById('wk-list');el.innerHTML='';const ln=['— select —',...ltgs.map(l=>l.goal||'Unnamed goal')];wks.forEach(w=>{const d=document.createElement('div');d.className='dw-card';const go=WGO.map(o=>`<option${w.giw===o?' selected':''}>${esc(o)}</option>`).join('');const lo=ln.map(o=>`<option${w.ltg===o?' selected':''}>${esc(o)}</option>`).join('');d.innerHTML=`<div style="display:flex;justify-content:flex-end;margin-bottom:12px"><button class="btn btn-sm btn-ghost" onclick="dWK('${w.id}')">remove</button></div><div class="g2"><div class="fld"><label>Long-term goal</label><select onchange="uWK('${w.id}','ltg',this.value)">${lo}</select></div><div class="fld"><label>Week</label><input value="${esc(w.week)}" placeholder="Week 1" oninput="uWK('${w.id}','week',this.value)"></div><div class="fld span2"><label>Weekly goal</label><input value="${esc(w.goal)}" placeholder="Specific, doable goal for this week" oninput="uWK('${w.id}','goal',this.value)"></div><div class="fld"><label>Penalty for not completing</label><input value="${esc(w.penalty)}" placeholder="e.g. no weekend movies" oninput="uWK('${w.id}','penalty',this.value)"></div><div class="fld"><label>Reward for completing</label><input value="${esc(w.reward)}" placeholder="e.g. favorite coffee" oninput="uWK('${w.id}','reward',this.value)"></div><div class="fld"><label>Completion score (1–10)</label><input value="${esc(w.score)}" placeholder="1–10" oninput="uWK('${w.id}','score',this.value)"></div><div class="fld"><label>What got in the way?</label><select onchange="uWK('${w.id}','giw',this.value)">${go}</select></div></div>`;el.appendChild(d);});}
+function addVAL(){vals.push({id:uid(),value:'',painful:'',avoidance:'',a1:'',a2:'',a3:''});S('nd-val',vals);rVAL();}
+function dVAL(id){vals=vals.filter(x=>x.id!==id);S('nd-val',vals);rVAL();}
+function uVAL(id,f,v){const x=vals.find(x=>x.id===id);if(x){x[f]=v;S('nd-val',vals);}}
+function rVAL(){const el=document.getElementById('val-list');el.innerHTML='';vals.forEach(v=>{const d=document.createElement('div');d.className='dw-card';d.innerHTML=`<div style="display:flex;justify-content:flex-end;margin-bottom:12px"><button class="btn btn-sm btn-ghost" onclick="dVAL('${v.id}')">remove</button></div><div class="g3"><div class="fld span2"><label>Value</label><input value="${esc(v.value)}" placeholder="e.g. Connection, Creativity, Justice, Rest, Authenticity" oninput="uVAL('${v.id}','value',this.value)"></div><div class="fld"><label></label></div><div class="fld"><label>Painful thoughts / feelings in the way</label><textarea rows="3" oninput="uVAL('${v.id}','painful',this.value)" placeholder='"I\'m not good enough to do this"'>${esc(v.painful)}</textarea></div><div class="fld"><label>Avoidance strategies I use</label><textarea rows="3" oninput="uVAL('${v.id}','avoidance',this.value)" placeholder="Scrolling, isolating, overplanning, sleeping...">${esc(v.avoidance)}</textarea></div><div class="fld"><label></label></div><div class="fld"><label>Low-energy value-aligned activity 1</label><textarea rows="2" oninput="uVAL('${v.id}','a1',this.value)" placeholder="Option when capacity is very low">${esc(v.a1)}</textarea></div><div class="fld"><label>Activity 2</label><textarea rows="2" oninput="uVAL('${v.id}','a2',this.value)" placeholder="Medium capacity option">${esc(v.a2)}</textarea></div><div class="fld"><label>Activity 3</label><textarea rows="2" oninput="uVAL('${v.id}','a3',this.value)" placeholder="Full capacity option">${esc(v.a3)}</textarea></div></div>`;el.appendChild(d);});}
+
+// ═══ MELTDOWN ════════════════════════════════════════════════════════════════
+const TO=['Sensory overload','Unexpected change','Transition','Too many demands','Perceived injustice','Emotional flooding','Hunger or thirst','Fatigue','Physical pain','Conflict','Being misunderstood','Time pressure','Too many decisions','Loss of control','Crowded / loud environment','Social exhaustion'];
+const BO=['Heart racing','Jaw clenching','Skin crawling','Tunnel vision','Voice changing','Need to flee','Difficulty speaking','Dissociation / unreality','Increased stimming','Freezing','Stomach tightening','Sound becoming sharper','Tears','Rage spike','Shutdown / going blank'];
+const HO=['Solitude','Movement / walk','Sensory comfort item','Dark quiet space','Music / noise blocking','Sleep or rest','Nature','Weighted blanket','Cold water on face','Slow breathing','Stimming freely','Being with a specific person','Pets','Creative work','Eating something'];
+let mPlan=L('nd-mp',{triggers:[],bodySignals:[],whatHelps:[],contacts:'',cT:'',cB:'',cH:''});
+let mEps=L('nd-me',[]);
+function buildChips(elId,opts,arr,field){const el=document.getElementById(elId);el.innerHTML='';opts.forEach(o=>{const b=document.createElement('button');b.className='chip'+(arr.includes(o)?' on':'');b.textContent=o;b.onclick=()=>{mPlan[field].includes(o)?mPlan[field]=mPlan[field].filter(x=>x!==o):mPlan[field].push(o);b.classList.toggle('on',mPlan[field].includes(o));S('nd-mp',mPlan);};el.appendChild(b);});}
+function savePlan(){mPlan.cT=document.getElementById('trig-custom')?.value||'';mPlan.cB=document.getElementById('body-custom')?.value||'';mPlan.cH=document.getElementById('help-custom')?.value||'';mPlan.contacts=document.getElementById('contacts-ta')?.value||'';S('nd-mp',mPlan);}
+function initPlan(){buildChips('trig-chips',TO,mPlan.triggers,'triggers');buildChips('body-chips',BO,mPlan.bodySignals,'bodySignals');buildChips('help-chips',HO,mPlan.whatHelps,'whatHelps');const el=n=>document.getElementById(n);if(el('trig-custom'))el('trig-custom').value=mPlan.cT||'';if(el('body-custom'))el('body-custom').value=mPlan.cB||'';if(el('help-custom'))el('help-custom').value=mPlan.cH||'';if(el('contacts-ta'))el('contacts-ta').value=mPlan.contacts||'';}
+function mTab(w,b){['plan','log','hist'].forEach(t=>{document.getElementById('mp-'+t).style.display=t===w?'block':'none';});document.querySelectorAll('#pg-asd-skills .tab').forEach((x,i)=>x.classList.toggle('on',['plan','log','hist'][i]===w));if(w==='hist')rEps();if(w==='plan')initPlan();}
+function saveEp(){const g=id=>document.getElementById(id)?.value||'';mEps.unshift({id:uid(),savedAt:new Date().toLocaleDateString(),date:g('ep-date'),before:g('ep-before'),body:g('ep-body'),during:g('ep-during'),helped:g('ep-helped'),remember:g('ep-remember'),support:g('ep-support')});S('nd-me',mEps);['ep-date','ep-before','ep-body','ep-during','ep-helped','ep-remember','ep-support'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});const fl=document.getElementById('ep-fl');if(fl){fl.textContent='Saved';fl.style.opacity='1';setTimeout(()=>fl.style.opacity='0',2500);}}
+function rEps(){const el=document.getElementById('ep-list');if(!mEps.length){el.innerHTML='<p style="color:var(--dim);text-align:center;padding:3rem;font-size:14px">No episodes logged yet.</p>';return;}el.innerHTML='';mEps.forEach(ep=>{const d=document.createElement('div');d.className='ep-entry';d.innerHTML=`<div class="ep-head"><span class="ep-date">${ep.date||ep.savedAt}</span><button class="btn btn-sm btn-ghost" onclick="dEp('${ep.id}')">delete</button></div>${ep.before?`<div class="ep-field"><b>Before:</b> ${esc(ep.before)}</div>`:''} ${ep.helped?`<div class="ep-field"><b>What helped:</b> ${esc(ep.helped)}</div>`:''} ${ep.remember?`<div class="ep-field"><b>Remember:</b> ${esc(ep.remember)}</div>`:''}`;el.appendChild(d);});}
+function dEp(id){mEps=mEps.filter(x=>x.id!==id);S('nd-me',mEps);rEps();}
+
+// ═══ I-CBT ═══════════════════════════════════════════════════════════════════
+const ICBT_STEPS=['Situation','Primary Inference','OCD Narrative','The Crossroads','Trusted Self','Summary'];
+const DEVICES=[
+  {id:'d1',label:'Irrelevant associations',hint:'Connecting unrelated facts to justify the doubt (e.g., "Germs are invisible. I touched a doorknob.")'},
+  {id:'d2',label:'Hearsay and social pressure',hint:'Using stories you\'ve heard or social expectations as "evidence" ("I\'ve heard of people who did harm by accident")'},
+  {id:'d3',label:'Imagination as evidence',hint:'Treating the vividness of an imagined scenario as proof it could happen ("I can picture it so clearly, it must mean something")'},
+  {id:'d4',label:'Distrust of the senses',hint:'Dismissing what your senses actually report ("I feel clean, but you can\'t trust feelings")'},
+  {id:'d5',label:'Category error',hint:'Applying reasoning from a different domain ("A good person would always double-check")'},
+  {id:'d6',label:'Selective attention to threat',hint:'Noticing only confirming evidence; dismissing disconfirming evidence'},
+];
+let icbt=L('nd-icbt',{step:0,situation:'',inference:'',devices:[],sensory:'',feared:'',trusted:'',choice:''});
+function buildICBT(){
+  const prog=document.getElementById('icbt-prog');
+  prog.innerHTML=ICBT_STEPS.map((_,i)=>`<div class="icbt-step${i<icbt.step?' done':i===icbt.step?' active':''}"></div>`).join('');
+  const panels=document.getElementById('icbt-panels');
+  panels.innerHTML='';
+  const s=icbt.step;
+
+  const P=(i,html)=>{const d=document.createElement('div');d.className='icbt-panel'+(i===s?' on':'');d.innerHTML=html;panels.appendChild(d);};
+  P(0,`<div class="icbt-header">Describe the situation</div>
+    <div class="icbt-sub">What triggered the OCD? Describe the moment — what happened, where you were, what you were doing. Keep it grounded in the present-moment situation, not what you fear might happen.</div>
+    <div class="card"><div class="fld"><label>The triggering situation</label><textarea id="i-sit" rows="4" placeholder="e.g. I touched the door handle at the clinic before washing my hands, and then touched my face...">${esc(icbt.situation)}</textarea></div></div>
+    <div class="icbt-nav"><button class="btn btn-p" onclick="icbtNext()">Continue →</button></div>`);
+
+  P(1,`<div class="icbt-header">Identify the primary inference</div>
+    <div class="icbt-sub">The primary inference is the initial "what if…" doubt that launches the OCD sequence. It is always about something that could be happening <em>right now</em> — not a future catastrophe, but a present-moment doubt. It often begins with "What if I…", "What if I have already…", or "What if this means…"</div>
+    <div class="card"><div class="fld"><label>My primary inference</label><textarea id="i-inf" rows="3" placeholder="e.g. What if my hands are contaminated right now, even though I can't see or feel anything?">${esc(icbt.inference)}</textarea></div></div>
+    <div class="hint">Tip: A primary inference is distinct from a secondary inference (catastrophic prediction). "What if I'm contaminated?" is primary. "What if I get sick and die?" is secondary. Focus on the first.</div>
+    <div class="icbt-nav"><button class="btn btn-sm btn-ghost" onclick="icbtBack()">← Back</button><button class="btn btn-p" onclick="icbtNext()">Continue →</button></div>`);
+
+  P(2,`<div class="icbt-header">Map the OCD narrative</div>
+    <div class="icbt-sub">OCD justifies its doubt through a story built from reasoning devices. Which of these is OCD using to make the primary inference feel compelling? Check all that apply.</div>
+    <div class="device-list">${DEVICES.map(d=>`<div class="device-item${icbt.devices.includes(d.id)?' on':''}" onclick="toggleDevice('${d.id}')"><div class="di-check${icbt.devices.includes(d.id)?' on':''}"><svg width="10" height="8" viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="di-label">${d.label}</div><div class="di-hint">${d.hint}</div></div></div>`).join('')}</div>
+    <div class="icbt-nav"><button class="btn btn-sm btn-ghost" onclick="icbtBack()">← Back</button><button class="btn btn-p" onclick="icbtNext()">Continue →</button></div>`);
+
+  P(3,`<div class="icbt-header">At the crossroads</div>
+    <div class="icbt-sub">The crossroads is the decisive moment: you can follow the OCD narrative into the "what if," or you can stay with what your senses are actually reporting. What does present-moment sensory reality tell you right now?</div>
+    <div class="card"><div class="fld"><label>What my senses actually report right now</label><textarea id="i-sen" rows="3" placeholder="e.g. My hands look and feel clean. No visible contamination. No smell. The environment is ordinary...">${esc(icbt.sensory)}</textarea></div></div>
+    <div class="hint" style="margin-top:.75rem">The OCD narrative does not start with what you see, smell, hear, or touch — it starts with imagination and inference. Grounding in sensory reality is not reassurance-seeking; it is an act of trusting direct experience over the narrative.</div>
+    <div class="icbt-nav"><button class="btn btn-sm btn-ghost" onclick="icbtBack()">← Back</button><button class="btn btn-p" onclick="icbtNext()">Continue →</button></div>`);
+
+  P(4,`<div class="icbt-header">Trusted self / feared self</div>
+    <div class="icbt-sub">OCD targets what matters most to you. The feared self is an identity OCD fabricates; the trusted self is who you actually are — expressed in your history, values, and relationships.</div>
+    <div class="self-split">
+      <div class="self-box feared"><h4>The feared self OCD is asserting</h4><textarea id="i-fear" rows="4" placeholder="e.g. A reckless, careless person who harms others through negligence...">${esc(icbt.feared)}</textarea></div>
+      <div class="self-box trusted"><h4>What my trusted self actually knows</h4><textarea id="i-trus" rows="4" placeholder="e.g. I am a person who takes care. My history shows I am attentive, responsible, and safe...">${esc(icbt.trusted)}</textarea></div>
+    </div>
+    <div class="icbt-nav"><button class="btn btn-sm btn-ghost" onclick="icbtBack()">← Back</button><button class="btn btn-p" onclick="icbtNext()">Continue →</button></div>`);
+
+  P(5,`<div class="icbt-header">Session summary</div>
+    <div class="icbt-sub">Here is what you identified in this exercise. This summary can be used in session or as a homework record.</div>
+    <div class="icbt-summary">
+      <div class="icbt-sum-row"><span class="icbt-sum-label">Situation</span><span class="icbt-sum-val">${esc(icbt.situation)||'—'}</span></div>
+      <div class="icbt-sum-row"><span class="icbt-sum-label">Primary inference</span><span class="icbt-sum-val">${esc(icbt.inference)||'—'}</span></div>
+      <div class="icbt-sum-row"><span class="icbt-sum-label">Narrative devices</span><span class="icbt-sum-val">${icbt.devices.map(id=>DEVICES.find(d=>d.id===id)?.label).filter(Boolean).join(', ')||'None identified'}</span></div>
+      <div class="icbt-sum-row"><span class="icbt-sum-label">Sensory reality</span><span class="icbt-sum-val">${esc(icbt.sensory)||'—'}</span></div>
+      <div class="icbt-sum-row"><span class="icbt-sum-label">Feared self</span><span class="icbt-sum-val">${esc(icbt.feared)||'—'}</span></div>
+      <div class="icbt-sum-row"><span class="icbt-sum-label">Trusted self</span><span class="icbt-sum-val">${esc(icbt.trusted)||'—'}</span></div>
+    </div>
+    <div class="icbt-nav"><button class="btn btn-sm btn-ghost" onclick="icbtReset()">Start new exercise</button><button class="btn btn-p" onclick="window.print()">Print summary</button></div>`);
+}
+function icbtNext(){
+  const s=icbt.step;
+  if(s===0)icbt.situation=document.getElementById('i-sit')?.value||'';
+  if(s===1)icbt.inference=document.getElementById('i-inf')?.value||'';
+  if(s===3)icbt.sensory=document.getElementById('i-sen')?.value||'';
+  if(s===4){icbt.feared=document.getElementById('i-fear')?.value||'';icbt.trusted=document.getElementById('i-trus')?.value||'';}
+  if(icbt.step<ICBT_STEPS.length-1){icbt.step++;S('nd-icbt',icbt);buildICBT();}
+}
+function icbtBack(){if(icbt.step>0){icbt.step--;S('nd-icbt',icbt);buildICBT();}}
+function icbtReset(){icbt={step:0,situation:'',inference:'',devices:[],sensory:'',feared:'',trusted:''};S('nd-icbt',icbt);buildICBT();}
+function toggleDevice(id){if(icbt.devices.includes(id))icbt.devices=icbt.devices.filter(x=>x!==id);else icbt.devices.push(id);S('nd-icbt',icbt);buildICBT();}
+
+// ═══ ERP ══════════════════════════════════════════════════════════════════════
+let erp=L('nd-erp',{hierarchy:[],current:null,tracking:[],reflections:[]});
+function eTab(w,b){['hier','plan','track','reflect'].forEach(t=>{document.getElementById('ep-'+t).style.display=t===w?'block':'none';});document.querySelectorAll('#pg-erp .tab').forEach((x,i)=>x.classList.toggle('on',['hier','plan','track','reflect'][i]===w));if(w==='hier')rHier();if(w==='plan')rPlan();if(w==='track')rTrack();if(w==='reflect')rReflect();}
+function sudsClass(n){return n>=70?'suds-hi':n>=40?'suds-md':'suds-lo';}
+function rHier(){
+  const el=document.getElementById('ep-hier');
+  const sorted=[...erp.hierarchy].sort((a,b)=>b.suds-a.suds);
+  el.innerHTML=`<p class="hint" style="margin-bottom:1.25rem">Build your fear hierarchy by listing situations that trigger anxiety or compulsions, rated 0–100 (SUDS: Subjective Units of Distress). We'll work from lowest to highest in exposures.</p>
+  <div class="erp-hierarchy">${sorted.map(item=>`<div class="erp-item"><div class="erp-suds ${sudsClass(item.suds)}">${item.suds}</div><div class="erp-situation">${esc(item.situation)}</div><button class="btn btn-sm btn-ghost" onclick="delH('${item.id}')">×</button></div>`).join('')}
+  ${!erp.hierarchy.length?'<p style="color:var(--dim);padding:1rem;text-align:center;font-size:14px">No situations added yet.</p>':''}</div>
+  <div class="sep"></div>
+  <div class="card"><div style="font-size:12px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:1rem">Add a situation</div>
+  <div class="g2"><div class="fld"><label>Feared situation</label><input id="h-sit" placeholder="Describe the situation specifically"></div>
+  <div class="fld"><label>SUDS rating (0–100)</label><input id="h-suds" type="number" min="0" max="100" placeholder="0 = no distress, 100 = maximum"></div></div>
+  <button class="btn btn-p" style="margin-top:8px" onclick="addH()">Add to hierarchy</button></div>`;
+}
+function addH(){const sit=document.getElementById('h-sit')?.value||'';const suds=parseInt(document.getElementById('h-suds')?.value)||0;if(!sit)return;erp.hierarchy.push({id:uid(),situation:sit,suds:Math.max(0,Math.min(100,suds))});S('nd-erp',erp);rHier();}
+function delH(id){erp.hierarchy=erp.hierarchy.filter(x=>x.id!==id);S('nd-erp',erp);rHier();}
+function rPlan(){
+  const el=document.getElementById('ep-plan');
+  const sorted=[...erp.hierarchy].sort((a,b)=>a.suds-b.suds);
+  el.innerHTML=`<p class="hint" style="margin-bottom:1.25rem">Select a situation from your hierarchy to plan an exposure. Start with lower-SUDS items. The goal is to face the situation without performing any compulsion or neutralizing behavior, and to stay until anxiety begins to reduce naturally.</p>
+  <div class="card" style="margin-bottom:1rem"><div style="font-size:12px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">My hierarchy — lowest to highest</div>
+  ${sorted.map(item=>`<div class="erp-item" style="cursor:pointer" onclick="selectH('${item.id}')"><div class="erp-suds ${sudsClass(item.suds)}">${item.suds}</div><div class="erp-situation">${esc(item.situation)}</div><span style="font-size:11px;color:var(--dim);margin-left:auto">${erp.current===item.id?'✓ Selected':''}</span></div>`).join('')||'<p style="color:var(--dim);padding:.5rem">Add situations to your hierarchy first.</p>'}</div>
+  ${erp.current?`<div class="card"><div style="font-size:12px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:1rem">Exposure plan</div>
+  <div class="fld"><label>Type of exposure</label><select id="ep-type"><option>In vivo (real life)</option><option>Imaginal (visualization)</option><option>Interoceptive (body sensations)</option></select></div>
+  <div class="fld"><label>What I will do</label><textarea id="ep-do" rows="2" placeholder="Specifically describe the exposure task..."></textarea></div>
+  <div class="fld"><label>Response prevention plan — what I will NOT do</label><textarea id="ep-dont" rows="2" placeholder="The compulsion, checking, reassurance-seeking, or neutralizing behavior I will not perform..."></textarea></div>
+  <div class="fld"><label>Duration (minutes)</label><input id="ep-dur" type="number" placeholder="e.g. 45" min="1" max="180"></div>
+  <button class="btn btn-p" style="margin-top:4px" onclick="eTab('track',null)">Begin exposure →</button></div>`:''}`;
+}
+function selectH(id){erp.current=id;S('nd-erp',erp);rPlan();}
+function rTrack(){
+  const item=erp.hierarchy.find(x=>x.id===erp.current);
+  const el=document.getElementById('ep-track');
+  let trackData=erp.tracking||[];
+  el.innerHTML=`${item?`<div class="card" style="margin-bottom:1rem;border-left:3px solid var(--blue)"><div style="font-size:12px;font-weight:500;color:var(--accent);margin-bottom:4px">Current exposure</div><div style="font-size:15px;font-weight:500;color:var(--ink)">${esc(item.situation)}</div><div style="font-size:12px;color:var(--dim);margin-top:2px">SUDS at start: ${item.suds}</div></div>`:'<div class="hint" style="margin-bottom:1rem">No exposure selected. Go to Plan an Exposure first.</div>'}
+  <div class="card">
+    <div style="font-size:12px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:1rem">Track anxiety over time</div>
+    <p class="hint" style="margin-bottom:1rem">Log your SUDS every few minutes. Anxiety naturally peaks and then decreases — you are practicing staying with the discomfort without neutralizing.</p>
+    <div class="g2" style="margin-bottom:12px"><div class="fld"><label>Current SUDS (0–100)</label><input type="number" id="tr-suds" min="0" max="100" placeholder="0–100"></div><div class="fld"><label>Minutes elapsed</label><input type="number" id="tr-min" min="0" placeholder="e.g. 5"></div></div>
+    <button class="btn btn-p btn-sm" onclick="logSUDS()">Log reading</button>
+    <div style="margin-top:1rem">${trackData.length?`<div style="font-size:12px;color:var(--mid);margin-bottom:8px">Readings logged: ${trackData.length}</div>${trackData.map(r=>`<div style="display:flex;gap:10px;align-items:center;margin-bottom:6px"><span style="font-size:11px;color:var(--dim);min-width:60px">${r.min}min</span><div class="erp-bar-wrap" style="flex:1;padding:.5rem"><div class="erp-bar-row"><div class="erp-bar-track"><div class="erp-bar-fill ${sudsClass(r.suds)}" style="width:${r.suds}%;background:${r.suds>=70?'rgba(180,0,0,0.7)':r.suds>=40?'rgba(160,120,0,0.7)':'rgba(0,120,70,0.7)'}"></div></div><span class="suds-num" style="font-size:13px">${r.suds}</span></div></div></div>`).join('')}`:'<p style="color:var(--dim);font-size:13px">No readings yet.</p>'}
+    </div>
+    <button class="btn btn-sm btn-ghost" style="margin-top:12px" onclick="clearTrack()">Clear readings</button>
+  </div>`;
+}
+function logSUDS(){const suds=parseInt(document.getElementById('tr-suds')?.value)||0;const min=parseInt(document.getElementById('tr-min')?.value)||0;erp.tracking=erp.tracking||[];erp.tracking.push({suds,min});S('nd-erp',erp);rTrack();}
+function clearTrack(){erp.tracking=[];S('nd-erp',erp);rTrack();}
+function rReflect(){
+  const el=document.getElementById('ep-reflect');
+  el.innerHTML=`<p class="hint" style="margin-bottom:1.25rem">After each exposure, complete this reflection. Over time these records help you see your progress and identify patterns.</p>
+  <div class="card" style="margin-bottom:1rem"><div style="font-size:12px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:1rem">Post-exposure reflection</div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+  <div class="fld"><label>Date</label><input id="rf-date" placeholder="Today's date"></div>
+  <div class="fld"><label>Situation I faced</label><textarea id="rf-sit" rows="2" placeholder="What was the exposure?"></textarea></div>
+  <div class="fld"><label>Peak anxiety (SUDS)</label><input id="rf-peak" type="number" min="0" max="100" placeholder="0–100"></div>
+  <div class="fld"><label>Ending anxiety (SUDS)</label><input id="rf-end" type="number" min="0" max="100" placeholder="0–100 — did it come down?"></div>
+  <div class="fld"><label>Did I complete the response prevention?</label><select id="rf-rp"><option>Yes — fully</option><option>Mostly — small slip</option><option>Partially</option><option>No — I performed the compulsion</option></select></div>
+  <div class="fld"><label>What did I learn?</label><textarea id="rf-learn" rows="3" placeholder="What happened to your anxiety? Did you survive? What does this teach you about the feared outcome?"></textarea></div>
+  <div class="fld"><label>Percentage of feared outcome that came true (%)</label><input id="rf-pct" type="number" min="0" max="100" placeholder="0–100%"></div>
+  <button class="btn btn-p" style="margin-top:4px" onclick="saveRefl()">Save reflection</button>
+  </div></div>
+  <div id="rf-hist">${(erp.reflections||[]).length?`<div style="font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mid);margin-bottom:.75rem">Past reflections</div>${(erp.reflections||[]).map(r=>`<div class="card" style="margin-bottom:.75rem"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span style="font-size:13px;font-weight:600;color:var(--ink)">${r.date||''}</span><button class="btn btn-sm btn-ghost" onclick="dRefl('${r.id}')">delete</button></div>${r.sit?`<div class="ep-field"><b>Situation:</b> ${esc(r.sit)}</div>`:''}<div style="display:flex;gap:12px;margin:.4rem 0;flex-wrap:wrap"><span style="font-size:12px;padding:3px 10px;border-radius:20px;background:var(--s2);color:var(--accent)">Peak: ${r.peak}</span><span style="font-size:12px;padding:3px 10px;border-radius:20px;background:#eef6ee;color:#2a5a2a">End: ${r.end}</span>${r.pct!==undefined?`<span style="font-size:12px;padding:3px 10px;border-radius:20px;background:var(--s2);color:var(--dim)">Outcome: ${r.pct}%</span>`:''}</div>${r.learn?`<div class="ep-field"><b>Learned:</b> ${esc(r.learn)}</div>`:''}</div>`).join('')}`:''}`;
+}
+function saveRefl(){const g=id=>document.getElementById(id)?.value||'';erp.reflections=erp.reflections||[];erp.reflections.unshift({id:uid(),date:g('rf-date'),sit:g('rf-sit'),peak:parseInt(g('rf-peak'))||0,end:parseInt(g('rf-end'))||0,rp:g('rf-rp'),learn:g('rf-learn'),pct:parseInt(g('rf-pct'))||0});S('nd-erp',erp);rReflect();}
+function dRefl(id){erp.reflections=erp.reflections.filter(x=>x.id!==id);S('nd-erp',erp);rReflect();}
+
+
+// ═══ ASSESSMENTS ═════════════════════════════════════════════════════════════
+const AQ_Q=[
+  {n:1,t:"I prefer to do things with others rather than on my own.",dir:'D',sub:'social'},
+  {n:2,t:"I prefer to do things the same way over and over again.",dir:'A',sub:'switch'},
+  {n:3,t:"If I try to imagine something, I find it very easy to create a picture in my mind.",dir:'D',sub:'imag'},
+  {n:4,t:"I frequently get so strongly absorbed in one thing that I lose sight of other things.",dir:'A',sub:'switch'},
+  {n:5,t:"I often notice small sounds when others do not.",dir:'A',sub:'detail'},
+  {n:6,t:"I usually notice car number plates or similar strings of information.",dir:'A',sub:'detail'},
+  {n:7,t:"Other people frequently tell me that what I've said is impolite, even though I think it is polite.",dir:'A',sub:'comm'},
+  {n:8,t:"When I'm reading a story, I can easily imagine what the characters might look like.",dir:'D',sub:'imag'},
+  {n:9,t:"I am fascinated by dates.",dir:'A',sub:'detail'},
+  {n:10,t:"In a social group, I can easily keep track of several different people's conversations.",dir:'D',sub:'switch'},
+  {n:11,t:"I find social situations easy.",dir:'D',sub:'social'},
+  {n:12,t:"I tend to notice details that others do not.",dir:'A',sub:'detail'},
+  {n:13,t:"I would rather go to a library than a party.",dir:'A',sub:'social'},
+  {n:14,t:"I find making up stories easy.",dir:'D',sub:'imag'},
+  {n:15,t:"I find myself drawn more strongly to people than to things.",dir:'D',sub:'social'},
+  {n:16,t:"I tend to have very strong interests which I get upset about if I can't pursue.",dir:'A',sub:'switch'},
+  {n:17,t:"I enjoy social chit-chat.",dir:'D',sub:'comm'},
+  {n:18,t:"When I talk, it isn't always easy for others to get a word in edgeways.",dir:'A',sub:'comm'},
+  {n:19,t:"I am fascinated by numbers.",dir:'A',sub:'detail'},
+  {n:20,t:"When I'm reading a story, I find it difficult to work out the characters' intentions.",dir:'A',sub:'imag'},
+  {n:21,t:"I don't particularly enjoy reading fiction.",dir:'A',sub:'imag'},
+  {n:22,t:"I find it hard to make new friends.",dir:'A',sub:'social'},
+  {n:23,t:"I notice patterns in things all the time.",dir:'A',sub:'detail'},
+  {n:24,t:"I would rather go to the theatre than a museum.",dir:'D',sub:'imag'},
+  {n:25,t:"It does not upset me if my daily routine is disturbed.",dir:'D',sub:'switch'},
+  {n:26,t:"I frequently find that I don't know how to keep a conversation going.",dir:'A',sub:'comm'},
+  {n:27,t:"I find it easy to 'read between the lines' when someone is talking to me.",dir:'D',sub:'comm'},
+  {n:28,t:"I usually concentrate more on the whole picture, rather than the small details.",dir:'D',sub:'detail'},
+  {n:29,t:"I am not very good at remembering phone numbers.",dir:'D',sub:'detail'},
+  {n:30,t:"I don't usually notice small changes in a situation, or a person's appearance.",dir:'D',sub:'detail'},
+  {n:31,t:"I know how to tell if someone listening to me is getting bored.",dir:'D',sub:'comm'},
+  {n:32,t:"I find it easy to do more than one thing at once.",dir:'D',sub:'switch'},
+  {n:33,t:"When I talk on the phone, I'm not sure when it's my turn to speak.",dir:'A',sub:'comm'},
+  {n:34,t:"I enjoy doing things spontaneously.",dir:'D',sub:'switch'},
+  {n:35,t:"I am often the last to understand the point of a joke.",dir:'A',sub:'comm'},
+  {n:36,t:"I find it easy to work out what someone is thinking or feeling just by looking at their face.",dir:'D',sub:'social'},
+  {n:37,t:"If there is an interruption, I can switch back to what I was doing very quickly.",dir:'D',sub:'switch'},
+  {n:38,t:"I am good at social chit-chat.",dir:'D',sub:'comm'},
+  {n:39,t:"People often tell me that I keep going on and on about the same thing.",dir:'A',sub:'comm'},
+  {n:40,t:"When I was young, I used to enjoy playing games involving pretending with other children.",dir:'D',sub:'imag'},
+  {n:41,t:"I like to collect information about categories of things (e.g. types of car, types of bird, types of train, types of plant etc).",dir:'A',sub:'detail'},
+  {n:42,t:"I find it difficult to imagine what it would be like to be someone else.",dir:'A',sub:'imag'},
+  {n:43,t:"I like to plan any activities I participate in carefully.",dir:'A',sub:'switch'},
+  {n:44,t:"I enjoy social occasions.",dir:'D',sub:'social'},
+  {n:45,t:"I find it difficult to work out people's intentions.",dir:'A',sub:'social'},
+  {n:46,t:"New situations make me anxious.",dir:'A',sub:'switch'},
+  {n:47,t:"I enjoy meeting new people.",dir:'D',sub:'social'},
+  {n:48,t:"I am a good diplomat.",dir:'D',sub:'social'},
+  {n:49,t:"I am not very good at remembering people's date of birth.",dir:'D',sub:'detail'},
+  {n:50,t:"I find it very easy to play games with children that involve pretending.",dir:'D',sub:'imag'},
+];
+const AQ_SUBS={social:'Social skills',switch:'Attention switching',detail:'Attention to detail',comm:'Communication',imag:'Imagination'};
+const AQ_OPTS=['Definitely agree','Slightly agree','Slightly disagree','Definitely disagree'];
+let aqAnswers=L('nd-aq',{});
+let aqView=L('nd-aq-v','questions'); // 'questions' or 'results'
+
+const TAS_Q=[
+  {n:1,t:"I am often confused about what emotion I am feeling.",sub:'DIF',rev:false},
+  {n:2,t:"It is difficult for me to find the right words for my feelings.",sub:'DDF',rev:false},
+  {n:3,t:"I have physical sensations that even doctors don't understand.",sub:'DIF',rev:false},
+  {n:4,t:"I am able to describe my feelings easily.",sub:'DDF',rev:true},
+  {n:5,t:"I prefer to analyze problems rather than just describe them.",sub:'EOT',rev:true},
+  {n:6,t:"When I am upset, I don't know if I am sad, frightened, or angry.",sub:'DIF',rev:false},
+  {n:7,t:"I am often puzzled by sensations in my body.",sub:'DIF',rev:false},
+  {n:8,t:"I prefer to just let things happen rather than to understand why they turned out that way.",sub:'EOT',rev:false},
+  {n:9,t:"I have feelings that I can't quite identify.",sub:'DIF',rev:false},
+  {n:10,t:"Being in touch with emotions is essential.",sub:'EOT',rev:true},
+  {n:11,t:"I find it hard to describe how I feel about people.",sub:'DDF',rev:false},
+  {n:12,t:"People tell me to describe my feelings more.",sub:'DDF',rev:false},
+  {n:13,t:"I don't know what's going on inside me.",sub:'DIF',rev:false},
+  {n:14,t:"I often don't know why I am crying.",sub:'DIF',rev:false},
+  {n:15,t:"I prefer talking to people about their daily activities rather than their feelings.",sub:'EOT',rev:false},
+  {n:16,t:"I prefer to watch 'light' entertainment shows rather than psychological dramas.",sub:'EOT',rev:false},
+  {n:17,t:"It is difficult for me to reveal my innermost feelings, even to close friends.",sub:'DDF',rev:false},
+  {n:18,t:"I can feel close to someone, even in moments of silence.",sub:'EOT',rev:true},
+  {n:19,t:"I find examination of my feelings useful in solving personal problems.",sub:'EOT',rev:true},
+  {n:20,t:"Looking for hidden meanings in movies or books distracts from their enjoyment.",sub:'EOT',rev:false},
+];
+const TAS_OPTS=['Strongly disagree','Disagree','Neither agree nor disagree','Agree','Strongly agree'];
+const TAS_SUB_LABELS={DIF:'Difficulty identifying feelings',DDF:'Difficulty describing feelings',EOT:'Externally-oriented thinking'};
+let tasAnswers=L('nd-tas',{});
+let tasView=L('nd-tas-v','questions');
+
+function aTab(w,b){
+  ['adhd','aq','tas','vviq'].forEach(t=>{document.getElementById('ap-'+t).style.display=t===w?'block':'none';});
+  document.querySelectorAll('#pg-assessments .tab').forEach((x,i)=>x.classList.toggle('on',['adhd','aq','tas','vviq'][i]===w));
+  if(w==='adhd')renderADHDTab();
+  if(w==='aq')renderAQ();
+  if(w==='tas')renderTAS();
+  if(w==='vviq')renderVVIQ();
+}
+function vizTab(w,b){
+  ['mtrx','ntwk'].forEach(t=>{document.getElementById('vz-'+t).style.display=t===w?'block':'none';});
+  document.querySelectorAll('#pg-viz .tab').forEach((x,i)=>x.classList.toggle('on',['mtrx','ntwk'][i]===w));
+  if(w==='ntwk'&&!netDone)buildNet();
+  if(w==='mtrx'&&!matDone)buildMatrix();
+}
+
+function aqScore(n,ans){
+  const q=AQ_Q[n-1];if(!q)return 0;
+  const agreeOpts=[0,1];const disagreeOpts=[2,3];
+  if(q.dir==='A') return agreeOpts.includes(ans)?1:0;
+  else return disagreeOpts.includes(ans)?1:0;
+}
+
+function calcAQ(){
+  let total=0;const subs={social:0,switch:0,detail:0,comm:0,imag:0};
+  AQ_Q.forEach(q=>{
+    if(aqAnswers[q.n]!==undefined){
+      const sc=aqScore(q.n,aqAnswers[q.n]);
+      total+=sc;subs[q.sub]+=sc;
+    }
+  });
+  return{total,subs};
+}
+
+function renderAQ(){
+  const el=document.getElementById('ap-aq');
+  const answered=Object.keys(aqAnswers).length;
+  if(aqView==='results'&&answered===50){
+    renderAQResults(el);return;
+  }
+  const pct=Math.round(answered/50*100);
+  el.innerHTML=`
+    <div class="assess-intro">
+      <h4>Autism Spectrum Quotient (AQ-50)</h4>
+      Baron-Cohen et al., 2001. A 50-item self-report screening tool measuring autistic traits across five domains. This is not a diagnostic tool — it is a conversation starter. Scores of 32+ are associated with autism in research populations; average in the general population is around 16–17.
+      <br><br><strong style="color:var(--accent)">Important:</strong> Many autistic adults, particularly women, mask extensively and may score lower than expected. Context matters as much as the number.
+    </div>
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:.5rem">
+      <span style="font-size:12px;color:var(--dim)">${answered} / 50 answered</span>
+      ${answered===50?`<button class="btn btn-p btn-sm" onclick="aqView='results';S('nd-aq-v','results');renderAQ()">View results →</button>`:''}
+      ${answered>0?`<button class="btn btn-sm btn-ghost" onclick="aqAnswers={};S('nd-aq',{});aqView='questions';S('nd-aq-v','questions');renderAQ()">Clear &amp; restart</button>`:''}
+    </div>
+    <div class="aq-prog-bar"><div class="aq-prog-fill" style="width:${pct}%"></div></div>
+    <div>
+    ${AQ_Q.map(q=>`
+      <div class="aq-question">
+        <div class="aq-num">Question ${q.n} · ${AQ_SUBS[q.sub]}</div>
+        <div class="aq-text">${q.t}</div>
+        <div class="aq-opts">
+          ${AQ_OPTS.map((opt,i)=>`<button class="aq-opt${aqAnswers[q.n]===i?' on':''}" onclick="aqAnswers[${q.n}]=${i};S('nd-aq',aqAnswers);renderAQ()">${opt}</button>`).join('')}
+        </div>
+      </div>`).join('')}
+    </div>
+    ${answered===50?`<div style="margin-top:1.5rem;text-align:center"><button class="btn btn-p" onclick="aqView='results';S('nd-aq-v','results');renderAQ()">See my results →</button></div>`:''}`;
+}
+
+function renderAQResults(el){
+  const {total,subs}=calcAQ();
+  let interp,ibg,ic;
+  if(total<=25){interp='Score in the typical range. Most people without autism score below 26. Note: masking can significantly lower scores, particularly in women and those with late diagnosis.';ibg='var(--s2)';ic='#70b070';}
+  else if(total<=31){interp='Borderline range. Many autistic adults score in this range, particularly those who mask extensively. Worth exploring further in clinical conversation.';ibg='var(--s2)';ic='#c8a050';}
+  else{interp='Score above the research threshold (32+) associated with autism. In Baron-Cohen\'s original research, 79% of diagnosed autistic adults scored 32+. This does not constitute a diagnosis — formal assessment is needed for that.';ibg='var(--s2)';ic='#7ab0d8';}
+  const pct=Math.round(total/50*100);
+  const barColor=total>=32?'#2563d4':total>=26?'#e0a020':'#2a8a2a';
+  el.innerHTML=`
+    <button class="btn btn-sm btn-ghost" style="margin-bottom:1.25rem" onclick="aqView='questions';S('nd-aq-v','questions');renderAQ()">← Back to questions</button>
+    <div class="score-card" style="background:var(--s2);border:1px solid var(--brd2)">
+      <div style="font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;opacity:.7;margin-bottom:.5rem">AQ-50 Total Score</div>
+      <div class="score-num" style="color:white">${total}<span style="font-size:1.5rem;opacity:.6"> / 50</span></div>
+      <div style="margin:1rem auto 0;max-width:280px;height:6px;background:rgba(255,255,255,.2);border-radius:3px;overflow:hidden"><div style="height:100%;width:${pct}%;background:var(--dim);border-radius:2px"></div></div>
+    </div>
+    <div class="score-interpretation" style="background:${ibg};border:1px solid ${ic}28;color:${ic}">${interp}</div>
+    <div style="font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mid);margin:.75rem 0">Subscale scores (out of 10)</div>
+    <div class="sub-scores">
+      ${Object.entries(subs).map(([k,v])=>`<div class="sub-score"><div class="sub-score-n">${v}<span style="font-size:.6em;color:var(--dim)">/10</span></div><div class="sub-score-label">${AQ_SUBS[k]}</div></div>`).join('')}
+    </div>
+    <div style="margin-top:1.5rem;padding:1rem;background:var(--s2);font-size:12.5px;color:var(--mid);line-height:1.7">
+      <strong style="color:var(--ink)">A note on interpretation.</strong> The AQ measures autistic traits, not autism per se. High scores reflect a cognitive and sensory style — not a disorder. Many people with high AQ scores are undiagnosed. Many autistic people, particularly women and those who have masked extensively, score lower than expected. This result is a starting point for conversation, not a conclusion.
+    </div>
+    <div style="margin-top:1rem;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-sm btn-ghost" onclick="aqAnswers={};S('nd-aq',{});aqView='questions';S('nd-aq-v','questions');renderAQ()">Clear &amp; retake</button>
+      <button class="btn btn-sm btn-p" onclick="window.print()">Print results</button>
+    </div>`;
+}
+
+function tasScore(q,ans){
+  if(ans===undefined)return 0;
+  const raw=ans+1; // 0-indexed → 1-5
+  return q.rev?(6-raw):raw;
+}
+
+function calcTAS(){
+  let total=0;const subs={DIF:0,DDF:0,EOT:0};
+  TAS_Q.forEach(q=>{
+    if(tasAnswers[q.n]!==undefined){
+      const sc=tasScore(q,tasAnswers[q.n]);
+      total+=sc;subs[q.sub]+=sc;
+    }
+  });
+  return{total,subs};
+}
+
+function renderTAS(){
+  const el=document.getElementById('ap-tas');
+  const answered=Object.keys(tasAnswers).length;
+  if(tasView==='results'&&answered===20){renderTASResults(el);return;}
+  const pct=Math.round(answered/20*100);
+  el.innerHTML=`
+    <div class="assess-intro">
+      <h4>Toronto Alexithymia Scale (TAS-20)</h4>
+      Bagby, Parker &amp; Taylor, 1994. A 20-item measure assessing difficulty identifying and describing emotional states. Three subscales: Difficulty Identifying Feelings (DIF), Difficulty Describing Feelings (DDF), and Externally-Oriented Thinking (EOT). Highly relevant for autistic adults, ADHD, and trauma presentations where interoceptive differences impair emotion recognition.
+      <br><br>Rate each statement on a scale from Strongly Disagree to Strongly Agree.
+    </div>
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:.5rem">
+      <span style="font-size:12px;color:var(--dim)">${answered} / 20 answered</span>
+      ${answered===20?`<button class="btn btn-p btn-sm" onclick="tasView='results';S('nd-tas-v','results');renderTAS()">View results →</button>`:''}
+      ${answered>0?`<button class="btn btn-sm btn-ghost" onclick="tasAnswers={};S('nd-tas',{});tasView='questions';S('nd-tas-v','questions');renderTAS()">Clear &amp; restart</button>`:''}
+    </div>
+    <div class="aq-prog-bar"><div class="aq-prog-fill" style="width:${pct}%"></div></div>
+    <div>
+    ${TAS_Q.map(q=>`
+      <div class="aq-question">
+        <div class="aq-num">Question ${q.n} · ${TAS_SUB_LABELS[q.sub]}</div>
+        <div class="aq-text">${q.t}</div>
+        <div class="aq-opts">
+          ${TAS_OPTS.map((opt,i)=>`<button class="aq-opt${tasAnswers[q.n]===i?' on':''}" onclick="tasAnswers[${q.n}]=${i};S('nd-tas',tasAnswers);renderTAS()">${opt}</button>`).join('')}
+        </div>
+      </div>`).join('')}
+    </div>
+    ${answered===20?`<div style="margin-top:1.5rem;text-align:center"><button class="btn btn-p" onclick="tasView='results';S('nd-tas-v','results');renderTAS()">See my results →</button></div>`:''}`;
+}
+
+function renderTASResults(el){
+  const {total,subs}=calcTAS();
+  let interp,ibg,ic;
+  if(total<=51){interp='Score in the non-alexithymic range. A score below 52 suggests you are generally able to identify and describe your emotional states, though this can vary significantly across contexts.';ibg='var(--s2)';ic='#70b070';}
+  else if(total<=60){interp='Score in the possible alexithymia range (52–60). You may experience notable difficulty with some aspects of emotional identification or description. This is common in neurodivergent presentations and often responds well to targeted therapeutic work.';ibg='var(--s2)';ic='#c8a050';}
+  else{interp='Score in the alexithymia range (61+). Significant difficulty with emotional identification, description, or both. This is particularly common in autism, ADHD, and trauma presentations. It is not a deficit of emotion — it is a difference in how emotions are processed and communicated.';ibg='var(--s2)';ic='#7ab0d8';}
+  el.innerHTML=`
+    <button class="btn btn-sm btn-ghost" style="margin-bottom:1.25rem" onclick="tasView='questions';S('nd-tas-v','questions');renderTAS()">← Back to questions</button>
+    <div class="score-card" style="background:var(--s2);border:1px solid var(--brd2)">
+      <div style="font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;opacity:.7;margin-bottom:.5rem">TAS-20 Total Score</div>
+      <div class="score-num" style="color:white">${total}<span style="font-size:1.5rem;opacity:.6"> / 100</span></div>
+      <div style="margin:1rem auto 0;max-width:280px;height:6px;background:rgba(255,255,255,.2);border-radius:3px;overflow:hidden"><div style="height:100%;width:${total}%;background:var(--dim);border-radius:2px"></div></div>
+    </div>
+    <div class="score-interpretation" style="background:${ibg};border:1px solid ${ic}28;color:${ic}">${interp}</div>
+    <div style="font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mid);margin:.75rem 0">Subscale scores</div>
+    <div class="sub-scores">
+      <div class="sub-score"><div class="sub-score-n">${subs.DIF}<span style="font-size:.6em;color:var(--dim)">/35</span></div><div class="sub-score-label">Difficulty identifying feelings</div></div>
+      <div class="sub-score"><div class="sub-score-n">${subs.DDF}<span style="font-size:.6em;color:var(--dim)">/25</span></div><div class="sub-score-label">Difficulty describing feelings</div></div>
+      <div class="sub-score"><div class="sub-score-n">${subs.EOT}<span style="font-size:.6em;color:var(--dim)">/40</span></div><div class="sub-score-label">Externally-oriented thinking</div></div>
+    </div>
+    <div style="margin-top:1.5rem;padding:1rem;background:var(--s2);font-size:12.5px;color:var(--mid);line-height:1.7">
+      <strong style="color:var(--ink)">A note on alexithymia.</strong> Alexithymia is not about lacking emotions — it is about a different relationship to emotional information. People with alexithymia often feel emotions intensely but have difficulty locating, labeling, or describing them. This is particularly common in autistic adults (estimated 50%+), ADHD, and people with complex trauma histories. It is treatable and workable, not permanent.
+    </div>
+    <div style="margin-top:1rem;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-sm btn-ghost" onclick="tasAnswers={};S('nd-tas',{});tasView='questions';S('nd-tas-v','questions');renderTAS()">Clear &amp; retake</button>
+      <button class="btn btn-sm btn-p" onclick="window.print()">Print results</button>
+    </div>`;
+}
+
+
+// ─── ADHD CHECKLIST TAB ──────────────────────────────────────────────────────
+function renderADHDTab(){
+  const el=document.getElementById('ap-adhd');
+  if(!el)return;
+  const answered=clCh.size, pct=Math.round(answered/clTotal*100);
+  el.innerHTML=`
+    <div class="assess-intro">
+      <h4>ADHD Symptom Checklist</h4>
+      DSM-5 diagnostic criteria alongside community-reported experiences. Check items that resonate. This is not a diagnostic tool — use it to open conversation about your experience. All selections save automatically.
+    </div>
+    <div class="vid-link-grid">
+      <a class="vid-link-card" href="https://youtu.be/7izHQ7Ojt-s?si=9AJRZgywYNlZfAeq" target="_blank" rel="noopener">
+        <div class="vid-link-label">Video Resource</div>
+        <div class="vid-link-title">Body Doubling for ADHD</div>
+        <div class="vid-link-sub">Watch on YouTube &nbsp;↗</div>
+      </a>
+      <a class="vid-link-card" href="https://www.youtube.com/watch?v=HSVqiA3sRdU" target="_blank" rel="noopener">
+        <div class="vid-link-label">Video Resource</div>
+        <div class="vid-link-title">1-Hour Visual Timer</div>
+        <div class="vid-link-sub">For focus &amp; time awareness &nbsp;↗</div>
+      </a>
+    </div>
+    <div class="cl-bar">
+      <div class="cl-n"><span id="cl-n2">${answered}</span><br><sub>/ <span id="cl-tot2">${clTotal}</span> checked</sub></div>
+      <div class="cl-track"><div class="cl-fill" id="cl-fill2" style="width:${pct}%"></div></div>
+      <button class="btn btn-sm" style="background:rgba(255,255,255,0.12);color:white;border-color:transparent" onclick="clClear();renderADHDTab()">clear all</button>
+    </div>
+    <div id="cl-list2"></div>`;
+  buildChecklistInto('cl-list2','cl-n2','cl-tot2','cl-fill2');
+  // Append video resources
+  const vidSection = document.createElement('div');
+  vidSection.style.cssText = 'margin-top:2.5rem;border-top:1px solid var(--brd);padding-top:2rem';
+  vidSection.innerHTML = `
+    <div style="font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:1.5rem">Video Resources</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--brd);border:1px solid var(--brd2);margin-bottom:1rem">
+      <div style="background:var(--s1);padding:1.25rem">
+        <div style="font-family:var(--font-display);font-size:16px;font-style:italic;color:var(--ink);margin-bottom:6px">How to ADHD</div>
+        <div style="font-size:11px;color:var(--dim);margin-bottom:12px;line-height:1.6">Executive function strategies and neurodiversity-affirming approaches to daily life with ADHD.</div>
+        <a href="https://youtu.be/7izHQ7Ojt-s?si=9AJRZgywYNlZfAeq" target="_blank" style="font-size:11px;color:var(--off);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--brd2);padding-bottom:2px;text-decoration:none">Watch ↗</a>
+      </div>
+      <div style="background:var(--s1);padding:1.25rem">
+        <div style="font-family:var(--font-display);font-size:16px;font-style:italic;color:var(--ink);margin-bottom:6px">ADHD & the Brain</div>
+        <div style="font-size:11px;color:var(--dim);margin-bottom:12px;line-height:1.6">Understanding ADHD neurologically — attention, motivation, and the role of dopamine and executive function systems.</div>
+        <a href="https://www.youtube.com/watch?v=HSVqiA3sRdU" target="_blank" style="font-size:11px;color:var(--off);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--brd2);padding-bottom:2px;text-decoration:none">Watch ↗</a>
+      </div>
+    </div>`;
+  document.getElementById('ap-adhd').appendChild(vidSection);
+}
+function buildChecklistInto(listId,nId,totId,fillId){
+  const list=document.getElementById(listId);if(!list)return;
+  list.innerHTML='';
+  CLD.forEach(sec=>{
+    const div=document.createElement('div');div.className='cl-sec';
+    const tC=sec.tag==='DSM-5'?'tag-dsm':'tag-comm';
+    div.innerHTML=`<div class="cl-sec-hd"><span class="cl-sec-title">${sec.t}</span><span class="tag ${tC}">${sec.tag}</span>${sec.n?`<span style="font-size:11px;color:var(--dim)">${sec.n}</span>`:''}<span style="margin-left:auto;font-size:11px;color:var(--dim)" id="${listId}-sn-${sec.id}">0/${sec.items.length}</span></div>`;
+    const card=document.createElement('div');card.className='card';card.style.padding='.4rem 1rem';
+    sec.items.forEach((item,i)=>{
+      const row=document.createElement('div');row.className='cl-item';
+      row.style.borderBottom=i<sec.items.length-1?'1px solid var(--frost)':'none';
+      row.innerHTML=`<div class="cl-box${clCh.has(item.id)?' on':''}" id="${listId}-cb-${item.id}">${clCh.has(item.id)?'<svg width="10" height="8" viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}</div><div><div class="cl-text">${item.t}</div>${item.h?`<div class="cl-hint">${item.h}</div>`:''}</div>`;
+      row.onclick=()=>{
+        clCh.has(item.id)?clCh.delete(item.id):clCh.add(item.id);
+        S('nd-cl',[...clCh]);
+        const cb=document.getElementById(listId+'-cb-'+item.id);
+        if(cb){cb.className='cl-box'+(clCh.has(item.id)?' on':'');cb.innerHTML=clCh.has(item.id)?'<svg width="10" height="8" viewBox="0 0 10 8"><polyline points="1,4 4,7 9,1" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>':'';}
+        const n=clCh.size;
+        const nEl=document.getElementById(nId);if(nEl)nEl.textContent=n;
+        const fEl=document.getElementById(fillId);if(fEl)fEl.style.width=Math.round(n/clTotal*100)+'%';
+        const snEl=document.getElementById(listId+'-sn-'+sec.id);if(snEl)snEl.textContent=`${sec.items.filter(x=>clCh.has(x.id)).length}/${sec.items.length}`;
+      };
+      card.appendChild(row);
+    });
+    div.appendChild(card);list.appendChild(div);
+    const snEl=document.getElementById(listId+'-sn-'+sec.id);if(snEl)snEl.textContent=`${sec.items.filter(x=>clCh.has(x.id)).length}/${sec.items.length}`;
+  });
+}
+
+// ─── VALUES LIST ──────────────────────────────────────────────────────────────
+const VALUES_LIST=[
+  {cat:'Connection & relationships',items:['Intimacy','Friendship','Family','Community','Belonging','Compassion','Empathy','Trust']},
+  {cat:'Autonomy & authenticity',items:['Authenticity','Independence','Self-direction','Freedom','Integrity','Honesty','Courage']},
+  {cat:'Growth & learning',items:['Curiosity','Learning','Creativity','Mastery','Challenge','Open-mindedness','Wisdom']},
+  {cat:'Contribution & justice',items:['Justice','Fairness','Advocacy','Service','Generosity','Responsibility','Equality']},
+  {cat:'Inner life & spirituality',items:['Mindfulness','Spirituality','Peace','Meaning','Purpose','Acceptance','Gratitude']},
+  {cat:'Care & health',items:['Physical health','Rest','Play','Nature','Simplicity','Nourishment','Safety']},
+  {cat:'Achievement & excellence',items:['Competence','Excellence','Achievement','Leadership','Ambition','Perseverance','Discipline']},
+  {cat:'Expression & experience',items:['Beauty','Art','Music','Adventure','Humor','Sensuality','Passion']},
+];
+let myVals=L('nd-vals2',{selected:[],top3:[],notes:{}});
+function renderVals(targetId){
+  const el=document.getElementById(targetId||'ap-vals');if(!el)return;
+  const sel=myVals.selected||[];
+  el.innerHTML=`
+    <div class="assess-intro">
+      <h4>Values Clarification</h4>
+      From ACT. Select all values that feel meaningful to you, then identify your top 3. These are the compass points you can return to when life feels chaotic or when capacity is low. There are no right or wrong answers — values are personal and contextual.
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.25rem;flex-wrap:wrap">
+      <span style="font-size:12px;color:var(--dim)">${sel.length} values selected</span>
+      ${myVals.top3&&myVals.top3.length?`<span style="font-size:12px;padding:3px 10px;border-radius:20px;background:var(--s2);color:var(--accent)">Top 3: ${myVals.top3.join(', ')}</span>`:''}
+      <button class="btn btn-sm btn-ghost" onclick="myVals={selected:[],top3:[],notes:{}};S('nd-vals2',myVals);renderVals()">Reset</button>
+    </div>
+    ${VALUES_LIST.map(cat=>`
+      <div style="margin-bottom:1.5rem">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--mid);margin-bottom:8px">${cat.cat}</div>
+        <div class="chips">${cat.items.map(v=>`<button class="chip${sel.includes(v)?' on':''}" onclick="toggleVal('${v}')">${v}</button>`).join('')}</div>
+      </div>`).join('')}
+    <div class="sep"></div>
+    ${sel.length>0?`
+    <div style="margin-bottom:1.5rem">
+      <div style="font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mid);margin-bottom:10px">My selected values (${sel.length})</div>
+      <div class="chips" style="margin-bottom:1rem">${sel.map(v=>`<span class="chip on">${v}</span>`).join('')}</div>
+      <div style="font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mid);margin-bottom:8px">Choose my top 3</div>
+      <p class="hint" style="margin-bottom:10px">From your selected values, which 3 feel most central to who you want to be?</p>
+      <div class="chips">${sel.map(v=>{const on=(myVals.top3||[]).includes(v);return `<button class="chip${on?' on':''}" onclick="toggleTop3('${v}')" style="${on?'background:var(--navy);border-color:var(--ink)':''}">${on?'★ ':''}${v}</button>`;}).join('')}</div>
+    </div>`:''}
+    ${myVals.top3&&myVals.top3.length===3?`
+    <div style="margin-bottom:1.5rem">
+      <div style="font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mid);margin-bottom:10px">Reflect on each value</div>
+      ${myVals.top3.map(v=>`
+        <div class="card" style="margin-bottom:1rem">
+          <div style="font-size:16px;font-weight:600;color:var(--ink);font-family:var(--font-display);margin-bottom:8px">${v}</div>
+          <div class="fld"><label>What does living this value look like for me?</label><textarea rows="2" oninput="updVNote('${v}','look',this.value)" placeholder="In concrete, specific terms...">${esc((myVals.notes&&myVals.notes[v]&&myVals.notes[v].look)||'')}</textarea></div>
+          <div class="fld"><label>What gets in the way?</label><textarea rows="2" oninput="updVNote('${v}','barrier',this.value)" placeholder="Thoughts, feelings, situations...">${esc((myVals.notes&&myVals.notes[v]&&myVals.notes[v].barrier)||'')}</textarea></div>
+          <div class="fld"><label>One small action I could take this week</label><textarea rows="1" oninput="updVNote('${v}','action',this.value)" placeholder="Specific, doable...">${esc((myVals.notes&&myVals.notes[v]&&myVals.notes[v].action)||'')}</textarea></div>
+        </div>`).join('')}
+    </div>`:''}`;
+}
+function toggleVal(v){const s=myVals.selected||[];myVals.selected=s.includes(v)?s.filter(x=>x!==v):[...s,v];if(!myVals.selected.includes(v)&&myVals.top3)myVals.top3=(myVals.top3||[]).filter(x=>x!==v);S('nd-vals2',myVals);renderVals();}
+function toggleTop3(v){const t=myVals.top3||[];if(t.includes(v)){myVals.top3=t.filter(x=>x!==v);}else if(t.length<3){myVals.top3=[...t,v];}S('nd-vals2',myVals);renderVals();}
+function updVNote(v,field,val){myVals.notes=myVals.notes||{};myVals.notes[v]=myVals.notes[v]||{};myVals.notes[v][field]=val;S('nd-vals2',myVals);}
+
+// ─── ACT MATRIX ──────────────────────────────────────────────────────────────
+let actm=L('nd-actm',{q1:'',q2:'',q3:'',q4:'',q5:'',q6:'',q7:''});
+function renderACTM(targetId){
+  const el=document.getElementById(targetId||'ap-actm');if(!el)return;
+  el.innerHTML=`
+    <div class="assess-intro">
+      <h4>ACT Matrix</h4>
+      Developed by Kevin Polk. The matrix is a simple tool for noticing where you are in any moment — moving toward what matters, or away from discomfort. There is no wrong answer; the goal is noticing, not fixing.
+    </div>
+    <div style="position:relative;width:100%;margin:0 auto 1.5rem">
+      <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto;gap:0;border:1px solid var(--brd2);border-radius:12px;overflow:hidden">
+        <!-- Header row -->
+        <div style="grid-column:1/-1;background:var(--bg);color:var(--ink);padding:10px 16px;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;text-align:center">The ACT Matrix</div>
+        <!-- Quadrant labels row -->
+        <div style="background:var(--s2);padding:8px 16px;font-size:11px;font-weight:600;color:var(--mid);letter-spacing:.05em;text-transform:uppercase;border-right:1px solid var(--brd);border-bottom:1px solid var(--brd)">
+          Moving away ↙ &nbsp;<span style="font-weight:400;color:var(--dim)">from discomfort</span>
+        </div>
+        <div style="background:var(--s2);padding:8px 16px;font-size:11px;font-weight:600;color:var(--accent);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid var(--brd)">
+          Moving toward ↗ &nbsp;<span style="font-weight:400;color:var(--dim)">what matters</span>
+        </div>
+        <!-- Top half: Outside/behaviors -->
+        <div style="padding:1rem;border-right:1px solid var(--brd);border-bottom:2px solid var(--brd)">
+          <div style="font-size:11px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Outside world<br><span style="font-weight:400;font-size:10px">Behaviors others can see</span></div>
+          <div class="fld"><label>What do I do to move away from difficult feelings?</label><textarea id="actm-q1" rows="3" oninput="updACTM('q1',this.value)" placeholder="e.g. Scroll, isolate, postpone, over-explain, people-please, check...">${esc(actm.q1)}</textarea></div>
+        </div>
+        <div style="padding:1rem;border-bottom:2px solid var(--brd)">
+          <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Outside world<br><span style="font-weight:400;font-size:10px;color:var(--dim)">Behaviors others can see</span></div>
+          <div class="fld"><label>What would I be doing if I were living my values more fully?</label><textarea id="actm-q2" rows="3" oninput="updACTM('q2',this.value)" placeholder="e.g. Calling a friend, working on the project, resting without guilt, setting a limit...">${esc(actm.q2)}</textarea></div>
+        </div>
+        <!-- Center axis label -->
+        <div style="grid-column:1/-1;background:var(--s3);padding:6px 16px;text-align:center;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd)">
+          ↕ &nbsp; Inner experience — thoughts, feelings, sensations &nbsp; ↕
+        </div>
+        <!-- Bottom half: Inside/mental -->
+        <div style="padding:1rem;border-right:1px solid var(--brd)">
+          <div style="font-size:11px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Inside world<br><span style="font-weight:400;font-size:10px">Thoughts &amp; feelings</span></div>
+          <div class="fld"><label>What thoughts, feelings, or sensations do I most want to get away from?</label><textarea id="actm-q3" rows="3" oninput="updACTM('q3',this.value)" placeholder="e.g. Shame, anxiety, the thought 'I'm failing', loneliness, physical tension...">${esc(actm.q3)}</textarea></div>
+        </div>
+        <div style="padding:1rem">
+          <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Inside world<br><span style="font-weight:400;font-size:10px;color:var(--dim)">What matters</span></div>
+          <div class="fld"><label>Who or what matters most to me?</label><textarea id="actm-q4" rows="3" oninput="updACTM('q4',this.value)" placeholder="e.g. My relationship with my kids, creative work, being honest, contributing to my community...">${esc(actm.q4)}</textarea></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:1rem">
+      <div style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mid);margin-bottom:1rem">Noticing &amp; Choosing</div>
+      <div class="fld"><label>Right now, which direction am I moving — toward or away?</label>
+        <div style="display:flex;gap:10px;margin-top:4px;flex-wrap:wrap">
+          <button class="chip${actm.q5==='toward'?' on':''}" onclick="updACTM('q5','toward');renderACTM()">↗ Toward what matters</button>
+          <button class="chip${actm.q5==='away'?' on':''}" onclick="updACTM('q5','away');renderACTM()" style="${actm.q5==='away'?'background:var(--txm);border-color:var(--mid)':''}">↙ Away from discomfort</button>
+          <button class="chip${actm.q5==='both'?' on':''}" onclick="updACTM('q5','both');renderACTM()">Both / unsure</button>
+        </div>
+      </div>
+      <div class="fld" style="margin-top:12px"><label>What do I notice in my body right now?</label><textarea id="actm-q6" rows="2" oninput="updACTM('q6',this.value)" placeholder="Physical sensations, location, intensity...">${esc(actm.q6)}</textarea></div>
+      <div class="fld"><label>If I chose to move toward what matters, what is the smallest next step?</label><textarea id="actm-q7" rows="2" oninput="updACTM('q7',this.value)" placeholder="Specific, concrete, available to me right now...">${esc(actm.q7)}</textarea></div>
+    </div>
+
+    <div style="padding:1rem;background:var(--s2);font-size:12.5px;color:var(--mid);line-height:1.75">
+      <strong style="color:var(--ink)">Using the matrix.</strong> The away moves are not bad — they are often intelligent responses to pain. The matrix is not about stopping them; it is about noticing them, and noticing that you have a choice. Even a tiny step toward what matters counts. You do not have to feel less pain to move toward your values.
+    </div>
+    <div style="margin-top:1rem;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-sm btn-ghost" onclick="actm={q1:'',q2:'',q3:'',q4:'',q5:'',q6:'',q7:''};S('nd-actm',actm);renderACTM()">Clear &amp; restart</button>
+      <button class="btn btn-sm btn-p" onclick="window.print()">Print matrix</button>
+    </div>`;
+}
+function updACTM(field,val){actm[field]=val;S('nd-actm',actm);}
+
+
+// ─── VVIQ ─────────────────────────────────────────────────────────────────────
+// Vividness of Visual Imagery Questionnaire (VVIQ-2, Marks 1973/1995)
+// 16 items, each rated 1-5. Total 16-80. Higher = more vivid.
+const VVIQ_ITEMS=[
+  {n:1,scene:'A relative or friend',q:'The exact contour of face, head, shoulders, and body.'},
+  {n:2,scene:'A relative or friend',q:'Characteristic poses of head, attitudes of body, etc.'},
+  {n:3,scene:'A relative or friend',q:'The precise carriage, length of step, etc., in walking.'},
+  {n:4,scene:'A relative or friend',q:'The different colors worn in some familiar clothes.'},
+  {n:5,scene:'A rising sun',q:'The sun is rising above the horizon into a hazy sky.'},
+  {n:6,scene:'A rising sun',q:'The sky clears and surrounds the sun with blueness.'},
+  {n:7,scene:'A rising sun',q:'Clouds. A stormy sky lowering, with streaks of lightning.'},
+  {n:8,scene:'A rising sun',q:'A rainbow appears.'},
+  {n:9,scene:'A country scene',q:'The contours of the landscape.'},
+  {n:10,scene:'A country scene',q:'The color and shape of the trees.'},
+  {n:11,scene:'A country scene',q:'The color and shape of a lake or pond.'},
+  {n:12,scene:'A country scene',q:'A strong wind blows on the trees and on the lake causing waves.'},
+  {n:13,scene:'A shop',q:'The overall appearance of the shop from the outside.'},
+  {n:14,scene:'A shop',q:'A window display including colors, shapes, and details of individual items for sale.'},
+  {n:15,scene:'A shop',q:'You are near the entrance. The color, shape, and details of the door.'},
+  {n:16,scene:'A shop',q:'You enter the shop and go to the counter. The counter assistant serves you. Money changes hands.'},
+];
+const VVIQ_OPTS=['No image at all (only "knowing")','Dim and vague image','Moderately clear and lively','Clear and reasonably vivid','Perfectly clear and as vivid as real seeing'];
+let vviqAnswers=L('nd-vviq',{});
+let vviqView=L('nd-vviq-v','questions');
+
+function renderVVIQ(){
+  const el=document.getElementById('ap-vviq');if(!el)return;
+  const answered=Object.keys(vviqAnswers).length;
+  if(vviqView==='results'&&answered===16){renderVVIQResults(el);return;}
+  const pct=Math.round(answered/16*100);
+  const scenes=[...new Set(VVIQ_ITEMS.map(i=>i.scene))];
+  el.innerHTML=`
+    <div class="assess-intro">
+      <h4>Vividness of Visual Imagery Questionnaire (VVIQ)</h4>
+      Marks, 1973/1995. Close your eyes and form a mental image of each scene described. Rate how vivid the image is for you. There are no right or wrong answers — this captures where you fall on the imagery spectrum, from aphantasia (no mental imagery) to hyperphantasia (imagery as vivid as real seeing). Scores are directly relevant to OCD, I-CBT, and maladaptive daydreaming presentations.
+    </div>
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:.5rem">
+      <span style="font-size:12px;color:var(--dim)">${answered} / 16 answered</span>
+      ${answered===16?`<button class="btn btn-p btn-sm" onclick="vviqView='results';S('nd-vviq-v','results');renderVVIQ()">View results →</button>`:''}
+      ${answered>0?`<button class="btn btn-sm btn-ghost" onclick="vviqAnswers={};S('nd-vviq',{});vviqView='questions';S('nd-vviq-v','questions');renderVVIQ()">Clear &amp; restart</button>`:''}
+    </div>
+    <div class="aq-prog-bar"><div class="aq-prog-fill" style="width:${pct}%"></div></div>
+    <p class="hint" style="margin-bottom:1.25rem">For each item: close your eyes, try to form a clear mental picture of the scene, then rate the vividness.</p>
+    ${scenes.map(scene=>{
+      const items=VVIQ_ITEMS.filter(i=>i.scene===scene);
+      return `<div style="margin-bottom:1.75rem"><div style="font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.75rem;padding-bottom:.4rem;border-bottom:2px solid var(--mist)">Scene: ${scene}</div>
+      ${items.map(item=>`<div class="aq-question"><div class="aq-num">Item ${item.n}</div>
+      <div class="aq-text">${item.q}</div>
+      <div class="aq-opts">${VVIQ_OPTS.map((opt,i)=>`<button class="aq-opt${vviqAnswers[item.n]===i+1?' on':''}" onclick="vviqAnswers[${item.n}]=${i+1};S('nd-vviq',vviqAnswers);renderVVIQ()">${i+1} — ${opt}</button>`).join('')}</div>
+      </div>`).join('')}</div>`;
+    }).join('')}
+    ${answered===16?`<div style="margin-top:1.5rem;text-align:center"><button class="btn btn-p" onclick="vviqView='results';S('nd-vviq-v','results');renderVVIQ()">See my results →</button></div>`:''}`;
+}
+
+function renderVVIQResults(el){
+  const total=Object.values(vviqAnswers).reduce((a,v)=>a+v,0);
+  const avg=(total/16).toFixed(1);
+  let label,interp,ibg,ic;
+  if(total<=20){label='Aphantasia range';interp='Very low or no visual imagery. You may experience the "knowing" of things without a corresponding mental image. This is a natural variation — not a deficit. Aphantasia has specific implications for I-CBT (the crossroads intervention may need reframing) and for imaginal exposure in ERP.';ibg='var(--s2)';ic='#7ab0d8';}
+  else if(total<=40){label='Low imagery range';interp='Below-average vividness of mental imagery. Images may be vague, fleeting, or present in some modalities but not others. Worth exploring in clinical context — particularly around intrusive imagery and obsessive thought.';ibg='var(--s2)';ic='#7ab0d8';}
+  else if(total<=55){label='Mid-range imagery';interp='Typical range. Mental imagery is present and moderately clear. Most people fall in this range. Imagery plays a role in emotion regulation, memory, and creative thought.';ibg='var(--s2)';ic='#2a6a3a';}
+  else if(total<=68){label:'High imagery range';interp='Above-average vividness. Mental images are clear and relatively lifelike. High imagery is associated with stronger emotional responses to imagined scenarios — clinically relevant for OCD, anxiety, and PTSD presentations.';ibg='var(--s2)';ic='#c8a050';}
+  else{label='Hyperphantasia range';interp='Exceptionally vivid mental imagery, approaching or matching the vividness of real perception. Directly relevant to OCD (inferential confusion), PTSD (intrusive re-experiencing), maladaptive daydreaming, and the I-CBT model. May also be a significant creative asset.';ibg='var(--s2)';ic='#d09060';}
+
+  const scenes=[...new Set(VVIQ_ITEMS.map(i=>i.scene))];
+  const sceneTotals=scenes.map(s=>{
+    const items=VVIQ_ITEMS.filter(i=>i.scene===s);
+    return{scene:s,total:items.reduce((a,i)=>a+(vviqAnswers[i.n]||0),0),max:items.length*5};
+  });
+
+  el.innerHTML=`
+    <button class="btn btn-sm btn-ghost" style="margin-bottom:1.25rem" onclick="vviqView='questions';S('nd-vviq-v','questions');renderVVIQ()">← Back to questions</button>
+    <div class="score-card" style="background:var(--s2);border:1px solid var(--brd2)">
+      <div style="font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;opacity:.7;margin-bottom:.5rem">VVIQ Total Score</div>
+      <div class="score-num" style="color:white">${total}<span style="font-size:1.5rem;opacity:.6"> / 80</span></div>
+      <div style="font-size:13px;opacity:.8;margin-top:.4rem">${label} &nbsp;·&nbsp; Average rating: ${avg} / 5</div>
+      <div style="margin:1rem auto 0;max-width:280px;height:6px;background:rgba(255,255,255,.2);border-radius:3px;overflow:hidden"><div style="height:100%;width:${Math.round(total/80*100)}%;background:var(--dim);border-radius:2px"></div></div>
+    </div>
+    <div class="score-interpretation" style="background:${ibg};border:1px solid ${ic}28;color:${ic}"><strong>${label}.</strong> ${interp}</div>
+    <div style="font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mid);margin:.75rem 0">Scores by scene (out of ${VVIQ_ITEMS.filter(i=>i.scene===scenes[0]).length*5})</div>
+    <div class="sub-scores">
+      ${sceneTotals.map(s=>`<div class="sub-score"><div class="sub-score-n">${s.total}<span style="font-size:.6em;color:var(--dim)">/${s.max}</span></div><div class="sub-score-label">${s.scene}</div></div>`).join('')}
+    </div>
+    <div style="margin-top:1.5rem;padding:1rem;background:var(--s2);font-size:12.5px;color:var(--mid);line-height:1.7">
+      <strong style="color:var(--ink)">Clinical relevance.</strong> Mental imagery sits at the intersection of OCD, PTSD, maladaptive daydreaming, and the I-CBT model of inferential confusion. In I-CBT, the vividness of imagined threat is one of the reasoning devices that makes the primary inference feel credible. Knowing where a client falls on the imagery spectrum helps calibrate treatment — particularly the crossroads intervention and imaginal exposure work in ERP.
+    </div>
+    <div style="margin-top:1rem;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-sm btn-ghost" onclick="vviqAnswers={};S('nd-vviq',{});vviqView='questions';S('nd-vviq-v','questions');renderVVIQ()">Clear &amp; retake</button>
+      <button class="btn btn-sm btn-p" onclick="window.print()">Print results</button>
+    </div>`;
+}
+
+
+// ─── ACT PAGE ────────────────────────────────────────────────────────────────
+function actTab(w,b){
+  ['vals','matrix'].forEach(t=>{document.getElementById('act-'+t).style.display=t===w?'block':'none';});
+  document.querySelectorAll('#pg-act .tab').forEach((x,i)=>x.classList.toggle('on',['vals','matrix'][i]===w));
+  if(w==='vals')renderVals('act-vals');
+  if(w==='matrix')renderACTM('act-matrix');
+}
+function renderACTPage(){
+  renderVals('act-vals');
+  renderACTM('act-matrix');
+}
+
+
+function ocdTab(w,b){
+  ['icbt','erp'].forEach(t=>{document.getElementById('ocd-'+t+'-panel').style.display=t===w?'block':'none';});
+  document.querySelectorAll('#pg-ocd-skills .tab').forEach((x,i)=>x.classList.toggle('on',['icbt','erp'][i]===w));
+}
+
+// ═══ INIT ═════════════════════════════════════════════════════════════════════
+buildChecklist();
+buildSlides();
+buildICBT();
+rLTG();rHier();rPlan();rTrack();rReflect();
+initPlan();
+renderADHDTab();
+renderAQ();
+renderTAS();
+renderVVIQ();
+renderVals();
+renderACTM();
+renderACTPage();
+</script>
+</body>
+</html>

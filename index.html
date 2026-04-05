@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loquat — Neuroinclusive Therapy Center</title>
+<meta name="description" content="Neuroinclusive psychotherapy for neurodivergent adults in the San Francisco Bay Area. ADHD, autism, OCD, trauma. Dr. Madrone Love, PsyD.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ========== LOQUAT DESIGN TOKENS ========== */
+:root {
+  --clay: #b8856c;
+  --rust: #a0522d;
+  --mud: #6b4e3d;
+  --sand: #d4c4a8;
+  --warm-cream: #f5f0e8;
+  --soft-linen: #faf7f2;
+  --charcoal: #3a3632;
+  --text-secondary: #7a6e63;
+  --border-light: #e8e0d4;
+  --accent-warm: #c47a5a;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+}
+
+/* ========== RESET & BASE ========== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--charcoal);
+  background: var(--soft-linen);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img { max-width: 100%; display: block; }
+a { color: var(--clay); text-decoration: none; transition: color 0.3s ease; }
+a:hover { color: var(--accent-warm); }
+
+/* ========== TYPOGRAPHY ========== */
+h2 {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: 2rem;
+  letter-spacing: 0.02em;
+  color: var(--mud);
+  margin-bottom: 0.5rem;
+}
+
+h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.3rem;
+  color: var(--mud);
+}
+
+h4 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.1rem;
+  color: var(--mud);
+}
+
+.section-subtitle {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  max-width: 600px;
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--clay);
+}
+
+.small-text {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+
+/* ========== HEADER ========== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 60px;
+  border-bottom: 1px solid var(--border-light);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.brand-name {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.6rem;
+  letter-spacing: 0.15em;
+  color: var(--mud);
+}
+
+.brand-sub {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.header-contact {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.header-contact a {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.header-contact a:hover { color: var(--mud); }
+
+.btn-consult {
+  padding: 10px 24px;
+  border-radius: 4px;
+  border: 1px solid var(--border-light);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mud);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.btn-consult:hover {
+  background: var(--mud);
+  color: white;
+  border-color: var(--mud);
+}
+
+/* ========== STICKY NAV ========== */
+.tab-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--soft-linen);
+  border-bottom: 1px solid var(--border-light);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.tab-nav::-webkit-scrollbar { display: none; }
+
+.tab-nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 60px;
+  display: flex;
+  gap: 0;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 16px 20px;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.tab-btn:hover { color: var(--mud); }
+
+.tab-btn.active {
+  border-bottom-color: var(--clay);
+  color: var(--mud);
+}
+
+/* ========== TAB CONTENT ========== */
+.tab-content {
+  display: none;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px;
+}
+
+.tab-content.active {
+  display: block;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== HERO SECTION ========== */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  min-height: 420px;
+}
+
+.hero-text h1 {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: 2.4rem;
+  letter-spacing: 0.02em;
+  color: var(--mud);
+  line-height: 1.3;
+  margin-bottom: 1.5rem;
+}
+
+.hero-text h1 em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--clay);
+}
+
+.hero-text p {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  max-width: 440px;
+}
+
+.hero-photo {
+  position: relative;
+  height: 420px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--sand);
+}
+
+.hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.7) brightness(0.95);
+}
+
+/* ========== DIVIDERS ========== */
+.divider {
+  height: 1px;
+  background: var(--border-light);
+  margin: 40px 0;
+}
+
+/* ========== CARD GRID ========== */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  padding: 28px;
+  border: 1px solid var(--border-light);
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 20px rgba(107, 78, 61, 0.08);
+}
+
+.card .label { margin-bottom: 10px; display: block; }
+
+.card h4 { margin-bottom: 10px; }
+
+.card p {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+/* ========== APPROACH GRID ========== */
+.approach-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.approach-text p {
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+}
+
+.approach-text p:last-child { margin-bottom: 0; }
+
+/* ========== LOCATION CARDS ========== */
+.location-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.location-card {
+  background: white;
+  border-radius: 8px;
+  padding: 32px;
+  border: 1px solid var(--border-light);
+  transition: box-shadow 0.3s ease;
+}
+
+.location-card:hover {
+  box-shadow: 0 4px 20px rgba(107, 78, 61, 0.08);
+}
+
+.location-card .label { margin-bottom: 14px; display: block; }
+
+.location-card h4 { margin-bottom: 6px; }
+
+.location-card .address {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ========== MODALITIES LIST ========== */
+.modality-panel {
+  background: white;
+  border-radius: 8px;
+  padding: 32px;
+  border: 1px solid var(--border-light);
+}
+
+.modality-item {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.modality-item:last-child { border-bottom: none; }
+
+.modality-num {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.3rem;
+  color: var(--clay);
+  min-width: 28px;
+}
+
+.modality-name {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.05rem;
+  color: var(--mud);
+}
+
+.modality-desc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* ========== ROLES SECTION ========== */
+.roles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.role-card {
+  background: white;
+  border-radius: 8px;
+  padding: 28px;
+  border: 1px solid var(--border-light);
+  transition: box-shadow 0.3s ease;
+}
+
+.role-card:hover {
+  box-shadow: 0 4px 20px rgba(107, 78, 61, 0.08);
+}
+
+.role-card .label { margin-bottom: 10px; display: block; }
+.role-card h4 { margin-bottom: 8px; }
+
+.role-card p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.role-link {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--clay);
+}
+
+.role-link:hover { color: var(--rust); }
+
+/* ========== FEES PANEL ========== */
+.fees-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.fee-panel {
+  background: white;
+  border-radius: 8px;
+  padding: 32px;
+  border: 1px solid var(--border-light);
+}
+
+.fee-amount {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: 2.8rem;
+  color: var(--mud);
+  margin-bottom: 6px;
+}
+
+.fee-unit {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* ========== EDUCATION TIMELINE ========== */
+.timeline {
+  padding-left: 24px;
+  border-left: 1px solid var(--border-light);
+}
+
+.timeline-item {
+  padding: 12px 0 12px 20px;
+  position: relative;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -28.5px;
+  top: 20px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--clay);
+}
+
+.timeline-year {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--clay);
+  margin-bottom: 4px;
+}
+
+.timeline-text {
+  font-size: 0.88rem;
+  color: var(--charcoal);
+}
+
+.timeline-sub {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+/* ========== CONTACT SECTION ========== */
+.contact-row {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.contact-info {
+  flex: 1;
+}
+
+.contact-info h3 { margin-bottom: 1rem; }
+
+.contact-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+}
+
+.contact-detail a,
+.contact-detail span {
+  font-size: 0.88rem;
+  color: var(--charcoal);
+}
+
+/* ========== FOOTER ========== */
+.footer {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 60px;
+  border-top: 1px solid var(--border-light);
+  text-align: center;
+}
+
+.footer p {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  text-transform: uppercase;
+}
+
+.footer .footer-legal {
+  text-transform: none;
+  font-size: 0.7rem;
+  margin-top: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .header { padding: 28px 24px; flex-direction: column; gap: 16px; align-items: flex-start; }
+  .header-contact { gap: 1rem; flex-wrap: wrap; }
+  .tab-nav-inner { padding: 0 24px; }
+  .tab-btn { font-size: 0.65rem; padding: 14px 14px; }
+  .tab-content { padding: 30px 24px; }
+  .hero { grid-template-columns: 1fr; gap: 32px; }
+  .hero-text h1 { font-size: 1.8rem; }
+  .hero-photo { height: 300px; }
+  .card-grid { grid-template-columns: 1fr; }
+  .approach-grid { grid-template-columns: 1fr; }
+  .location-grid { grid-template-columns: 1fr; }
+  .fees-grid { grid-template-columns: 1fr; }
+  .roles-grid { grid-template-columns: 1fr; }
+  .contact-row { flex-direction: column; }
+  .footer { padding: 30px 24px; }
+  h2 { font-size: 1.6rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<header class="header">
+  <a href="#" class="brand" onclick="showTab('welcome'); return false;">
+    <div>
+      <div class="brand-name">Loquat</div>
+      <div class="brand-sub">Neuroinclusive Therapy Center</div>
+    </div>
+  </a>
+  <div class="header-contact">
+    <a href="tel:+14159152183">(415) 915-2183</a>
+    <a href="https://calendar.app.google/fTADXwL79iR4DWom7" target="_blank" class="btn-consult">Free Consultation</a>
+  </div>
+</header>
+
+<!-- ========== TAB NAVIGATION ========== -->
+<nav class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" onclick="showTab('welcome')">Welcome</button>
+    <button class="tab-btn" onclick="showTab('approach')">Approach</button>
+    <button class="tab-btn" onclick="showTab('specialties')">Specialties</button>
+    <button class="tab-btn" onclick="showTab('practice')">Practice Details</button>
+    <button class="tab-btn" onclick="showTab('about')">About Dr. Love</button>
+    <button class="tab-btn" onclick="showTab('contact')">Contact</button>
+  </div>
+</nav>
+
+<!-- ========== WELCOME TAB ========== -->
+<div id="tab-welcome" class="tab-content active">
+
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Therapy that honors<br>how your mind <em>actually</em> works</h1>
+      <p>Maybe you have an autism, ADHD, or OCD diagnosis — including self-diagnosis — or you simply describe yourself as "weird." Your difference isn't a sign that something is wrong with you. Working together is about understanding who you are and the life you are building for yourself.</p>
+      <a href="https://calendar.app.google/fTADXwL79iR4DWom7" target="_blank" class="btn-consult">Book a Free 20-Minute Consult</a>
+    </div>
+    <div class="hero-photo">
+      <img src="https://framerusercontent.com/images/dFb8nG8s65ACttUOCX4LpKj7qw" alt="Dr. Madrone Love, PsyD">
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <div style="text-align: center; margin-bottom: 40px;">
+    <h2>Who I Work With</h2>
+    <p class="section-subtitle" style="margin: 0.5rem auto 0;">Neurodivergent adults navigating identity, relationships, and the texture of daily life.</p>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="label">Neurodivergence</span>
+      <h4>ADHD, Autism &amp; Giftedness</h4>
+      <p>Late-diagnosed and self-identified adults finding their way in a neurotypical world. We explore emotional intensity, rejection sensitivity, masking, executive function, and building a life that fits how your brain actually works.</p>
+    </div>
+    <div class="card">
+      <span class="label">OCD &amp; Anxiety</span>
+      <h4>Intrusive Thoughts &amp; Compulsions</h4>
+      <p>Harm OCD, relationship OCD, scrupulosity, contamination, "just right" experiences. I use Inference-Based CBT and Exposure &amp; Response Prevention — evidence-based treatments that address OCD at its root.</p>
+    </div>
+    <div class="card">
+      <span class="label">Life &amp; Identity</span>
+      <h4>Grief, Transitions &amp; Existential Questions</h4>
+      <p>Divorce, loss, career shifts, identity confusion, existential anxiety, and the quiet suffering that doesn't always have a name. Therapy as a place to think and feel deeply about your life.</p>
+    </div>
+    <div class="card">
+      <span class="label">Relationships</span>
+      <h4>Connection &amp; Intimacy</h4>
+      <p>Alexithymia, limerence, attachment patterns, and building relationships where you don't perform. I also work with partners and family members of neurodivergent adults.</p>
+    </div>
+    <div class="card">
+      <span class="label">Trauma</span>
+      <h4>Relational &amp; Developmental Trauma</h4>
+      <p>Early experiences that shaped your nervous system and still show up in how you relate, regulate, and make meaning. Somatic and contemplative approaches alongside evidence-based modalities.</p>
+    </div>
+    <div class="card">
+      <span class="label">Identity &amp; Culture</span>
+      <h4>LGBTQ+, Multiracial &amp; Cultural Identity</h4>
+      <p>The intersections of neurodivergence, race, gender, sexuality, and spirituality. A practice that holds all of who you are without asking you to compartmentalize.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ========== APPROACH TAB ========== -->
+<div id="tab-approach" class="tab-content">
+
+  <h2>Therapeutic Approach</h2>
+  <p class="section-subtitle" style="margin-bottom: 40px;">Presence, precision, and a deep respect for how your mind works.</p>
+
+  <div class="approach-grid">
+    <div class="approach-text">
+      <h3 style="margin-bottom: 1rem;">Buddhist-Informed Practice</h3>
+      <p>My approach to psychotherapy draws deeply from my Buddhist practice — a long-standing Vipassana practice under teacher Gil Fronsdal at Insight Meditation Center. This isn't an add-on; it's foundational to how I sit with people. I bring full presence to our work together, meeting suffering with curiosity and compassion rather than trying to fix or eliminate it.</p>
+      <p>Mindfulness isn't a technique I prescribe — it's the ground I practice from. This means I'm interested in what's actually happening for you, not in making you match a model of health. We explore your experience with precision and warmth.</p>
+    </div>
+    <div class="approach-text">
+      <h3 style="margin-bottom: 1rem;">Neurodiversity-Affirming</h3>
+      <p>I integrate neurodiversity-affirming perspectives throughout all clinical work, whether we're focusing directly on neurodivergent experience or on relationships, grief, major transitions, or existential questions. Your neurotype shapes everything — how you process, relate, regulate, and make meaning.</p>
+      <p>My work isn't about fixing or normalizing you. It's about understanding who you are — and building a life that reflects that understanding. I work with the grain of your nervous system, not against it.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3 style="margin-bottom: 1.25rem;">Evidence-Based Modalities</h3>
+  <p class="section-subtitle" style="margin-bottom: 24px;">I only use treatments that have been proven to work, because I respect your time, energy, and money.</p>
+
+  <div class="modality-panel">
+    <div class="modality-item">
+      <span class="modality-num">1</span>
+      <div>
+        <div class="modality-name">Inference-Based CBT (I-CBT)</div>
+        <div class="modality-desc">A newer approach to OCD that targets the reasoning process behind obsessions, rather than just the anxiety they produce.</div>
+      </div>
+    </div>
+    <div class="modality-item">
+      <span class="modality-num">2</span>
+      <div>
+        <div class="modality-name">Exposure &amp; Response Prevention (ERP)</div>
+        <div class="modality-desc">The gold-standard treatment for OCD. Specialized training through the International OCD Foundation.</div>
+      </div>
+    </div>
+    <div class="modality-item">
+      <span class="modality-num">3</span>
+      <div>
+        <div class="modality-name">Dialectical Behavior Therapy (DBT)</div>
+        <div class="modality-desc">Skills for emotional regulation, distress tolerance, and interpersonal effectiveness.</div>
+      </div>
+    </div>
+    <div class="modality-item">
+      <span class="modality-num">4</span>
+      <div>
+        <div class="modality-name">Acceptance &amp; Commitment Therapy (ACT)</div>
+        <div class="modality-desc">Values-driven work that builds psychological flexibility and reduces the grip of avoidance.</div>
+      </div>
+    </div>
+    <div class="modality-item">
+      <span class="modality-num">5</span>
+      <div>
+        <div class="modality-name">Compassion-Focused Therapy</div>
+        <div class="modality-desc">For people who are hard on themselves. Building a different relationship with your inner critic.</div>
+      </div>
+    </div>
+    <div class="modality-item">
+      <span class="modality-num">6</span>
+      <div>
+        <div class="modality-name">Somatic &amp; Contemplative Approaches</div>
+        <div class="modality-desc">Body-based awareness practices for trauma, nervous system regulation, and deepening self-knowledge.</div>
+      </div>
+    </div>
+    <div class="modality-item">
+      <span class="modality-num">7</span>
+      <div>
+        <div class="modality-name">Ketamine-Assisted Psychotherapy</div>
+        <div class="modality-desc">Specialized training in therapeutic use of ketamine for treatment-resistant conditions.</div>
+      </div>
+    </div>
+    <div class="modality-item">
+      <span class="modality-num">8</span>
+      <div>
+        <div class="modality-name">Psychedelic Integration</div>
+        <div class="modality-desc">Making meaning of psychedelic experiences within a clinical and contemplative framework.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ========== SPECIALTIES TAB ========== -->
+<div id="tab-specialties" class="tab-content">
+
+  <h2>Areas of Focus</h2>
+  <p class="section-subtitle" style="margin-bottom: 40px;">Each area of focus reflects both clinical expertise and lived understanding.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="label">Core Specialty</span>
+      <h4>ADHD in Adults</h4>
+      <p>Inattentive, combined, and late-diagnosed presentations. Executive function challenges, emotional dysregulation, time blindness, rejection sensitivity, and the grief that comes with late diagnosis. I understand ADHD from the inside out.</p>
+    </div>
+    <div class="card">
+      <span class="label">Core Specialty</span>
+      <h4>OCD</h4>
+      <p>Harm OCD, relationship OCD (ROCD), scrupulosity, intrusive thoughts, contamination, symmetry, and "just right" experiences. Treated with I-CBT and ERP — not talk therapy that accidentally reinforces the cycle.</p>
+    </div>
+    <div class="card">
+      <span class="label">Core Specialty</span>
+      <h4>Autism in Adults</h4>
+      <p>Late-diagnosed and self-identified adults. Masking, social exhaustion, sensory overwhelm, identity reconstruction, autistic burnout, and the intersection of autism with other neurodivergencies.</p>
+    </div>
+    <div class="card">
+      <span class="label">Specialty</span>
+      <h4>Giftedness &amp; Twice-Exceptional</h4>
+      <p>The particular isolation and intensity of giftedness, especially when it co-occurs with ADHD, autism, or OCD. Overexcitabilities, asynchronous development, and the search for intellectual peers.</p>
+    </div>
+    <div class="card">
+      <span class="label">Specialty</span>
+      <h4>Alexithymia</h4>
+      <p>Difficulty identifying, naming, or describing emotions. Often co-occurs with autism and trauma. We build emotional vocabulary through somatic and experiential work, not by intellectualizing feelings.</p>
+    </div>
+    <div class="card">
+      <span class="label">Specialty</span>
+      <h4>Limerence &amp; Maladaptive Daydreaming</h4>
+      <p>Intense, involuntary romantic fixation and immersive inner worlds. These experiences are often misunderstood — even by therapists. I take them seriously as windows into attachment, need, and neurodivergent inner life.</p>
+    </div>
+    <div class="card">
+      <span class="label">Specialty</span>
+      <h4>Trauma &amp; Grief</h4>
+      <p>Relational trauma, developmental trauma, complex grief, divorce, and major life transitions. How early experience shapes your present — and how to move through it without being consumed by it.</p>
+    </div>
+    <div class="card">
+      <span class="label">Specialty</span>
+      <h4>LGBTQ+ Identity</h4>
+      <p>Gender, sexuality, and neurodivergence often intersect in complex and beautiful ways. Therapy that holds all of who you are and honors the particular stressors of navigating multiple marginalized identities.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ========== PRACTICE DETAILS TAB ========== -->
+<div id="tab-practice" class="tab-content">
+
+  <h2>Practice Details</h2>
+  <p class="section-subtitle" style="margin-bottom: 40px;">Everything you need to know about working together.</p>
+
+  <!-- LOCATIONS -->
+  <h3 style="margin-bottom: 20px;">Locations</h3>
+  <div class="location-grid" style="margin-bottom: 40px;">
+    <div class="location-card">
+      <span class="label">Berkeley</span>
+      <h4>Anam Cara Therapy Center</h4>
+      <p class="address">2915 Martin Luther King Jr. Way<br>Berkeley, CA 94703</p>
+    </div>
+    <div class="location-card">
+      <span class="label">San Francisco</span>
+      <h4>Hayes Valley</h4>
+      <p class="address">110 Gough Street, Suite 203<br>San Francisco, CA 94102</p>
+    </div>
+    <div class="location-card">
+      <span class="label">Virtual</span>
+      <h4>California Telehealth</h4>
+      <p class="address">Secure video sessions<br>available throughout California</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- FEES -->
+  <h3 style="margin-bottom: 20px;">Fees &amp; Insurance</h3>
+  <div class="fees-grid" style="margin-bottom: 40px;">
+    <div class="fee-panel">
+      <div class="fee-amount">$250</div>
+      <div class="fee-unit">per session</div>
+      <div class="divider" style="margin: 20px 0;"></div>
+      <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7;">Out of network. I provide a superbill for clients who would like to submit for insurance reimbursement, and I can help with the reimbursement process.</p>
+    </div>
+    <div class="fee-panel">
+      <h4 style="margin-bottom: 14px;">Free Consultation</h4>
+      <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px;">I offer a free 20-minute consultation call — an opportunity for us to discuss how we might work together and for you to assess whether I'm a good fit. If we're not the right match, I'll help you find someone who is.</p>
+      <a href="https://calendar.app.google/fTADXwL79iR4DWom7" target="_blank" class="btn-consult">Schedule a Consult</a>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- LICENSING -->
+  <h3 style="margin-bottom: 16px;">Licensing</h3>
+  <div class="card" style="max-width: 500px;">
+    <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.8;">
+      <strong style="color: var(--charcoal); font-weight: 400;">Jerlina Love, PsyD</strong><br>
+      Licensed Clinical Psychologist<br>
+      California Board of Psychology<br>
+      License #PSY35899 — Active
+    </p>
+  </div>
+
+</div>
+
+<!-- ========== ABOUT TAB ========== -->
+<div id="tab-about" class="tab-content">
+
+  <h2>Dr. Madrone Love</h2>
+  <p class="section-subtitle" style="margin-bottom: 40px;">Clinical psychologist, professor, dharma practitioner.</p>
+
+  <div class="approach-grid" style="margin-bottom: 40px;">
+    <div>
+      <div style="height: 340px; border-radius: 8px; overflow: hidden; background: var(--sand); margin-bottom: 20px;">
+        <img src="https://framerusercontent.com/images/dFb8nG8s65ACttUOCX4LpKj7qw" alt="Dr. Madrone Love" style="width: 100%; height: 100%; object-fit: cover; filter: saturate(0.7) brightness(0.95);">
+      </div>
+    </div>
+    <div class="approach-text">
+      <p>Working as a psychologist is not just a job for me — it is my passion. I am deeply nourished by the opportunity to think and feel deeply with my clients as they heal and grow.</p>
+      <p>My practice of psychotherapy draws deeply from my Buddhist practice. I am interested in being fully present with my clients as they make their way through the vast variety of suffering that life provides. I integrate my understanding of neurodivergence into our work, whether we focus on the neurodivergence itself or other aspects of life.</p>
+      <p>I offer direct engagement, not therapeutic distance. I bring both presence and practical tools. I'll challenge you when it serves your growth and witness you when that's what's needed.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- EDUCATION -->
+  <h3 style="margin-bottom: 24px;">Education &amp; Training</h3>
+  <div class="timeline" style="max-width: 600px; margin-bottom: 40px;">
+    <div class="timeline-item">
+      <div class="timeline-year">Postdoctoral Fellowship</div>
+      <div class="timeline-text">University of California, San Francisco (UCSF)</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">Doctorate (PsyD)</div>
+      <div class="timeline-text">The Wright Institute</div>
+      <div class="timeline-sub">Clinical Psychology</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">MA</div>
+      <div class="timeline-text">University of California, Berkeley</div>
+      <div class="timeline-sub">African American Studies</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">BA</div>
+      <div class="timeline-text">University of Pennsylvania</div>
+      <div class="timeline-sub">African American Studies</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">Specialized Training</div>
+      <div class="timeline-text">Exposure &amp; Response Prevention (ERP)</div>
+      <div class="timeline-sub">International OCD Foundation (IOCDF)</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">Specialized Training</div>
+      <div class="timeline-text">Inference-Based CBT (I-CBT)</div>
+      <div class="timeline-sub">OCD Training School</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ROLES -->
+  <h3 style="margin-bottom: 8px;">Teaching, Scholarship &amp; Community</h3>
+  <p class="section-subtitle" style="margin-bottom: 24px;">My work extends beyond the consulting room.</p>
+
+  <div class="roles-grid">
+    <div class="role-card">
+      <span class="label">Faculty</span>
+      <h4>Assistant Professor, CIIS</h4>
+      <p>Integral Counseling Psychology at the California Institute of Integral Studies. Teaching at the intersection of clinical training, multicultural competence, and contemplative practice.</p>
+      <a href="https://www.ciis.edu/profiles/madrone-love" target="_blank" class="role-link">CIIS Faculty Profile →</a>
+    </div>
+    <div class="role-card">
+      <span class="label">Leadership</span>
+      <h4>Director, Sati Center for Buddhist Studies</h4>
+      <p>Leading the educational infrastructure of the Sati Center, including certificate programs and an M.Div program in Buddhist chaplaincy and contemplative practice.</p>
+      <a href="https://www.sati.org" target="_blank" class="role-link">Sati Center →</a>
+    </div>
+    <div class="role-card">
+      <span class="label">Podcast</span>
+      <h4>Multiracial Mental Health</h4>
+      <p>Hosting conversations about the intersection of race, identity, and mental health — with a particular focus on multiracial experience.</p>
+    </div>
+    <div class="role-card">
+      <span class="label">Research</span>
+      <h4>Dissertation Research</h4>
+      <p>Qualitative research on clinician experience in MDMA-assisted therapy, applying Black feminist epistemology to examine hidden philosophical assumptions in psychedelic-assisted treatment protocols.</p>
+    </div>
+    <div class="role-card">
+      <span class="label">Practice</span>
+      <h4>Vipassana &amp; Insight Meditation</h4>
+      <p>Long-standing meditation practice under teacher Gil Fronsdal at Insight Meditation Center. Buddhist practice is not separate from clinical work — it is the foundation.</p>
+      <a href="https://www.insightmeditationcenter.org" target="_blank" class="role-link">Insight Meditation Center →</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ========== CONTACT TAB ========== -->
+<div id="tab-contact" class="tab-content">
+
+  <h2>Get in Touch</h2>
+  <p class="section-subtitle" style="margin-bottom: 40px;">Change starts now. I am happy to discuss what working together might look like.</p>
+
+  <div class="fees-grid">
+    <div class="fee-panel">
+      <h4 style="margin-bottom: 20px;">Contact</h4>
+      <div class="contact-detail">
+        <a href="tel:+14159152183" style="font-size: 1.1rem; font-family: var(--font-serif); color: var(--mud);">(415) 915-2183</a>
+        <a href="mailto:therapy@madronelove.com" style="color: var(--clay);">therapy@madronelove.com</a>
+      </div>
+      <a href="https://calendar.app.google/fTADXwL79iR4DWom7" target="_blank" class="btn-consult" style="margin-bottom: 24px;">Schedule a Free Consult</a>
+      <div style="margin-top: 24px;">
+        <a href="https://www.psychologytoday.com/us/therapists/dr-madrone-love-clinical-psychologist-san-francisco-ca/1554818" target="_blank" class="role-link">View Psychology Today Profile →</a>
+      </div>
+    </div>
+    <div>
+      <div class="location-card" style="margin-bottom: 16px;">
+        <span class="label">Berkeley</span>
+        <h4>Anam Cara Therapy Center</h4>
+        <p class="address">2915 Martin Luther King Jr. Way<br>Berkeley, CA 94703</p>
+      </div>
+      <div class="location-card" style="margin-bottom: 16px;">
+        <span class="label">San Francisco</span>
+        <h4>Hayes Valley</h4>
+        <p class="address">110 Gough Street, Suite 203<br>San Francisco, CA 94102</p>
+      </div>
+      <div class="location-card">
+        <span class="label">Virtual</span>
+        <h4>California Telehealth</h4>
+        <p class="address">Secure video throughout California</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer">
+  <p>Loquat: Neuroinclusive Therapy Center &nbsp;·&nbsp; Dr. Madrone Love, PsyD</p>
+  <p class="footer-legal">Jerlina Love, PsyD · Licensed Clinical Psychologist · PSY35899 · California Board of Psychology · Active</p>
+  <p class="footer-legal">This site may use cookies or analytics tools. Privacy policy effective 7/1/2025.</p>
+  <p class="footer-legal">&copy; 2026 Loquat: Neuroinclusive Therapy Center</p>
+</footer>
+
+<!-- ========== SCRIPT ========== -->
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  const target = document.getElementById('tab-' + id);
+  if (target) target.classList.add('active');
+  const btns = document.querySelectorAll('.tab-btn');
+  const tabNames = ['welcome', 'approach', 'specialties', 'practice', 'about', 'contact'];
+  const idx = tabNames.indexOf(id);
+  if (idx >= 0 && btns[idx]) btns[idx].classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
