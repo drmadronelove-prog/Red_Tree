@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adjunct Faculty Portal — ICP | CIIS</title>
+  <meta name="description" content="Resource hub for adjunct professors in the Integral Counseling Psychology program at the California Institute of Integral Studies.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ========== NAV ========== -->
+<nav class="site-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html" aria-label="ICP Adjunct Portal Home">
+      <div class="nav-logo-emblem">
+        <!-- CIIS-style spiral emblem (SVG) -->
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="20" cy="20" r="18" stroke="white" stroke-width="1.5" fill="none"/>
+          <circle cx="20" cy="20" r="12" stroke="white" stroke-width="1" fill="none" opacity="0.6"/>
+          <circle cx="20" cy="20" r="6"  stroke="white" stroke-width="1" fill="none" opacity="0.4"/>
+          <circle cx="20" cy="20" r="2"  fill="white" opacity="0.7"/>
+          <line x1="20" y1="2"  x2="20" y2="8"  stroke="white" stroke-width="1" opacity="0.5"/>
+          <line x1="20" y1="32" x2="20" y2="38" stroke="white" stroke-width="1" opacity="0.5"/>
+          <line x1="2"  y1="20" x2="8"  y2="20" stroke="white" stroke-width="1" opacity="0.5"/>
+          <line x1="32" y1="20" x2="38" y2="20" stroke="white" stroke-width="1" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="nav-logo-text">
+        <span class="org">CIIS · ICP Program</span>
+        <span class="portal">Adjunct Faculty Portal</span>
+      </div>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu" onclick="this.closest('nav').querySelector('.nav-links').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="hr-pay.html">HR &amp; Pay</a></li>
+      <li><a href="pedagogy.html">Pedagogy</a></li>
+      <li><a href="expectations.html">Expectations</a></li>
+      <li><a href="campus-map.html">Campus Map</a></li>
+      <li><a href="transportation.html">Getting Here</a></li>
+      <li><a href="approach.html">CIIS Approach</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ========== HOME HERO ========== -->
+<section class="home-hero">
+  <div class="inner">
+    <span class="eyebrow">California Institute of Integral Studies</span>
+    <h1>Welcome, Adjunct Faculty</h1>
+    <p class="lead">Your resource hub for everything you need as an adjunct professor in the <em>Integral Counseling Psychology</em> program — from getting paid to finding the lounge.</p>
+    <div class="hero-cta-group">
+      <a class="btn btn-white" href="hr-pay.html">HR &amp; Pay Info →</a>
+      <a class="btn btn-outline-white" href="campus-map.html">Campus Map</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WELCOME STRIP ========== -->
+<section class="welcome-strip">
+  <div class="inner">
+    <p class="quote">"The universe is made of stories, not of atoms."</p>
+    <p class="attribution">— Muriel Rukeyser &nbsp;·&nbsp; Often cited in the ICP tradition</p>
+  </div>
+</section>
+
+<!-- ========== QUICK LINKS ========== -->
+<section class="quicklinks-section">
+  <div class="section-label">Resources at a Glance</div>
+  <h2>What do you need today?</h2>
+  <div class="quicklinks-grid">
+
+    <a class="ql-card" href="hr-pay.html">
+      <div class="ql-icon">💰</div>
+      <h3>HR &amp; Getting Paid</h3>
+      <p>Contracts, payroll timelines, direct deposit setup, W-9s, and who to contact in HR.</p>
+    </a>
+
+    <a class="ql-card" href="pedagogy.html">
+      <div class="ql-icon">📚</div>
+      <h3>Pedagogical Resources</h3>
+      <p>Syllabus templates, Canvas LMS guides, library access, and recommended readings.</p>
+    </a>
+
+    <a class="ql-card" href="expectations.html">
+      <div class="ql-icon">📋</div>
+      <h3>Attendance &amp; Accommodations</h3>
+      <p>CIIS policies on attendance, disability accommodations, and student support referrals.</p>
+    </a>
+
+    <a class="ql-card" href="campus-map.html">
+      <div class="ql-icon">🏢</div>
+      <h3>Campus Map</h3>
+      <p>Interactive floor-by-floor guide: lounge, café, library, namaste hall, HR offices &amp; more.</p>
+    </a>
+
+    <a class="ql-card" href="transportation.html">
+      <div class="ql-icon">🚌</div>
+      <h3>Getting Here</h3>
+      <p>BART, Muni, bike parking, car parking, and cafés &amp; restaurants near 1453 Mission St.</p>
+    </a>
+
+    <a class="ql-card" href="approach.html">
+      <div class="ql-icon">🌀</div>
+      <h3>The CIIS Approach</h3>
+      <p>Experiential, integral, and social-justice-centered pedagogy — the heart of ICP teaching.</p>
+    </a>
+
+  </div>
+</section>
+
+<!-- ========== ABOUT STRIP ========== -->
+<section style="background: var(--ciis-white); border-top: 1px solid var(--ciis-cream-dk); padding: 3.5rem 1.5rem;">
+  <div style="max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;">
+    <div>
+      <p style="font-size:0.72rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--ciis-coral); margin-bottom:0.4rem;">About this Portal</p>
+      <h2>Built for Adjunct Faculty in ICP</h2>
+      <p>The Integral Counseling Psychology (ICP) program at CIIS trains therapists rooted in depth psychology, somatic awareness, and social justice. Adjunct professors are the backbone of this community, and this portal is designed to make your administrative and pedagogical life as smooth as possible.</p>
+      <p>Content on each page serves as a living placeholder — program staff and faculty coordinators will continue to expand and update each section.</p>
+      <a class="btn btn-crimson" href="approach.html" style="margin-top:0.5rem;">Explore CIIS Approach →</a>
+    </div>
+    <div>
+      <div style="background: linear-gradient(135deg, var(--ciis-crimson), var(--ciis-coral)); border-radius: var(--radius-lg); padding: 2.5rem; color: #fff; text-align: center;">
+        <!-- CIIS Large Emblem -->
+        <svg viewBox="0 0 80 80" width="80" height="80" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 0 auto 1rem;" aria-hidden="true">
+          <circle cx="40" cy="40" r="38" stroke="white" stroke-width="2" fill="none" opacity="0.4"/>
+          <circle cx="40" cy="40" r="28" stroke="white" stroke-width="1.5" fill="none" opacity="0.5"/>
+          <circle cx="40" cy="40" r="18" stroke="white" stroke-width="1.5" fill="none" opacity="0.6"/>
+          <circle cx="40" cy="40" r="9"  stroke="white" stroke-width="1" fill="none" opacity="0.7"/>
+          <circle cx="40" cy="40" r="3"  fill="white" opacity="0.9"/>
+          <!-- tick marks -->
+          <line x1="40" y1="2"  x2="40" y2="10" stroke="white" stroke-width="1.5" opacity="0.5"/>
+          <line x1="40" y1="70" x2="40" y2="78" stroke="white" stroke-width="1.5" opacity="0.5"/>
+          <line x1="2"  y1="40" x2="10" y2="40" stroke="white" stroke-width="1.5" opacity="0.5"/>
+          <line x1="70" y1="40" x2="78" y2="40" stroke="white" stroke-width="1.5" opacity="0.5"/>
+          <line x1="12" y1="12" x2="18" y2="18" stroke="white" stroke-width="1" opacity="0.35"/>
+          <line x1="62" y1="62" x2="68" y2="68" stroke="white" stroke-width="1" opacity="0.35"/>
+          <line x1="68" y1="12" x2="62" y2="18" stroke="white" stroke-width="1" opacity="0.35"/>
+          <line x1="12" y1="68" x2="18" y2="62" stroke="white" stroke-width="1" opacity="0.35"/>
+        </svg>
+        <p style="font-family: var(--font-serif); font-size: 1.3rem; font-style: italic; color: #fff; margin-bottom: 0.25rem;">California Institute<br>of Integral Studies</p>
+        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.7); margin: 0;">Founded 1968 · San Francisco, CA</p>
+        <hr style="border:none; border-top: 1px solid rgba(255,255,255,0.25); margin: 1.25rem 0;">
+        <p style="font-size: 0.82rem; color: rgba(255,255,255,0.85); margin: 0; line-height: 1.6;">1453 Mission Street<br>San Francisco, CA 94103<br>415.575.6100</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <p class="footer-org">California Institute of Integral Studies</p>
+      <p class="footer-title">ICP Adjunct Faculty Portal</p>
+      <p class="footer-desc">A resource hub for adjunct professors in the Integral Counseling Psychology program. Content is maintained by the ICP Program Coordinator in collaboration with CIIS Human Resources and Academic Affairs.</p>
+    </div>
+    <div>
+      <p class="footer-links-heading">Portal Pages</p>
+      <ul class="footer-links">
+        <li><a href="hr-pay.html">HR &amp; Getting Paid</a></li>
+        <li><a href="pedagogy.html">Pedagogical Resources</a></li>
+        <li><a href="expectations.html">Attendance &amp; Accommodations</a></li>
+        <li><a href="campus-map.html">Campus Map</a></li>
+        <li><a href="transportation.html">Getting Here</a></li>
+        <li><a href="approach.html">CIIS Approach</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-links-heading">CIIS Links</p>
+      <ul class="footer-links">
+        <li><a href="https://www.ciis.edu" target="_blank" rel="noopener">ciis.edu</a></li>
+        <li><a href="https://www.ciis.edu/academics/graduate-programs/integral-counseling-psychology" target="_blank" rel="noopener">ICP Program Page</a></li>
+        <li><a href="https://www.ciis.edu/student-services/disability-services" target="_blank" rel="noopener">Disability Services</a></li>
+        <li><a href="https://library.ciis.edu" target="_blank" rel="noopener">CIIS Library</a></li>
+        <li><a href="https://ciis.instructure.com" target="_blank" rel="noopener">Canvas LMS</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 California Institute of Integral Studies · 1453 Mission St, San Francisco, CA 94103</span>
+    <span>CIIS is located on unceded Ramaytush Ohlone land.</span>
+  </div>
+</footer>
+
+</body>
+</html>
