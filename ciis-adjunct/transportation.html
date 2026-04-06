@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Getting Here — ICP Adjunct Portal | CIIS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="site-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html" aria-label="ICP Adjunct Portal Home">
+      <div class="nav-logo-emblem">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="20" cy="20" r="18" stroke="white" stroke-width="1.5" fill="none"/>
+          <circle cx="20" cy="20" r="12" stroke="white" stroke-width="1" fill="none" opacity="0.6"/>
+          <circle cx="20" cy="20" r="6"  stroke="white" stroke-width="1" fill="none" opacity="0.4"/>
+          <circle cx="20" cy="20" r="2"  fill="white" opacity="0.7"/>
+          <line x1="20" y1="2"  x2="20" y2="8"  stroke="white" stroke-width="1" opacity="0.5"/>
+          <line x1="20" y1="32" x2="20" y2="38" stroke="white" stroke-width="1" opacity="0.5"/>
+          <line x1="2"  y1="20" x2="8"  y2="20" stroke="white" stroke-width="1" opacity="0.5"/>
+          <line x1="32" y1="20" x2="38" y2="20" stroke="white" stroke-width="1" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="nav-logo-text">
+        <span class="org">CIIS · ICP Program</span>
+        <span class="portal">Adjunct Faculty Portal</span>
+      </div>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu" onclick="this.closest('nav').querySelector('.nav-links').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="hr-pay.html">HR &amp; Pay</a></li>
+      <li><a href="pedagogy.html">Pedagogy</a></li>
+      <li><a href="expectations.html">Expectations</a></li>
+      <li><a href="campus-map.html">Campus Map</a></li>
+      <li><a href="transportation.html" class="active">Getting Here</a></li>
+      <li><a href="approach.html">CIIS Approach</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <p class="breadcrumb"><a href="index.html">Home</a> › Getting Here</p>
+  <h1>Getting to CIIS</h1>
+  <p class="subtitle">1453 Mission Street is well-served by BART, Muni, and bike lanes. Here's how to get here — and where to eat once you arrive.</p>
+</header>
+
+<main class="page-body">
+
+  <div class="notice-box">
+    📍 <strong>CIIS Address:</strong> 1453 Mission Street, San Francisco, CA 94103 &nbsp;·&nbsp; Located in the Civic Center / SoMa neighborhood, close to City Hall and the main BART station.
+  </div>
+
+  <!-- ===== TRANSIT ===== -->
+  <section>
+    <h2>Public Transit</h2>
+    <p style="margin-bottom:1.5rem;">CIIS is one of the best-connected campuses in San Francisco for public transit. We strongly encourage faculty to take public transit — parking is expensive and limited in this neighborhood.</p>
+
+    <div class="two-col">
+
+      <div class="transport-card">
+        <div class="transport-icon">🚇</div>
+        <h3>BART</h3>
+        <p><strong>Closest Station: Civic Center / UN Plaza</strong> — approximately a 5–7 minute walk from 1453 Mission St.</p>
+        <p>BART connects San Francisco to the East Bay (Oakland, Berkeley, Fremont), the Peninsula (SFO, Millbrae), and the South Bay (San Jose). Trains run frequently on weekdays and less frequently on evenings and weekends.</p>
+        <ul>
+          <li>Exit at <strong>Civic Center / UN Plaza</strong> station</li>
+          <li>Walk south on 7th St or east on Market St, then south on 10th/11th to Mission St</li>
+          <li>Or exit at <strong>16th Street Mission</strong> for a longer, flat walk through the Mission District</li>
+        </ul>
+        <div class="tags">
+          <span class="tag crimson">5–7 min walk</span>
+          <span class="tag">bart.gov</span>
+        </div>
+      </div>
+
+      <div class="transport-card coral">
+        <div class="transport-icon">🚌</div>
+        <h3>Muni (SF Municipal Railway)</h3>
+        <p>Multiple Muni lines stop within a block or two of CIIS on Mission Street and nearby corridors.</p>
+        <ul>
+          <li><strong>Muni Metro:</strong> Lines J, K, L, M, N, T stop at Civic Center Station (underground), same as BART</li>
+          <li><strong>Bus Lines:</strong> The 14 (Mission), 49 (Van Ness/Mission), and other routes serve nearby stops</li>
+          <li><strong>Real-time info:</strong> Use the SFMTA app or 511 SF Bay to plan your trip</li>
+        </ul>
+        <p>Clipper Card is the easiest payment method and transfers between BART and Muni are discounted within 90 minutes.</p>
+        <div class="tags">
+          <span class="tag crimson">Multiple lines</span>
+          <span class="tag">sfmta.com</span>
+          <span class="tag">511.org</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ===== BIKING ===== -->
+  <section>
+    <h2>Biking</h2>
+    <div class="two-col">
+      <div class="transport-card">
+        <div class="transport-icon">🚲</div>
+        <h3>Bike Parking</h3>
+        <p>CIIS has secure bike parking available for faculty and students. Bike racks are located:</p>
+        <ul>
+          <li>On the street outside 1453 Mission St (public racks)</li>
+          <li>In the building's designated bike storage area — ask at the front desk for access</li>
+        </ul>
+        <p>Always lock your bike with a sturdy U-lock, even in the building's storage area.</p>
+        <div class="placeholder-note">Confirm indoor bike storage access procedure with Facilities on Floor 5.</div>
+      </div>
+      <div class="transport-card coral">
+        <div class="transport-icon">🛴</div>
+        <h3>Bay Wheels (Bike Share)</h3>
+        <p>Bay Wheels bike share stations are located near CIIS, including near Civic Center and along Market Street. Electric and standard bikes available.</p>
+        <p>The area around CIIS has bike lanes on many streets, including protected lanes on Valencia Street (parallel to Mission, 1 block east).</p>
+        <ul>
+          <li>Lyft / Bay Wheels app for dock locations and availability</li>
+          <li>Membership options available for frequent riders</li>
+        </ul>
+        <div class="tags"><span class="tag crimson">baywheels.com</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ===== PARKING ===== -->
+  <section>
+    <h2>Parking</h2>
+    <div class="highlight-box">
+      <h3>⚠️ A Word on Driving</h3>
+      <p>The Civic Center / SoMa neighborhood is not known for easy or affordable parking. We strongly encourage BART, Muni, or biking. If you must drive, allow extra time and budget for parking costs.</p>
+    </div>
+
+    <div class="two-col" style="margin-top:1.5rem;">
+      <div class="transport-card">
+        <div class="transport-icon">🅿️</div>
+        <h3>Nearby Parking Garages</h3>
+        <p>Several parking garages operate within a few blocks of CIIS. Rates vary and are subject to change.</p>
+        <ul>
+          <li><strong>Civic Center Garage</strong> — 355 McAllister St (~5 min walk)</li>
+          <li><strong>1355 Market Street Garage</strong> — near Twitter/Twitter HQ (~7 min walk)</li>
+          <li><strong>SF City Hall area garages</strong> — check SpotHero or ParkWhiz for current rates and availability</li>
+        </ul>
+        <div class="placeholder-note">Current rates and recommendations from CIIS Facilities to be added here.</div>
+      </div>
+      <div class="transport-card coral">
+        <div class="transport-icon">🚗</div>
+        <h3>Street Parking &amp; Apps</h3>
+        <p>Street parking on Mission Street and nearby blocks is metered. SFpark sensors provide real-time availability in the SF MTA app.</p>
+        <ul>
+          <li>Metered hours typically 9am–6pm on weekdays; some evening meters active until 10pm</li>
+          <li>Evening and weekend parking can be more available, especially if you teach late classes</li>
+          <li>SpotHero and ParkWhiz apps can help you pre-book garage spots at discounted rates</li>
+        </ul>
+        <div class="tags"><span class="tag">sfpark.org</span><span class="tag">spothero.com</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ===== NEIGHBORHOOD FOOD ===== -->
+  <section>
+    <h2>Cafés &amp; Restaurants Near CIIS</h2>
+    <p>The Civic Center / SoMa / Lower Haight neighborhood surrounding CIIS has a diverse range of places to eat and caffeinate before or after teaching. The following are general categories and directions — specific spots change seasonally.</p>
+
+    <div class="placeholder-note">
+      This section will be updated with current faculty recommendations. In the meantime, apps like Yelp, Google Maps, or The Infatuation are your best guides to current hours and quality.
+    </div>
+
+    <div class="three-col" style="margin-top:1.5rem;">
+
+      <div class="transport-card">
+        <div class="transport-icon">☕</div>
+        <h3>Coffee &amp; Cafés</h3>
+        <p>Several independent cafés are within walking distance on Mission St, Market St, and nearby side streets. Look for cafés around the Civic Center area and the start of the Mission District (16th St corridor).</p>
+        <ul>
+          <li>Blue Bottle Coffee (multiple SF locations nearby)</li>
+          <li>Sightglass Coffee (7th St, SoMa)</li>
+          <li>Ritual Coffee (various locations)</li>
+          <li>Local independent spots on Mission St</li>
+        </ul>
+      </div>
+
+      <div class="transport-card coral">
+        <div class="transport-icon">🌮</div>
+        <h3>Quick Bites &amp; Lunch</h3>
+        <p>The Mission District — just a few blocks south — is famous for its taquerias, burritos, and diverse food options. Great for lunch before an afternoon class.</p>
+        <ul>
+          <li>La Taqueria (24th St, classic SF burrito)</li>
+          <li>Tartine Manufactory (Inner Mission)</li>
+          <li>Numerous Vietnamese, Salvadoran, and Burmese spots on and near Mission St</li>
+          <li>Civic Center Farmers Market (Wednesdays &amp; Sundays)</li>
+        </ul>
+      </div>
+
+      <div class="transport-card">
+        <div class="transport-icon">🍽️</div>
+        <h3>Dinner &amp; After Class</h3>
+        <p>If you teach evening classes, the Hayes Valley and Lower Haight neighborhoods (10–15 min walk) offer excellent dinner options. SoMa also has many restaurants open late.</p>
+        <ul>
+          <li>Hayes Valley restaurants along Hayes St</li>
+          <li>Absinthe Brasserie (Hayes St, French)</li>
+          <li>SoMa spots on Folsom, Howard, and Brannan</li>
+          <li>Japanese, Korean, and Southeast Asian restaurants within easy walk</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- ===== NEIGHBORHOOD NOTE ===== -->
+    <div class="info-box" style="margin-top:2rem;">
+      <h3>A Note on the Neighborhood</h3>
+      <p>The Civic Center / SoMa area is a vibrant and complex neighborhood. It is also an area with significant unhoused populations, particularly around UN Plaza and the Civic Center BART station. CIIS's social justice commitments include approaching our neighbors with dignity and awareness.</p>
+      <p>If you have concerns about safety on your commute, particularly for evening classes, feel free to ask the Program Coordinator about resources, buddy systems, or transportation assistance options.</p>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ===== RIDESHARE ===== -->
+  <section>
+    <h2>Rideshare &amp; Other Options</h2>
+    <div class="three-col">
+      <div class="card">
+        <h3>🚕 Rideshare</h3>
+        <p>Lyft and Uber both serve the CIIS area. Drop-off on Mission St is usually straightforward. Surge pricing is common during commute hours and after evening classes end.</p>
+      </div>
+      <div class="card coral-border">
+        <h3>🚶 Walking</h3>
+        <p>If you live in SoMa, the Mission, Hayes Valley, or the Castro, CIIS is potentially walkable. The Civic Center area is flat and pedestrian-friendly on the main streets.</p>
+      </div>
+      <div class="card">
+        <h3>🛴 Scooters</h3>
+        <p>Shared electric scooters (Lime, Spin) are frequently available near Civic Center. Check local scooter apps for docking locations.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <p class="footer-org">California Institute of Integral Studies</p>
+      <p class="footer-title">ICP Adjunct Faculty Portal</p>
+      <p class="footer-desc">Transportation guide and neighborhood resources for adjunct faculty commuting to 1453 Mission Street, San Francisco.</p>
+    </div>
+    <div>
+      <p class="footer-links-heading">Portal Pages</p>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="hr-pay.html">HR &amp; Getting Paid</a></li>
+        <li><a href="pedagogy.html">Pedagogical Resources</a></li>
+        <li><a href="expectations.html">Attendance &amp; Accommodations</a></li>
+        <li><a href="campus-map.html">Campus Map</a></li>
+        <li><a href="transportation.html">Getting Here</a></li>
+        <li><a href="approach.html">CIIS Approach</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-links-heading">Transit Links</p>
+      <ul class="footer-links">
+        <li><a href="https://www.bart.gov" target="_blank" rel="noopener">bart.gov</a></li>
+        <li><a href="https://www.sfmta.com" target="_blank" rel="noopener">sfmta.com (Muni)</a></li>
+        <li><a href="https://www.baywheels.com" target="_blank" rel="noopener">baywheels.com</a></li>
+        <li><a href="https://sfpark.org" target="_blank" rel="noopener">sfpark.org</a></li>
+        <li><a href="https://www.ciis.edu" target="_blank" rel="noopener">ciis.edu</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 California Institute of Integral Studies · 1453 Mission St, San Francisco, CA 94103</span>
+    <span>CIIS is located on unceded Ramaytush Ohlone land.</span>
+  </div>
+</footer>
+
+</body>
+</html>
